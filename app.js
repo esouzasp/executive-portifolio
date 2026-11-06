@@ -2,7 +2,7 @@
   var D = window.PORTFOLIO;
   var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
                 set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
-  var state = { lang: store.get('lang') || ((navigator.language || '').toLowerCase().indexOf('pt') === 0 ? 'pt' : 'en'), area: 'all', co: 'all' };
+  var state = { lang: store.get('lang') || 'en', area: 'all', co: 'all' };
 
   var FLAG_BR = '<svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" fill="#009C3B"/><path d="M10 1.6 18.2 7 10 12.4 1.8 7Z" fill="#FFDF00"/><circle cx="10" cy="7" r="3.2" fill="#002776"/><path d="M6.9 6.4c2-.5 4.4-.2 6.1.9" stroke="#fff" stroke-width=".6" fill="none"/></svg>';
   var FLAG_US = '<svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" fill="#fff"/><g fill="#B22234"><rect y="0" width="20" height="1.08"/><rect y="2.15" width="20" height="1.08"/><rect y="4.3" width="20" height="1.08"/><rect y="6.46" width="20" height="1.08"/><rect y="8.62" width="20" height="1.08"/><rect y="10.77" width="20" height="1.08"/><rect y="12.92" width="20" height="1.08"/></g><rect width="8.6" height="7.54" fill="#3C3B6E"/><g fill="#fff"><circle cx="1.6" cy="1.4" r=".45"/><circle cx="4.3" cy="1.4" r=".45"/><circle cx="7" cy="1.4" r=".45"/><circle cx="2.95" cy="2.9" r=".45"/><circle cx="5.65" cy="2.9" r=".45"/><circle cx="1.6" cy="4.4" r=".45"/><circle cx="4.3" cy="4.4" r=".45"/><circle cx="7" cy="4.4" r=".45"/><circle cx="2.95" cy="5.9" r=".45"/><circle cx="5.65" cy="5.9" r=".45"/></g></svg>';
