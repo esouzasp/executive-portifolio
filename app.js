@@ -113,7 +113,9 @@
 
   function footer() {
     return '<footer id="contact" class="contact"><div class="wrap"><div><h2>' + L(T.foot)[0] + '</h2><p>' + L(T.foot)[1] + '</p></div>' +
-      '<div class="ctas"><a class="btn primary" href="https://www.linkedin.com/">LinkedIn</a><a class="btn ghost" href="mailto:">E-mail</a></div></div></footer>';
+      '<div class="ctas"><a class="btn ghost" href="mailto:isouzae@gmail.com">isouzae@gmail.com</a>' +
+      '<a class="btn primary" href="https://wa.me/5519981608088" target="_blank" rel="noopener">WhatsApp +55 19 98160-8088</a>' +
+      '<a class="btn ghost" href="https://www.linkedin.com/">LinkedIn</a></div></div></footer>';
   }
 
   function detail(n) {
