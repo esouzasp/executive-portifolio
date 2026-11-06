@@ -609,7 +609,7 @@ window.PORTFOLIO = {
         r: ["Processo otimizado com solver linear", "Plano de produção entregue para o S&OP"],
         tg: ["MPS", "Otimização", "S&OP"] } },
 
-    { a: "ai", co: "pln", org: { en: "Planus Tech · Ice cream manufacturer · Mid-size", pt: "Planus Tech · Fabricante de sorvetes · Médio porte" }, y: "",
+    { a: "ai", co: "pln", org: { en: "Planus Tech · Ice cream manufacturer · Mid-size", pt: "Planus Tech · Fabricante de sorvetes · Médio porte" }, y: "", featured: 7,
       en: { t: "Weather-Driven Forecast", m: "+30 pp", ml: "accuracy, 7-day daily forecast",
         s: "Weather-driven daily forecasting for an ice cream company, improving accuracy by up to 30 percentage points.",
         cx: "Ice cream demand is highly sensitive to weather.",
