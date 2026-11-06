@@ -22,7 +22,7 @@
     s2: { en: ['02 — Representative Solutions', 'What I have built and led'], pt: ['02 — Soluções Representativas', 'O que construí e liderei'] },
     s3: { en: ['04 — Portfolio Projects', 'Selected cases'], pt: ['04 — Projetos do Portfólio', 'Cases selecionados'] },
     sT: { en: ['03 — Tech Stack', 'Technologies I work with'], pt: ['03 — Tecnologias', 'Tecnologias com que trabalho'] },
-    all: { en: 'All', pt: 'Todos' }, byArea: { en: 'Area', pt: 'Área' }, byCo: { en: 'Company', pt: 'Empresa' },
+    all: { en: 'All', pt: 'Todos' }, filter: { en: 'Filter cases', pt: 'Filtrar cases' }, byArea: { en: 'Area', pt: 'Área' }, byCo: { en: 'Company', pt: 'Empresa' },
     count: { en: ' cases', pt: ' cases' }, featured: { en: 'Featured Cases', pt: 'Cases em destaque' }, more: { en: 'More Cases', pt: 'Mais cases' }, view: { en: 'View', pt: 'Visualização' }, cards: { en: 'Cards', pt: 'Caixas' }, list: { en: 'List', pt: 'Lista' },
     cols: { en: ['Case', 'Area', 'Company', 'Result', 'Tags'], pt: ['Case', 'Área', 'Empresa', 'Resultado', 'Tags'] },
     star: { en: ['Situation', 'Task', 'Action', 'Result'], pt: ['Situação', 'Tarefa', 'Ação', 'Resultado'] },
@@ -147,14 +147,14 @@
       D.overview.stack.map(function (g) { return '<div class="pillar"><h3>' + esc(g.t[i]) + '</h3><p>' + g.i.map(esc).join(' · ') + '</p></div>'; }).join('') +
       '</div></div></section>';
     var vis = visible();
-    var areaPills = '<button type="button" class="pill" data-area="all" aria-pressed="' + (state.area === 'all') + '">' + L(T.all) + '</button>' +
-      Object.keys(D.areas).map(function (k) { return '<button type="button" class="pill" data-area="' + k + '" aria-pressed="' + (state.area === k) + '">' + esc(L(D.areas[k])) + '</button>'; }).join('');
-    var coPills = '<button type="button" class="pill" data-co="all" aria-pressed="' + (state.co === 'all') + '">' + L(T.all) + '</button>' +
-      Object.keys(D.companies).map(function (k) { return '<button type="button" class="pill" data-co="' + k + '" aria-pressed="' + (state.co === k) + '">' + esc(L(D.companies[k])) + '</button>'; }).join('');
+    var allOn = state.area === 'all' && state.co === 'all';
+    var pills = '<button type="button" class="pill" data-all aria-pressed="' + allOn + '">' + L(T.all) + '</button>' +
+      Object.keys(D.areas).map(function (k) { return '<button type="button" class="pill pa" data-area="' + k + '" aria-pressed="' + (state.area === k) + '">' + esc(L(D.areas[k])) + '</button>'; }).join('') +
+      Object.keys(D.companies).map(function (k) { return '<button type="button" class="pill pc" data-co="' + k + '" aria-pressed="' + (state.co === k) + '">' + esc(L(D.companies[k])) + '</button>'; }).join('');
     h += '<section id="portfolio" class="block last"><div class="wrap"><div class="port-head"><div class="head"><p class="eyebrow">' + L(T.s3)[0] + '</p><h2>' + L(T.s3)[1] + '</h2></div>' +
       '<p class="count" aria-live="polite">' + vis.length + L(T.count) + '</p></div>' +
-      '<div class="filters"><div class="frow" role="group" aria-label="' + L(T.byArea) + '"><span class="lbl">' + L(T.byArea) + '</span>' + areaPills + '</div>' +
-      '<div class="frow" role="group" aria-label="' + L(T.byCo) + '"><span class="lbl">' + L(T.byCo) + '</span>' + coPills + '</div></div>' +
+      '<div class="filters"><div class="frow" role="group" aria-label="' + L(T.filter) + '">' + pills + '</div>' +
+      '<p class="fkey"><span class="k-a"></span>' + L(T.byArea) + '<span class="k-c"></span>' + L(T.byCo) + '</p></div>' +
       casesBlock(vis) + '</div></section>';
     h += footer();
     h += modal();
@@ -214,9 +214,10 @@
   app.addEventListener('click', function (e) {
     if (state.modal != null) { if (e.target.closest('[data-close]') || e.target.hasAttribute('data-overlay')) closeModal(); return; }
     var m = e.target.closest('[data-modal]'); if (m) { openModal(+m.getAttribute('data-modal')); return; }
-    var b = e.target.closest('[data-lang],[data-area],[data-co],[data-view],[data-open],[data-back]');
+    var b = e.target.closest('[data-lang],[data-all],[data-area],[data-co],[data-view],[data-open],[data-back]');
     if (!b) return;
     if (b.hasAttribute('data-lang')) { state.lang = b.getAttribute('data-lang'); store.set('lang', state.lang); render(false); }
+    else if (b.hasAttribute('data-all')) { state.area = 'all'; state.co = 'all'; render(false); }
     else if (b.hasAttribute('data-area')) { state.area = b.getAttribute('data-area'); state.co = 'all'; render(false); }
     else if (b.hasAttribute('data-co')) { state.co = b.getAttribute('data-co'); state.area = 'all'; render(false); }
     else if (b.hasAttribute('data-view')) { var v = b.getAttribute('data-view').split('|'); state[v[0]] = v[1]; render(false); }

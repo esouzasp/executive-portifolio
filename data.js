@@ -42,13 +42,13 @@ window.PORTFOLIO = {
     ],
     stack: [
       { t: ["Data Platforms & Engineering", "Plataformas e Engenharia de Dados"],
-        i: ["Databricks", "SAP Datasphere", "Azure Synapse", "Snowflake", "SAP HANA", "PySpark", "SparkSQL", "T-SQL", "Pentaho", "Talend", "Apache NiFi", "Hadoop / Hive", "CDC", "Oracle", "PostgreSQL", "SQL Server", "MongoDB / NoSQL"] },
+        i: ["Databricks", "SAP Datasphere", "Azure Synapse", "Snowflake", "SAP HANA", "PySpark", "SparkSQL", "SQL", "T-SQL", "Pentaho", "Talend", "Apache NiFi", "Hadoop / Hive", "CDC", "Oracle", "PostgreSQL", "MySQL", "SQL Server", "MongoDB / NoSQL"] },
       { t: ["Planning, Optimization & Enterprise Systems", "Planejamento, Otimização e Sistemas"],
-        i: ["SAP ECC / S/4", "o9 (IBP)", "Infor APS", "VTEX", "TMS / WMS", "Pyomo", "OR-Tools", "Gurobi", "CPLEX", "HiGHS", "CBC", "SCIP", "AIMMS"] },
+        i: ["SAP ECC / S/4", "o9 (IBP)", "Infor APS", "VTEX", "Cello TMS", "GKO", "TMS / WMS", "Pyomo", "OR-Tools", "Gurobi", "CPLEX", "HiGHS", "CBC", "SCIP", "AIMMS"] },
       { t: ["AI, ML & Forecasting", "IA, ML e Forecasting"],
-        i: ["Python", "LLM Agents", "Databricks Genie", "Computer Vision", "Prophet", "Darts", "sktime", "statsmodels", "Orbit", "scikit-learn"] },
+        i: ["Python", "LLM Agents", "Databricks Genie", "Computer Vision", "Prophet", "Darts", "sktime", "statsmodels", "Orbit", "scikit-learn (GLM)"] },
       { t: ["Analytics, Ops & Architecture", "Analytics, Operação e Arquitetura"],
-        i: ["Power BI", "Tableau", "Excel / VBA", "ElasticSearch", "Apache Ambari", "Kylo", "RPA", "REST APIs", "Event-Driven", "VPC", "IAM / OAuth", "Low-code"] }
+        i: ["Power BI", "Tableau", "Excel / VBA", "ElasticSearch", "Apache Ambari", "Kylo", "RPA", "FTP / SFTP", "REST APIs", "Event-Driven", "VPC", "IAM / OAuth", "Low-code"] }
     ],
     solutions: [
       [{ en: "Data & AI Platforms", pt: "Plataformas de Dados e IA" }, ["AI Agents", "Conversational Analytics", "Forecasting Platforms", "Lakehouse Architecture", "Data Integration & CDC", "BI Modernization"], ["Agentes de IA", "Analytics Conversacional", "Plataformas de Forecast", "Arquitetura Lakehouse", "Integração de Dados e CDC", "Modernização de BI"]],
@@ -443,7 +443,7 @@ window.PORTFOLIO = {
         r: ["Usuários desenvolvendo em Databricks com mais governança", "Caminho aberto para produtizar soluções criadas pelos usuários"],
         tg: ["Databricks", "Adoção", "Data Literacy"] } },
 
-    { a: "ai", co: "rch", org: "Riachuelo", y: "", featured: 8,
+    { a: "ai", co: "rch", org: "Riachuelo", y: "", featured: 8, hidden: true,
       en: { t: "AI Domain Agents for Retail Operations", m: "", ml: "",
         s: "Led design and implementation of AI agents with business context for the replenishment, stores and supply chain domains.",
         cx: "Replenishment, store and supply chain teams need fast answers grounded in their own data and business rules.",
