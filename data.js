@@ -1,5 +1,5 @@
 // Portfolio content — edit here. Each case has an English (en) and Portuguese (pt) version.
-// area: ai | sc | mo | dp | go    co: company filter key
+// area: ai | sc | mo | dp | go    co: company filter key    hidden: true = kept here but not shown on the page
 window.PORTFOLIO = {
   areas: {
     ai: { en: "AI & Decision Intelligence", pt: "IA e Inteligência de Decisão" },
@@ -31,7 +31,7 @@ window.PORTFOLIO = {
         r: ["Redução de 75% no lead time de novas integrações", "Menor dependência de ABAP: 600K no piloto, com potencial de redução de 2M", "Padrão reutilizável e escalável para novos domínios"],
         tg: ["Data Lake", "Engenharia de Dados", "Redução de Custos"] } },
 
-    { a: "mo", co: "rch", org: "Riachuelo", y: "",
+    { a: "mo", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Cutting Waste Optimization", m: "7M/yr", ml: "waste reduction business case",
         s: "Reviewed the fabric-cutting optimization model behind commercial orders and built the business case for large-scale waste reduction.",
         cx: "Commercial orders flow into manufacturing, where cutting plans determine fabric consumption.",
@@ -47,7 +47,7 @@ window.PORTFOLIO = {
         r: ["Business case de 7M por ano em redução de desperdício", "Oportunidades de pré-processamento mapeadas para o solver"],
         tg: ["Otimização", "Modelos Discretos", "Manufatura"] } },
 
-    { a: "ai", co: "rch", org: "Riachuelo", y: "",
+    { a: "ai", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Launch Calendar Automation with AI", m: "9,000+", ml: "follow-up tasks automated",
         s: "Designed the automation of product launch calendars, replacing manual follow-up with project management and RPA.",
         cx: "Product launches are coordinated through calendars involving many teams and deadlines.",
@@ -95,7 +95,7 @@ window.PORTFOLIO = {
         r: ["Plano para escalar a solução com engenharia de dados", "Decisão clara de trade-off sobre o que processar e onde"],
         tg: ["Visão Computacional", "IA", "Pipeline de Dados"] } },
 
-    { a: "dp", co: "rch", org: "Riachuelo", y: "",
+    { a: "dp", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "PLM Data Ingestion Architecture", m: "", ml: "",
         s: "Simplified the architecture between PLM and Databricks, enabling direct integration and reducing development dependency.",
         cx: "Product lifecycle (PLM) data feeds product, sourcing and supply chain analytics.",
@@ -367,7 +367,7 @@ window.PORTFOLIO = {
         r: ["Ferramenta visual e estatística para levar o planejamento a outro nível", "Forecast best-fit com cerca de 300 modelos"],
         tg: ["SaaS", "Azure", "Forecasting"] } },
 
-    { a: "sc", co: "pln", org: "Planus Tech · Casa Flora", y: "",
+    { a: "sc", co: "pln", org: "Planus Tech", y: "",
       en: { t: "Container Formation Optimization", m: "4 days → 30 min", ml: "container planning",
         s: "Optimization tool that cut container formation for order taking from 4 days to 30 minutes.",
         cx: "Order taking requires grouping items into containers.",
@@ -383,7 +383,7 @@ window.PORTFOLIO = {
         r: ["Ferramenta entregue para planejar containers", "Processo reduzido para 30 minutos"],
         tg: ["Otimização", "Solver", "Logística"] } },
 
-    { a: "ai", co: "pln", org: "Planus Tech · Ourofino", y: "",
+    { a: "ai", co: "pln", org: "Planus Tech", y: "",
       en: { t: "Demand Correlation with Exogenous Data", m: "Lag 6", ml: "correlation, Asian suppliers",
         s: "Explained demand peaks with exogenous factors, finding strong lagged correlation with Asian supplier market data.",
         cx: "Demand peaks affected inventory and service levels.",
@@ -399,7 +399,7 @@ window.PORTFOLIO = {
         r: ["Alta correlação com defasagem 6 para fornecedores asiáticos", "Sinais exógenos disponíveis para melhorar o forecast"],
         tg: ["Forecasting", "Dados Exógenos", "Analytics"] } },
 
-    { a: "mo", co: "pln", org: "Planus Tech · Nitro", y: "",
+    { a: "mo", co: "pln", org: "Planus Tech", y: "",
       en: { t: "MPS Optimization Solver", m: "", ml: "",
         s: "Replaced manual master production scheduling with a linear optimization model feeding S&OP.",
         cx: "The master production schedule balances demand, capacity and inventory.",
@@ -415,7 +415,7 @@ window.PORTFOLIO = {
         r: ["Processo otimizado com solver linear", "Plano de produção entregue para o S&OP"],
         tg: ["MPS", "Otimização", "S&OP"] } },
 
-    { a: "ai", co: "pln", org: "Planus Tech · Oggi", y: "",
+    { a: "ai", co: "pln", org: "Planus Tech", y: "",
       en: { t: "Weather-Driven Forecast", m: "+30 pp", ml: "accuracy, 7-day daily forecast",
         s: "Weather-driven daily forecasting for an ice cream company, improving accuracy by up to 30 percentage points.",
         cx: "Ice cream demand is highly sensitive to weather.",
@@ -447,20 +447,20 @@ window.PORTFOLIO = {
         r: ["5 clientes fechados em 6 meses", "Custos operacionais sustentados"],
         tg: ["Go-to-Market", "Vendas", "SaaS"] } },
 
-    { a: "dp", co: "pln", org: "Planus Tech · Coca-Cola", y: "",
+    { a: "dp", co: "pln", org: "Planus Tech", y: "",
       en: { t: "Long-Range Planning Productization", m: "", ml: "",
-        s: "Turned a long-range planning tool built in Excel and Power BI into a PySpark product on Coca-Cola's Synapse.",
+        s: "Turned a long-range planning tool built in Excel and Power BI into a PySpark data product on Azure Synapse.",
         cx: "Long-range planning (LRP) supports capacity and investment decisions for bottlers.",
         ch: "The LRP tool built in Excel + Power BI needed to become a product.",
         ap: "Led the architecture and built the pipeline in PySpark.",
-        r: ["Tool built in the Coca-Cola Synapse environment", "LatAm bottler ready to scale the solution globally"],
+        r: ["Tool running in the client's Azure Synapse environment", "LatAm bottler ready to scale the solution globally"],
         tg: ["PySpark", "Synapse", "LRP"] },
       pt: { t: "Produtização do Planejamento de Longo Prazo", m: "", ml: "",
-        s: "Transformação de uma ferramenta de planejamento de longo prazo em Excel e Power BI em um produto PySpark no Synapse da Coca-Cola.",
+        s: "Transformação de uma ferramenta de planejamento de longo prazo em Excel e Power BI em um produto de dados PySpark no Azure Synapse.",
         cx: "O planejamento de longo prazo (LRP) apoia decisões de capacidade e investimento dos engarrafadores.",
         ch: "A ferramenta de LRP em Excel + Power BI precisava virar produto.",
         ap: "Liderança da arquitetura e construção do pipeline em PySpark.",
-        r: ["Ferramenta construída no ambiente Synapse da Coca-Cola", "Engarrafador da América Latina pronto para escalar globalmente"],
+        r: ["Ferramenta rodando no ambiente Azure Synapse do cliente", "Engarrafador da América Latina pronto para escalar globalmente"],
         tg: ["PySpark", "Synapse", "LRP"] } },
 
     { a: "sc", co: "pln", org: "Planus Tech", y: "",

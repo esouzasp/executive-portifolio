@@ -53,14 +53,14 @@
   function idx() { return state.lang === 'pt' ? 1 : 0; }
   function visible() {
     return D.cases.map(function (c, i) { return { c: c, i: i }; }).filter(function (x) {
-      return (state.area === 'all' || x.c.a === state.area) && (state.co === 'all' || x.c.co === state.co);
+      return !x.c.hidden && (state.area === 'all' || x.c.a === state.area) && (state.co === 'all' || x.c.co === state.co);
     });
   }
-  function caseFromHash() { var m = /^#case-(\d+)$/.exec(location.hash); if (!m) return null; var n = +m[1]; return D.cases[n] ? n : null; }
+  function caseFromHash() { var m = /^#case-(\d+)$/.exec(location.hash); if (!m) return null; var n = +m[1]; return D.cases[n] && !D.cases[n].hidden ? n : null; }
 
   function header(home) {
     var n = L(T.nav), base = home ? '' : '#';
-    return '<header class="top"><div class="wrap bar"><a class="logo" href="#top">ETS<span>.</span></a>' +
+    return '<header class="top"><div class="wrap bar">' +
       (home ? '<nav class="nav" aria-label="Main"><a href="#overview">' + n[0] + '</a><a href="#solutions">' + n[1] + '</a><a href="#portfolio">' + n[2] + '</a><a href="#contact">' + n[3] + '</a></nav>'
             : '<a class="backlink" href="#portfolio" data-back>← ' + L(T.back) + '</a>') + '</div></header>';
   }
@@ -101,11 +101,11 @@
       '<div class="frow" role="group" aria-label="' + L(T.byCo) + '"><span class="lbl">' + L(T.byCo) + '</span>' + coPills + '</div></div>' +
       '<div class="cases">' + vis.map(function (x) {
         var c = x.c, t = c[state.lang];
-        return '<button type="button" class="case" data-open="' + x.i + '" aria-label="' + esc(L(T.open) + ': ' + t.t) + '">' +
+        return '<article class="case">' +
           '<span class="meta"><span class="area">' + esc(L(D.areas[c.a])) + '</span><span class="org">' + esc(c.org) + (c.y ? ' · ' + c.y : '') + '</span></span>' +
           '<h3>' + esc(t.t) + '</h3><p>' + esc(t.s) + '</p><span class="foot">' +
           (t.m ? '<span class="metric"><strong>' + esc(t.m) + '</strong><span>' + esc(t.ml) + '</span></span>' : '<span></span>') +
-          '<span class="tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</span></span></button>';
+          '<span class="tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</span></span></article>';
       }).join('') + '</div></div></section>';
     h += footer();
     return h;
