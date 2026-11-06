@@ -2,13 +2,13 @@
   var D = window.PORTFOLIO;
   var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
                 set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
-  var state = { lang: store.get('lang') || 'en', area: 'all', co: 'all', vf: 'cards', vm: 'list' };
+  var state = { modal: null, lang: store.get('lang') || 'en', area: 'all', co: 'all', vf: 'cards', vm: 'list' };
 
   var FLAG_BR = '<svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" fill="#009C3B"/><path d="M10 1.6 18.2 7 10 12.4 1.8 7Z" fill="#FFDF00"/><circle cx="10" cy="7" r="3.2" fill="#002776"/><path d="M6.9 6.4c2-.5 4.4-.2 6.1.9" stroke="#fff" stroke-width=".6" fill="none"/></svg>';
   var FLAG_US = '<svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" fill="#fff"/><g fill="#B22234"><rect y="0" width="20" height="1.08"/><rect y="2.15" width="20" height="1.08"/><rect y="4.3" width="20" height="1.08"/><rect y="6.46" width="20" height="1.08"/><rect y="8.62" width="20" height="1.08"/><rect y="10.77" width="20" height="1.08"/><rect y="12.92" width="20" height="1.08"/></g><rect width="8.6" height="7.54" fill="#3C3B6E"/><g fill="#fff"><circle cx="1.6" cy="1.4" r=".45"/><circle cx="4.3" cy="1.4" r=".45"/><circle cx="7" cy="1.4" r=".45"/><circle cx="2.95" cy="2.9" r=".45"/><circle cx="5.65" cy="2.9" r=".45"/><circle cx="1.6" cy="4.4" r=".45"/><circle cx="4.3" cy="4.4" r=".45"/><circle cx="7" cy="4.4" r=".45"/><circle cx="2.95" cy="5.9" r=".45"/><circle cx="5.65" cy="5.9" r=".45"/></g></svg>';
 
   var T = {
-    nav: { en: ['Overview', 'Solutions', 'Portfolio', 'Contact'], pt: ['Visão geral', 'Soluções', 'Portfólio', 'Contato'] },
+    nav: { en: ['Overview', 'Solutions', 'Tech Stack', 'Portfolio', 'Contact'], pt: ['Visão geral', 'Soluções', 'Tecnologias', 'Portfólio', 'Contato'] },
     eyebrow: { en: 'Executive Transformation Portfolio', pt: 'Portfólio Executivo de Transformação' },
     summary: {
       en: 'Senior transformation leader with 20+ years of experience connecting business strategy, operations, data and technology across retail, manufacturing, logistics and supply chain environments. This portfolio presents selected programs in AI, analytics, enterprise platforms, planning, optimization and governance, delivering measurable operational and business outcomes at scale.',
@@ -20,11 +20,13 @@
     domains: { en: 'Functional domains', pt: 'Domínios funcionais' },
     legend: { en: 'Depth of expertise — three bars = core specialty', pt: 'Profundidade de expertise — três barras = especialidade principal' },
     s2: { en: ['02 — Representative Solutions', 'What I have built and led'], pt: ['02 — Soluções Representativas', 'O que construí e liderei'] },
-    s3: { en: ['03 — Portfolio Projects', 'Selected cases'], pt: ['03 — Projetos do Portfólio', 'Cases selecionados'] },
+    s3: { en: ['04 — Portfolio Projects', 'Selected cases'], pt: ['04 — Projetos do Portfólio', 'Cases selecionados'] },
+    sT: { en: ['03 — Tech Stack', 'Technologies I work with'], pt: ['03 — Tecnologias', 'Tecnologias com que trabalho'] },
     all: { en: 'All', pt: 'Todos' }, byArea: { en: 'Area', pt: 'Área' }, byCo: { en: 'Company', pt: 'Empresa' },
     count: { en: ' cases', pt: ' cases' }, featured: { en: 'Featured Cases', pt: 'Cases em destaque' }, more: { en: 'More Cases', pt: 'Mais cases' }, view: { en: 'View', pt: 'Visualização' }, cards: { en: 'Cards', pt: 'Caixas' }, list: { en: 'List', pt: 'Lista' },
     cols: { en: ['Case', 'Area', 'Company', 'Result', 'Tags'], pt: ['Case', 'Área', 'Empresa', 'Resultado', 'Tags'] },
-    star: { en: ['Situation', 'Task', 'Action', 'Result'], pt: ['Situação', 'Tarefa', 'Ação', 'Resultado'] }, open: { en: 'View case', pt: 'Ver case' },
+    star: { en: ['Situation', 'Task', 'Action', 'Result'], pt: ['Situação', 'Tarefa', 'Ação', 'Resultado'] },
+    close: { en: 'Close', pt: 'Fechar' }, open: { en: 'View case', pt: 'Ver case' },
     back: { en: 'Back to portfolio', pt: 'Voltar ao portfólio' },
     k: { en: ['Company / Client', 'Year', 'Area'], pt: ['Empresa / Cliente', 'Ano', 'Área'] },
     cxa: { en: ['Context', 'Challenge', 'Approach'], pt: ['Contexto', 'Desafio', 'Abordagem'] },
@@ -48,19 +50,32 @@
 
   var STAR = '<svg class="star" width="12" height="12" viewBox="0 0 24 24" role="img" aria-label="Featured"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" fill="currentColor"/></svg>';
   function tip(c) {
-    var t = c[state.lang], k = L(T.star);
-    return '<div class="tip" role="tooltip"><p class="tip-sum">' + esc(t.s) + '</p><dl>' +
-      '<dt>' + k[0] + '</dt><dd>' + esc(t.cx) + '</dd><dt>' + k[1] + '</dt><dd>' + esc(t.ch) + '</dd>' +
+    var t = c[state.lang];
+    return '<div class="tip" role="tooltip"><p class="tip-sum">' + esc(t.s) + '</p>' + starBlock(t) + '</div>';
+  }
+  function starBlock(t) {
+    var k = L(T.star);
+    return '<dl class="star-dl"><dt>' + k[0] + '</dt><dd>' + esc(t.cx) + '</dd><dt>' + k[1] + '</dt><dd>' + esc(t.ch) + '</dd>' +
       '<dt>' + k[2] + '</dt><dd>' + esc(t.ap) + '</dd><dt>' + k[3] + '</dt><dd><ul>' +
-      t.r.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></dd></dl></div>';
+      t.r.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></dd></dl>';
+  }
+  function modal() {
+    if (state.modal == null || !D.cases[state.modal]) return '';
+    var c = D.cases[state.modal], t = c[state.lang];
+    return '<div class="overlay" data-overlay><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">' +
+      '<button type="button" class="modal-close" data-close aria-label="' + L(T.close) + '"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+      '<p class="modal-meta">' + (c.featured ? STAR : '') + '<span class="area">' + esc(L(D.areas[c.a])) + '</span> | ' + esc(O(c)) + (c.y ? ' · ' + esc(c.y) : '') + '</p>' +
+      '<h2 id="modal-title">' + esc(t.t) + '</h2><p class="modal-sum">' + esc(t.s) + '</p>' +
+      (t.m ? '<p class="modal-metric"><strong>' + esc(t.m) + '</strong>' + esc(t.ml) + '</p>' : '') +
+      starBlock(t) + '<p class="tags modal-tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p></div></div>';
   }
   function card(x) {
     var c = x.c, t = c[state.lang];
-    return '<article class="case hv" tabindex="0">' +
+    return '<article class="case hv" tabindex="0" role="button" aria-haspopup="dialog" data-modal="' + x.i + '">' +
       '<p class="meta">' + (c.featured ? STAR : '') + '<span class="area">' + esc(L(D.areas[c.a])) + '</span> | ' + esc(O(c)) + '</p>' +
       '<h3>' + esc(t.t) + '</h3><p class="sum">' + esc(t.s) + '</p>' +
       '<p class="res">' + (t.m ? '<strong>' + esc(t.m) + '</strong> ' + esc(t.ml) : esc(t.r[0])) + '</p>' +
-      '<p class="tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p>' + tip(c) + '</article>';
+      '<p class="tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p></article>';
   }
   var ICON_CARDS = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>';
   var ICON_LIST = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>';
@@ -95,7 +110,7 @@
   function header(home) {
     var n = L(T.nav), base = home ? '' : '#';
     return '<header class="top"><div class="wrap bar">' +
-      (home ? '<nav class="nav" aria-label="Main"><a href="#overview">' + n[0] + '</a><a href="#solutions">' + n[1] + '</a><a href="#portfolio">' + n[2] + '</a><a href="#contact">' + n[3] + '</a></nav>'
+      (home ? '<nav class="nav" aria-label="Main"><a href="#overview">' + n[0] + '</a><a href="#solutions">' + n[1] + '</a><a href="#stack">' + n[2] + '</a><a href="#portfolio">' + n[3] + '</a><a href="#contact">' + n[4] + '</a></nav>'
             : '<a class="backlink" href="#portfolio" data-back>← ' + L(T.back) + '</a>') + '</div></header>';
   }
   function masthead(home, eyebrow, title, width) {
@@ -125,9 +140,12 @@
     h += '</div><p class="legend"><span class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i></span>' + L(T.legend) + '</p></div></section>';
 
     h += '<section id="solutions" class="block"><div class="wrap"><div class="head"><p class="eyebrow">' + L(T.s2)[0] + '</p><h2>' + L(T.s2)[1] + '</h2></div><div class="grid5">' +
-      SOLUTIONS.map(function (s) { return '<div class="sol"><h3>' + esc(L(D.areas[s[0]])) + '</h3><div class="chips">' + s[1 + i].map(function (x) { return '<span class="chip">' + esc(x) + '</span>'; }).join('') + '</div></div>'; }).join('') +
+      SOLUTIONS.map(function (s) { return '<div class="sol"><h3>' + esc(L(typeof s[0] === 'string' ? D.areas[s[0]] : s[0])) + '</h3><div class="chips">' + s[1 + i].map(function (x) { return '<span class="chip">' + esc(x) + '</span>'; }).join('') + '</div></div>'; }).join('') +
       '</div></div></section>';
 
+    h += '<section id="stack" class="block"><div class="wrap"><div class="head"><p class="eyebrow">' + L(T.sT)[0] + '</p><h2>' + L(T.sT)[1] + '</h2></div><div class="pillars">' +
+      D.overview.stack.map(function (g) { return '<div class="pillar"><h3>' + esc(g.t[i]) + '</h3><p>' + g.i.map(esc).join(' · ') + '</p></div>'; }).join('') +
+      '</div></div></section>';
     var vis = visible();
     var areaPills = '<button type="button" class="pill" data-area="all" aria-pressed="' + (state.area === 'all') + '">' + L(T.all) + '</button>' +
       Object.keys(D.areas).map(function (k) { return '<button type="button" class="pill" data-area="' + k + '" aria-pressed="' + (state.area === k) + '">' + esc(L(D.areas[k])) + '</button>'; }).join('');
@@ -139,6 +157,7 @@
       '<div class="frow" role="group" aria-label="' + L(T.byCo) + '"><span class="lbl">' + L(T.byCo) + '</span>' + coPills + '</div></div>' +
       casesBlock(vis) + '</div></section>';
     h += footer();
+    h += modal();
     return h;
   }
 
@@ -185,7 +204,16 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
 
+  function openModal(n) { state.modal = n; render(false); document.body.style.overflow = 'hidden'; var x = app.querySelector('.modal-close'); if (x) x.focus(); }
+  function closeModal() { var n = state.modal; state.modal = null; document.body.style.overflow = ''; render(false); var el = app.querySelector('[data-modal="' + n + '"]'); if (el) el.focus(); }
+  document.addEventListener('keydown', function (e) {
+    if (state.modal != null && e.key === 'Escape') { closeModal(); return; }
+    var c = e.target.closest && e.target.closest('[data-modal]');
+    if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openModal(+c.getAttribute('data-modal')); }
+  });
   app.addEventListener('click', function (e) {
+    if (state.modal != null) { if (e.target.closest('[data-close]') || e.target.hasAttribute('data-overlay')) closeModal(); return; }
+    var m = e.target.closest('[data-modal]'); if (m) { openModal(+m.getAttribute('data-modal')); return; }
     var b = e.target.closest('[data-lang],[data-area],[data-co],[data-view],[data-open],[data-back]');
     if (!b) return;
     if (b.hasAttribute('data-lang')) { state.lang = b.getAttribute('data-lang'); store.set('lang', state.lang); render(false); }

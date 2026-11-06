@@ -1,5 +1,6 @@
 // Portfolio content — edit here. Each case has an English (en) and Portuguese (pt) version.
-// overview: domains / value blocks / solutions shown in sections 01 and 02
+// solutions: first item is an area key or a { en, pt } title
+// overview: domains / value blocks / tech stack / solutions shown in sections 01–03
 // org: text, or { en, pt } when it differs by language
 // featured: 1..n = shown in Featured Cases (in this order) when no filter is applied
 // area: ai | sc | mo | dp | go    co: company filter key    hidden: true = kept here but not shown on the page
@@ -39,12 +40,21 @@ window.PORTFOLIO = {
         en: ["Technical Consulting", "Analytics Modernization", "Data Platforms", "Operating Models", "Strategy & Governance", "Enterprise Architecture", "SAP Modernization", "AI & Automation"],
         pt: ["Consultoria Técnica", "Modernização de Analytics", "Plataformas de Dados", "Modelos Operacionais", "Estratégia e Governança", "Arquitetura Corporativa", "Modernização SAP", "IA e Automação"] }
     ],
+    stack: [
+      { t: ["Data Platforms & Engineering", "Plataformas e Engenharia de Dados"],
+        i: ["Databricks", "SAP Datasphere", "Azure Synapse", "Snowflake", "SAP HANA", "PySpark", "SparkSQL", "T-SQL", "Pentaho", "Talend", "Apache NiFi", "Hadoop / Hive", "CDC", "Oracle", "PostgreSQL", "SQL Server", "MongoDB / NoSQL"] },
+      { t: ["Planning, Optimization & Enterprise Systems", "Planejamento, Otimização e Sistemas"],
+        i: ["SAP ECC / S/4", "o9 (IBP)", "Infor APS", "VTEX", "TMS / WMS", "Pyomo", "OR-Tools", "Gurobi", "CPLEX", "HiGHS", "CBC", "SCIP", "AIMMS"] },
+      { t: ["AI, ML & Forecasting", "IA, ML e Forecasting"],
+        i: ["Python", "LLM Agents", "Databricks Genie", "Computer Vision", "Prophet", "Darts", "sktime", "statsmodels", "Orbit", "scikit-learn"] },
+      { t: ["Analytics, Ops & Architecture", "Analytics, Operação e Arquitetura"],
+        i: ["Power BI", "Tableau", "Excel / VBA", "ElasticSearch", "Apache Ambari", "Kylo", "RPA", "REST APIs", "Event-Driven", "VPC", "IAM / OAuth", "Low-code"] }
+    ],
     solutions: [
-      ["ai", ["Databricks Genie", "AI Agents", "Conversational Analytics", "Forecasting Platforms"], ["Databricks Genie", "Agentes de IA", "Analytics Conversacional", "Plataformas de Forecast"]],
+      [{ en: "Data & AI Platforms", pt: "Plataformas de Dados e IA" }, ["AI Agents", "Conversational Analytics", "Forecasting Platforms", "Lakehouse Architecture", "Data Integration & CDC", "BI Modernization"], ["Agentes de IA", "Analytics Conversacional", "Plataformas de Forecast", "Arquitetura Lakehouse", "Integração de Dados e CDC", "Modernização de BI"]],
       ["sc", ["Demand Collaboration", "Manufacturing Planning", "Order Sequencing", "Inventory Optimization"], ["Colaboração de Demanda", "Planejamento de Manufatura", "Sequenciamento de Pedidos", "Otimização de Estoque"]],
       ["mo", ["Margin Engine", "Capacity Planning", "Make vs Buy", "Production Analytics"], ["Motor de Margem", "Planejamento de Capacidade", "Make vs Buy", "Analytics de Produção"]],
       ["ec", ["Marketplace Data Hub", "Order Management Integration", "Last-Mile Analytics", "Order Tracking Portal"], ["Hub de Dados de Marketplaces", "Integração de Gestão de Pedidos", "Analytics de Última Milha", "Portal de Rastreamento de Pedidos"]],
-      ["dp", ["SAP Datasphere", "Databricks", "Lakehouse", "Power BI Modernization"], ["SAP Datasphere", "Databricks", "Lakehouse", "Modernização Power BI"]],
       ["go", ["Analytics Governance", "Portfolio Management", "Delivery Frameworks", "Data Governance"], ["Governança de Analytics", "Gestão de Portfólio", "Frameworks de Entrega", "Governança de Dados"]]
     ]
   },
