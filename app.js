@@ -2,7 +2,7 @@
   var D = window.PORTFOLIO;
   var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
                 set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
-  var state = { lang: store.get('lang') || 'en', area: 'all', co: 'all' };
+  var state = { lang: store.get('lang') || 'en', area: 'all', co: 'all', vf: 'cards', vm: 'list' };
 
   var FLAG_BR = '<svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" fill="#009C3B"/><path d="M10 1.6 18.2 7 10 12.4 1.8 7Z" fill="#FFDF00"/><circle cx="10" cy="7" r="3.2" fill="#002776"/><path d="M6.9 6.4c2-.5 4.4-.2 6.1.9" stroke="#fff" stroke-width=".6" fill="none"/></svg>';
   var FLAG_US = '<svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" fill="#fff"/><g fill="#B22234"><rect y="0" width="20" height="1.08"/><rect y="2.15" width="20" height="1.08"/><rect y="4.3" width="20" height="1.08"/><rect y="6.46" width="20" height="1.08"/><rect y="8.62" width="20" height="1.08"/><rect y="10.77" width="20" height="1.08"/><rect y="12.92" width="20" height="1.08"/></g><rect width="8.6" height="7.54" fill="#3C3B6E"/><g fill="#fff"><circle cx="1.6" cy="1.4" r=".45"/><circle cx="4.3" cy="1.4" r=".45"/><circle cx="7" cy="1.4" r=".45"/><circle cx="2.95" cy="2.9" r=".45"/><circle cx="5.65" cy="2.9" r=".45"/><circle cx="1.6" cy="4.4" r=".45"/><circle cx="4.3" cy="4.4" r=".45"/><circle cx="7" cy="4.4" r=".45"/><circle cx="2.95" cy="5.9" r=".45"/><circle cx="5.65" cy="5.9" r=".45"/></g></svg>';
@@ -22,7 +22,8 @@
     s2: { en: ['02 — Representative Solutions', 'What I have built and led'], pt: ['02 — Soluções Representativas', 'O que construí e liderei'] },
     s3: { en: ['03 — Portfolio Projects', 'Selected cases'], pt: ['03 — Projetos do Portfólio', 'Cases selecionados'] },
     all: { en: 'All', pt: 'Todos' }, byArea: { en: 'Area', pt: 'Área' }, byCo: { en: 'Company', pt: 'Empresa' },
-    count: { en: ' cases', pt: ' cases' }, featured: { en: 'Featured Cases', pt: 'Cases em destaque' }, more: { en: 'More Cases', pt: 'Mais cases' }, open: { en: 'View case', pt: 'Ver case' },
+    count: { en: ' cases', pt: ' cases' }, featured: { en: 'Featured Cases', pt: 'Cases em destaque' }, more: { en: 'More Cases', pt: 'Mais cases' }, view: { en: 'View', pt: 'Visualização' }, cards: { en: 'Cards', pt: 'Caixas' }, list: { en: 'List', pt: 'Lista' },
+    cols: { en: ['Case', 'Area', 'Company', 'Result', 'Tags'], pt: ['Case', 'Área', 'Empresa', 'Resultado', 'Tags'] }, open: { en: 'View case', pt: 'Ver case' },
     back: { en: 'Back to portfolio', pt: 'Voltar ao portfólio' },
     k: { en: ['Company / Client', 'Year', 'Area'], pt: ['Empresa / Cliente', 'Ano', 'Área'] },
     cxa: { en: ['Context', 'Challenge', 'Approach'], pt: ['Contexto', 'Desafio', 'Abordagem'] },
@@ -31,22 +32,7 @@
     foot: { en: ["Let's talk transformation.", 'São Paulo, Brazil · Open to conversations on data, AI and supply chain leadership.'],
             pt: ['Vamos conversar sobre transformação.', 'São Paulo, Brasil · Aberto a conversas sobre liderança em dados, IA e supply chain.'] }
   };
-  var DOMAINS = [['Supply Chain', 'Supply Chain', 3], ['Data Analytics & AI', 'Analytics de Dados e IA', 3], ['Data Science', 'Ciência de Dados', 3],
-    ['Logistics', 'Logística', 2], ['Ecommerce', 'E-commerce', 2], ['Data Engineering', 'Engenharia de Dados', 2], ['Manufacturing', 'Manufatura', 2],
-    ['Commercial', 'Comercial', 1], ['Procurement', 'Compras', 1]];
-  var GROUPS = [
-    { t: ['Industries', 'Indústrias'], en: ['Retail', 'Industrial', 'Consumer Goods', 'Electronics', 'Agribusiness', 'Oil & Gas', 'Logistics', 'Financial Services'], pt: ['Varejo', 'Industrial', 'Bens de Consumo', 'Eletrônicos', 'Agronegócio', 'Óleo e Gás', 'Logística', 'Serviços Financeiros'] },
-    { t: ['Capabilities', 'Competências'], en: ['Planning & Forecasting', 'Optimization & OR', 'Data & Analytics', 'AI & Decision Intelligence', 'Enterprise Platforms', 'Governance & Delivery'], pt: ['Planejamento e Forecasting', 'Otimização e Pesquisa Operacional', 'Dados e Analytics', 'IA e Inteligência de Decisão', 'Plataformas Corporativas', 'Governança e Entrega'] },
-    { t: ['Leadership', 'Liderança'], en: ['Program Management', 'Portfolio Management', 'Product Management', 'Stakeholder Management', 'Vendor Management'], pt: ['Gestão de Programas', 'Gestão de Portfólio', 'Gestão de Produto', 'Gestão de Stakeholders', 'Gestão de Fornecedores'] },
-    { t: ['Transformation', 'Transformação'], en: ['Analytics Modernization', 'Data Platforms', 'Operating Models', 'Strategy & Governance', 'Enterprise Architecture', 'SAP Modernization', 'AI & Automation'], pt: ['Modernização de Analytics', 'Plataformas de Dados', 'Modelos Operacionais', 'Estratégia e Governança', 'Arquitetura Corporativa', 'Modernização SAP', 'IA e Automação'] }
-  ];
-  var SOLUTIONS = [
-    ['ai', ['Databricks Genie', 'AI Agents', 'Conversational Analytics', 'Forecasting Platforms'], ['Databricks Genie', 'Agentes de IA', 'Analytics Conversacional', 'Plataformas de Forecast']],
-    ['sc', ['Demand Collaboration', 'Manufacturing Planning', 'Order Sequencing', 'Inventory Optimization'], ['Colaboração de Demanda', 'Planejamento de Manufatura', 'Sequenciamento de Pedidos', 'Otimização de Estoque']],
-    ['mo', ['Margin Engine', 'Capacity Planning', 'Make vs Buy', 'Production Analytics'], ['Motor de Margem', 'Planejamento de Capacidade', 'Make vs Buy', 'Analytics de Produção']],
-    ['dp', ['SAP Datasphere', 'Databricks', 'Lakehouse', 'Power BI Modernization'], ['SAP Datasphere', 'Databricks', 'Lakehouse', 'Modernização Power BI']],
-    ['go', ['Analytics Governance', 'Portfolio Management', 'Delivery Frameworks', 'Data Governance'], ['Governança de Analytics', 'Gestão de Portfólio', 'Frameworks de Entrega', 'Governança de Dados']]
-  ];
+  var DOMAINS = D.overview.domains, GROUPS = D.overview.groups, SOLUTIONS = D.overview.solutions;
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function L(o) { return o[state.lang]; }
@@ -68,19 +54,46 @@
       '<p class="res">' + (t.m ? '<strong>' + esc(t.m) + '</strong> ' + esc(t.ml) : esc(t.r[0])) + '</p>' +
       '<p class="tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p></article>';
   }
+  var ICON_CARDS = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>';
+  var ICON_LIST = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>';
+  function viewToggle(key) {
+    var cur = state[key];
+    return '<div class="view" role="group" aria-label="' + L(T.view) + '">' +
+      '<button type="button" data-view="' + key + '|cards" aria-pressed="' + (cur === 'cards') + '">' + ICON_CARDS + L(T.cards) + '</button>' +
+      '<button type="button" data-view="' + key + '|list" aria-pressed="' + (cur === 'list') + '">' + ICON_LIST + L(T.list) + '</button></div>';
+  }
+  function row(x) {
+    var c = x.c, t = c[state.lang];
+    return '<div class="row" role="row"><span role="cell" class="c-title">' + (c.featured ? STAR : '') + esc(t.t) + '</span>' +
+      '<span role="cell" class="c-area">' + esc(L(D.areas[c.a])) + '</span><span role="cell" class="c-org">' + esc(O(c)) + '</span>' +
+      '<span role="cell" class="c-res">' + (t.m ? '<strong>' + esc(t.m) + '</strong>' + esc(t.ml) : esc(t.r[0])) + '</span>' +
+      '<span role="cell" class="c-tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</span></div>';
+  }
+  function grid(list, mode) {
+    if (mode === 'list') {
+      var h = L(T.cols);
+      return '<div class="rows" role="table"><div class="row head" role="row">' + h.map(function (x) { return '<span role="columnheader">' + x + '</span>'; }).join('') + '</div>' +
+        list.map(row).join('') + '</div>';
+    }
+    return '<div class="cases">' + list.map(card).join('') + '</div>';
+  }
   function casesBlock(vis) {
-    if (state.area !== 'all' || state.co !== 'all') return '<div class="cases">' + vis.map(card).join('') + '</div>';
+    if (state.area !== 'all' || state.co !== 'all') return '<div class="subrow"><span></span>' + viewToggle('vm') + '</div>' + grid(vis, state.vm);
     var feat = vis.filter(function (x) { return x.c.featured; }).sort(function (a, b) { return a.c.featured - b.c.featured; });
     var more = vis.filter(function (x) { return !x.c.featured; });
-    return '<h3 class="subhead">' + STAR + L(T.featured) + '</h3><div class="cases">' + feat.map(card).join('') + '</div>' +
-      '<h3 class="subhead">' + L(T.more) + '</h3><div class="cases">' + more.map(card).join('') + '</div>';
+    return '<div class="subrow"><h3 class="subhead">' + STAR + L(T.featured) + '</h3>' + viewToggle('vf') + '</div>' + grid(feat, state.vf) +
+      '<div class="subrow"><h3 class="subhead">' + L(T.more) + '</h3>' + viewToggle('vm') + '</div>' + grid(more, state.vm);
   }
-
   function header(home) {
     var n = L(T.nav), base = home ? '' : '#';
     return '<header class="top"><div class="wrap bar">' +
       (home ? '<nav class="nav" aria-label="Main"><a href="#overview">' + n[0] + '</a><a href="#solutions">' + n[1] + '</a><a href="#portfolio">' + n[2] + '</a><a href="#contact">' + n[3] + '</a></nav>'
             : '<a class="backlink" href="#portfolio" data-back>← ' + L(T.back) + '</a>') + '</div></header>';
+  }
+  function masthead(home, eyebrow, title, width) {
+    return '<div class="masthead" id="masthead">' + header(home) +
+      '<div class="mast"><div class="' + width + '"><p class="eyebrow">' + eyebrow + '</p>' +
+      '<div class="name-row"><h1>' + title + '</h1>' + langToggle() + '</div></div></div></div>';
   }
   function langToggle() {
     return '<div class="lang" role="group" aria-label="Language / Idioma">' +
@@ -90,12 +103,11 @@
 
   function home() {
     var i = idx(), h = '';
-    h += header(true);
-    h += '<section id="top" class="hero"><div class="wrap"><p class="eyebrow">' + L(T.eyebrow) + '</p>' +
-      '<div class="name-row"><h1>Everton Teixeira de Souza</h1>' + langToggle() + '</div>' +
+    h += masthead(true, L(T.eyebrow), 'Everton Teixeira de Souza', 'wrap');
+    h += '<section id="top" class="hero"><div class="wrap">' +
       '<p class="lead">' + L(T.summary) + '</p>' +
       '<div class="ctas"><a class="btn primary" href="#portfolio">' + L(T.cta)[0] + '</a><a class="btn ghost" href="#contact">' + L(T.cta)[1] + '</a></div>' +
-      '<div class="stats">' + ['20+', '8+', '15+', '100+'].map(function (v, k) { return '<div><strong>' + v + '</strong><span>' + L(T.stats)[k] + '</span></div>'; }).join('') + '</div></div></section>';
+      '<div class="stats">' + ['20+', '10+', '20+', '100+'].map(function (v, k) { return '<div><strong>' + v + '</strong><span>' + L(T.stats)[k] + '</span></div>'; }).join('') + '</div></div></section>';
 
     h += '<section id="overview" class="block first"><div class="wrap"><div class="head"><p class="eyebrow">' + L(T.s1)[0] + '</p><h2>' + L(T.s1)[1] + '</h2></div><div class="grid5">';
     h += '<div class="card"><h3>' + L(T.domains) + '</h3>' + DOMAINS.map(function (d) {
@@ -135,9 +147,8 @@
     var vis = visible().map(function (x) { return x.i; });
     var pos = vis.indexOf(n); if (pos < 0) { vis = D.cases.map(function (_, i) { return i; }); pos = n; }
     var prev = vis[(pos - 1 + vis.length) % vis.length], next = vis[(pos + 1) % vis.length];
-    var h = header(false);
-    h += '<section id="top" class="hero"><div class="narrow"><p class="eyebrow">' + esc(L(D.areas[c.a])) + '</p>' +
-      '<div class="name-row"><h1>' + esc(t.t) + '</h1>' + langToggle() + '</div>' +
+    var h = masthead(false, esc(L(D.areas[c.a])), esc(t.t), 'narrow');
+    h += '<section id="top" class="hero"><div class="narrow">' +
       '<p class="lead">' + esc(t.s) + '</p>' +
       '<div class="dtags">' + t.tg.map(function (g) { return '<span>' + esc(g) + '</span>'; }).join('') + '</div>' +
       '<div class="stats"><div><span class="k">' + k[0] + '</span><span class="v">' + esc(O(c)) + '</span></div><div><span class="k">' + k[1] + '</span><span class="v">' + esc(c.y || '—') + '</span></div><div><span class="k">' + k[2] + '</span><span class="v">' + esc(L(D.areas[c.a])) + '</span></div></div></div></section>';
@@ -158,14 +169,21 @@
     app.innerHTML = n === null ? home() : detail(n);
     document.title = (n === null ? 'Everton Teixeira de Souza — ' + L(T.eyebrow) : D.cases[n][state.lang].t + ' — Everton Teixeira de Souza');
     if (scrollTop) window.scrollTo(0, 0);
+    onScroll();
   }
+  function onScroll() {
+    var m = document.getElementById('masthead');
+    if (m) m.classList.toggle('shrink', window.scrollY > 40);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
 
   app.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-lang],[data-area],[data-co],[data-open],[data-back]');
+    var b = e.target.closest('[data-lang],[data-area],[data-co],[data-view],[data-open],[data-back]');
     if (!b) return;
     if (b.hasAttribute('data-lang')) { state.lang = b.getAttribute('data-lang'); store.set('lang', state.lang); render(false); }
-    else if (b.hasAttribute('data-area')) { state.area = b.getAttribute('data-area'); render(false); }
-    else if (b.hasAttribute('data-co')) { state.co = b.getAttribute('data-co'); render(false); }
+    else if (b.hasAttribute('data-area')) { state.area = b.getAttribute('data-area'); state.co = 'all'; render(false); }
+    else if (b.hasAttribute('data-co')) { state.co = b.getAttribute('data-co'); state.area = 'all'; render(false); }
+    else if (b.hasAttribute('data-view')) { var v = b.getAttribute('data-view').split('|'); state[v[0]] = v[1]; render(false); }
     else if (b.hasAttribute('data-open')) { location.hash = 'case-' + b.getAttribute('data-open'); }
     else if (b.hasAttribute('data-back')) { e.preventDefault(); history.pushState(null, '', location.pathname); render(false); var p = document.getElementById('portfolio'); if (p) p.scrollIntoView(); }
   });
