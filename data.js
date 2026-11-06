@@ -1,4 +1,5 @@
 // Portfolio content — edit here. Each case has an English (en) and Portuguese (pt) version.
+// org: text, or { en, pt } when it differs by language
 // area: ai | sc | mo | dp | go    co: company filter key    hidden: true = kept here but not shown on the page
 window.PORTFOLIO = {
   areas: {
@@ -527,7 +528,7 @@ window.PORTFOLIO = {
         r: ["30% das transportadoras informavam um motivo falso", "Logística passou a ter visibilidade para atuar nas causas reais"],
         tg: ["Logística", "Analytics", "Transportadoras"] } },
 
-    { a: "ai", co: "pln", org: "Planus Tech", y: "",
+    { a: "ai", co: "pln", org: { en: "Planus Tech · Own SaaS product", pt: "Planus Tech · Produto SaaS próprio" }, y: "",
       en: { t: "Demand Planning SaaS from Scratch", m: "300", ml: "models in best-fit forecasting",
         s: "Led the technical team that built a demand planning SaaS on Azure, with best-fit selection across about 300 models.",
         cx: "Companies needed modern, accessible demand planning tools.",
@@ -543,7 +544,7 @@ window.PORTFOLIO = {
         r: ["Ferramenta visual e estatística para levar o planejamento a outro nível", "Forecast best-fit com cerca de 300 modelos"],
         tg: ["SaaS", "Azure", "Forecasting"] } },
 
-    { a: "sc", co: "pln", org: "Planus Tech", y: "",
+    { a: "sc", co: "pln", org: { en: "Planus Tech · Home décor retail · Mid-size", pt: "Planus Tech · Varejo de decoração · Médio porte" }, y: "",
       en: { t: "Container Formation Optimization", m: "4 days → 30 min", ml: "container planning",
         s: "Optimization tool that cut container formation for order taking from 4 days to 30 minutes.",
         cx: "Order taking requires grouping items into containers.",
@@ -559,7 +560,7 @@ window.PORTFOLIO = {
         r: ["Ferramenta entregue para planejar containers", "Processo reduzido para 30 minutos"],
         tg: ["Otimização", "Solver", "Logística"] } },
 
-    { a: "ai", co: "pln", org: "Planus Tech", y: "",
+    { a: "ai", co: "pln", org: { en: "Planus Tech · Animal health · Large enterprise", pt: "Planus Tech · Saúde animal · Grande porte" }, y: "",
       en: { t: "Demand Correlation with Exogenous Data", m: "Lag 6", ml: "correlation, Asian suppliers",
         s: "Explained demand peaks with exogenous factors, finding strong lagged correlation with Asian supplier market data.",
         cx: "Demand peaks affected inventory and service levels.",
@@ -575,7 +576,7 @@ window.PORTFOLIO = {
         r: ["Alta correlação com defasagem 6 para fornecedores asiáticos", "Sinais exógenos disponíveis para melhorar o forecast"],
         tg: ["Forecasting", "Dados Exógenos", "Analytics"] } },
 
-    { a: "mo", co: "pln", org: "Planus Tech", y: "",
+    { a: "mo", co: "pln", org: { en: "Planus Tech · Chemicals · Large enterprise", pt: "Planus Tech · Química · Grande porte" }, y: "",
       en: { t: "MPS Optimization Solver", m: "", ml: "",
         s: "Replaced manual master production scheduling with a linear optimization model feeding S&OP.",
         cx: "The master production schedule balances demand, capacity and inventory.",
@@ -591,7 +592,7 @@ window.PORTFOLIO = {
         r: ["Processo otimizado com solver linear", "Plano de produção entregue para o S&OP"],
         tg: ["MPS", "Otimização", "S&OP"] } },
 
-    { a: "ai", co: "pln", org: "Planus Tech", y: "",
+    { a: "ai", co: "pln", org: { en: "Planus Tech · Ice cream manufacturer · Mid-size", pt: "Planus Tech · Fabricante de sorvetes · Médio porte" }, y: "",
       en: { t: "Weather-Driven Forecast", m: "+30 pp", ml: "accuracy, 7-day daily forecast",
         s: "Weather-driven daily forecasting for an ice cream company, improving accuracy by up to 30 percentage points.",
         cx: "Ice cream demand is highly sensitive to weather.",
@@ -607,7 +608,7 @@ window.PORTFOLIO = {
         r: ["+30 p.p. de acurácia no forecast diário de 7 dias", "+20 p.p. de acurácia no forecast diário de 15 dias"],
         tg: ["Forecasting", "Python", "Clima"] } },
 
-    { a: "go", co: "pln", org: "Planus Tech", y: "",
+    { a: "go", co: "pln", org: { en: "Planus Tech · Own go-to-market", pt: "Planus Tech · Go-to-market próprio" }, y: "",
       en: { t: "SaaS Go-to-Market on a Lean Budget", m: "5", ml: "clients in 6 months",
         s: "Designed a lean sales model with a fixed-plus-success SDR contract, closing 5 clients in 6 months.",
         cx: "As a startup, Planus needed to grow revenue without a large sales team.",
@@ -623,7 +624,7 @@ window.PORTFOLIO = {
         r: ["5 clientes fechados em 6 meses", "Custos operacionais sustentados"],
         tg: ["Go-to-Market", "Vendas", "SaaS"] } },
 
-    { a: "dp", co: "pln", org: "Planus Tech", y: "",
+    { a: "dp", co: "pln", org: { en: "Planus Tech · Beverage bottler · Large enterprise", pt: "Planus Tech · Engarrafador de bebidas · Grande porte" }, y: "",
       en: { t: "Long-Range Planning Productization", m: "", ml: "",
         s: "Turned a long-range planning tool built in Excel and Power BI into a PySpark data product on Azure Synapse.",
         cx: "Long-range planning (LRP) supports capacity and investment decisions for bottlers.",
@@ -639,7 +640,7 @@ window.PORTFOLIO = {
         r: ["Ferramenta rodando no ambiente Azure Synapse do cliente", "Engarrafador da América Latina pronto para escalar globalmente"],
         tg: ["PySpark", "Synapse", "LRP"] } },
 
-    { a: "sc", co: "pln", org: "Planus Tech", y: "",
+    { a: "sc", co: "pln", org: { en: "Planus Tech · Oil & gas", pt: "Planus Tech · Óleo e gás" }, y: "",
       en: { t: "Oil & Gas Inventory Optimization", m: "4 days → min", ml: "inventory replanning",
         s: "Web optimization tool for serialized inventory that cut replanning from 4 days to minutes.",
         cx: "Oil and gas operations manage high-value, serialized inventory across locations.",
@@ -655,33 +656,33 @@ window.PORTFOLIO = {
         r: ["Gestão de estoque serializado, item a item", "Replanejamento reduzido de 4 dias para poucos minutos"],
         tg: ["Otimização", "Aplicação Web", "Estoque"] } },
 
-    { a: "go", co: "early", org: "Axsis · Votorantim", y: "2016",
+    { a: "go", co: "early", org: { en: "Axsis · Industrial conglomerate · Large enterprise", pt: "Axsis · Conglomerado industrial · Grande porte" }, y: "2016",
       en: { t: "Global Transfer Allocation RFP", m: "R$3M", ml: "project closed",
         s: "Built the winning proposal for transfer allocation in global operations, closing an R$3M project.",
-        cx: "Votorantim issued an RFP for transfer allocation in its global operations.",
+        cx: "A large industrial group issued an RFP for transfer allocation in its global operations.",
         ch: "Respond with a competitive MPS proposal for transfer allocation across global operations.",
         ap: "Analyzed the RFP, built the proposal and brought in partners (GMO).",
         r: ["Deal closed: R$3M project"],
         tg: ["Pre-sales", "MPS", "Consulting"] },
       pt: { t: "RFP de Alocação de Transferências Global", m: "R$ 3M", ml: "projeto fechado",
         s: "Construção da proposta vencedora para alocação de transferências em operações globais, fechando um projeto de R$ 3M.",
-        cx: "A Votorantim abriu uma RFP para alocação de transferências em suas operações globais.",
+        cx: "Um grande grupo industrial abriu uma RFP para alocação de transferências em suas operações globais.",
         ch: "Responder com uma proposta competitiva de MPS para a alocação de transferências nas operações globais.",
         ap: "Análise da RFP, construção da proposta e envolvimento de parceiros (GMO).",
         r: ["Negócio fechado: projeto de R$ 3M"],
         tg: ["Pré-vendas", "MPS", "Consultoria"] } },
 
-    { a: "mo", co: "early", org: "Axsis · Coca-Cola Sorocaba", y: "2016",
-      en: { t: "Coca-Cola Sorocaba MPS", m: "3 months", ml: "to production plan",
-        s: "MPS implementation for a Coca-Cola operation in Sorocaba, delivered in a 3-month project.",
-        cx: "The Sorocaba operation needed a structured master production schedule.",
+    { a: "mo", co: "early", org: { en: "Axsis · Beverage bottler · Large enterprise", pt: "Axsis · Engarrafador de bebidas · Grande porte" }, y: "2016",
+      en: { t: "Beverage Bottler MPS Implementation", m: "3 months", ml: "to production plan",
+        s: "Master production schedule (MPS) implementation for a large beverage bottling plant, delivered in a 3-month project.",
+        cx: "The bottling plant needed a structured master production schedule.",
         ch: "Implement an MPS model.",
         ap: "Mapped the process and modeled the APS.",
         r: ["3-month project delivering the production plan", "Stock policies modeled"],
         tg: ["MPS", "APS", "Consulting"] },
-      pt: { t: "MPS Coca-Cola Sorocaba", m: "3 meses", ml: "até o plano de produção",
-        s: "Implementação de MPS para uma operação Coca-Cola em Sorocaba, entregue em um projeto de 3 meses.",
-        cx: "A operação de Sorocaba precisava de um plano mestre de produção estruturado.",
+      pt: { t: "Implementação de MPS em Engarrafador de Bebidas", m: "3 meses", ml: "até o plano de produção",
+        s: "Implementação de plano mestre de produção (MPS) para uma grande planta engarrafadora de bebidas, entregue em um projeto de 3 meses.",
+        cx: "A planta engarrafadora precisava de um plano mestre de produção estruturado.",
         ch: "Implementar um modelo de MPS.",
         ap: "Mapeamento do processo e modelagem do APS.",
         r: ["Projeto de 3 meses entregando o plano de produção", "Políticas de estoque modeladas"],
