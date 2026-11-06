@@ -1,5 +1,6 @@
 // Portfolio content — edit here. Each case has an English (en) and Portuguese (pt) version.
 // org: text, or { en, pt } when it differs by language
+// featured: 1..n = shown in Featured Cases (in this order) when no filter is applied
 // area: ai | sc | mo | dp | go    co: company filter key    hidden: true = kept here but not shown on the page
 window.PORTFOLIO = {
   areas: {
@@ -64,7 +65,7 @@ window.PORTFOLIO = {
         r: ["Desenho de ingestão cobrindo cerca de 20 mil tabelas do WMS", "Abordagem CDC para capturar apenas as mudanças e manter os dados atualizados"],
         tg: ["WMS", "CDC", "Engenharia de Dados"] } },
 
-    { a: "ai", co: "rch", org: "Riachuelo", y: "",
+    { a: "ai", co: "rch", org: "Riachuelo", y: "", featured: 1,
       en: { t: "AI Data Quality Agent for o9", m: "", ml: "",
         s: "Led design and implementation of an AI agent that checks data quality in the integration with the o9 planning platform.",
         cx: "The o9 planning platform depends on clean, complete data from the corporate sources.",
@@ -304,7 +305,7 @@ window.PORTFOLIO = {
         r: ["Implementação acelerada da lógica de fair share", "Maior disponibilidade de produto nos CDs"],
         tg: ["DRP", "Alocação", "Estoque"] } },
 
-    { a: "go", co: "rch", org: "Riachuelo", y: "",
+    { a: "go", co: "rch", org: "Riachuelo", y: "", featured: 2,
       en: { t: "IT Product Management for Supply Chain", m: "", ml: "",
         s: "Raised product management maturity in supply chain technology with clear roles and governance rituals.",
         cx: "Supply chain technology demands compete for the same capacity and budget.",
@@ -400,7 +401,7 @@ window.PORTFOLIO = {
         r: ["Usuários desenvolvendo em Databricks com mais governança", "Caminho aberto para produtizar soluções criadas pelos usuários"],
         tg: ["Databricks", "Adoção", "Data Literacy"] } },
 
-    { a: "dp", co: "rch", org: "Riachuelo", y: "2025",
+    { a: "dp", co: "rch", org: "Riachuelo", y: "2025", featured: 3,
       en: { t: "SAP Datasphere Modernization", m: "−75%", ml: "integration lead time",
         s: "Rebuilt SAP ECC/S/4 data acquisition with SAP Datasphere and Databricks, closing the supply chain and manufacturing data gap in the lake.",
         cx: "Supply chain and manufacturing decisions depended on SAP ECC and S/4 data that was largely missing from the corporate data lake.",
@@ -415,6 +416,22 @@ window.PORTFOLIO = {
         ap: "Implementação do SAP Datasphere como camada governada de aquisição de dados SAP, alimentando o lakehouse Databricks, começando por um piloto para provar valor antes de escalar.",
         r: ["Redução de 75% no lead time de novas integrações", "Menor dependência de ABAP: 600K no piloto, com potencial de redução de 2M", "Padrão reutilizável e escalável para novos domínios"],
         tg: ["Data Lake", "Engenharia de Dados", "Redução de Custos"] } },
+
+    { a: "dp", co: "sam", org: "Samsung SDS", y: "", featured: 6,
+      en: { t: "Internal Data Integration Tool", m: "", ml: "",
+        s: "As Product Manager, led an in-house data integration tool on the Apache stack and Oracle database, built to replace market solutions.",
+        cx: "Data integration across systems relied on market (third-party) solutions.",
+        ch: "Depending on market solutions for data integration limited control and flexibility.",
+        ap: "As Product Manager, led product definition and delivery of an internal integration tool built on the Apache stack with an Oracle database.",
+        r: ["Internal tool built to replace market solutions", "Data integration capability owned in-house"],
+        tg: ["Data Integration", "Apache", "Oracle"] },
+      pt: { t: "Ferramenta Interna de Integração de Dados", m: "", ml: "",
+        s: "Como Product Manager, liderou uma ferramenta interna de integração de dados em stack Apache e banco Oracle, criada para substituir soluções de mercado.",
+        cx: "A integração de dados entre sistemas dependia de soluções de mercado (terceiros).",
+        ch: "Depender de soluções de mercado para integração de dados limitava controle e flexibilidade.",
+        ap: "Como Product Manager, liderou a definição do produto e a entrega de uma ferramenta interna de integração construída em stack Apache com banco Oracle.",
+        r: ["Ferramenta interna criada para substituir soluções de mercado", "Capacidade de integração de dados internalizada"],
+        tg: ["Integração de Dados", "Apache", "Oracle"] } },
 
     { a: "dp", co: "sam", org: "Samsung SDS", y: "2018",
       en: { t: "Sell-out Big Data Platform", m: "", ml: "",
@@ -464,15 +481,15 @@ window.PORTFOLIO = {
         r: ["Data lake entregue com dados batch e streaming", "Base para o projeto de control tower centralizada"],
         tg: ["Data Lake", "Streaming", "E-commerce"] } },
 
-    { a: "sc", co: "sam", org: "Samsung", y: "",
-      en: { t: "D2C Order Integration", m: "−90%", ml: "order status errors",
+    { a: "sc", co: "sam", org: "Samsung", y: "", featured: 4,
+      en: { t: "E-commerce D2C Order Integration", m: "−90%", ml: "order status errors",
         s: "Led a cross-team effort that integrated D2C orders with SCM and TMS, cutting order status errors by 90%.",
         cx: "Direct-to-consumer orders must flow through supply chain and transportation systems.",
         ch: "D2C lacked integration with SCM and TMS, causing order status errors.",
         ap: "Led a cross-team group to fix the integration end to end.",
         r: ["90% reduction in order status errors"],
         tg: ["D2C", "Integration", "TMS"] },
-      pt: { t: "Integração de Pedidos D2C", m: "−90%", ml: "erros de status de pedidos",
+      pt: { t: "Integração de Pedidos D2C do E-commerce", m: "−90%", ml: "erros de status de pedidos",
         s: "Liderança de um esforço entre áreas que integrou os pedidos D2C ao SCM e ao TMS, reduzindo em 90% os erros de status.",
         cx: "Os pedidos direct-to-consumer precisam fluir pelos sistemas de supply chain e transporte.",
         ch: "O D2C não era integrado ao SCM e ao TMS, gerando erros de status dos pedidos.",
@@ -640,7 +657,7 @@ window.PORTFOLIO = {
         r: ["Ferramenta rodando no ambiente Azure Synapse do cliente", "Engarrafador da América Latina pronto para escalar globalmente"],
         tg: ["PySpark", "Synapse", "LRP"] } },
 
-    { a: "sc", co: "pln", org: { en: "Planus Tech · Oil & gas", pt: "Planus Tech · Óleo e gás" }, y: "",
+    { a: "sc", co: "pln", org: { en: "Planus Tech · Oil & gas", pt: "Planus Tech · Óleo e gás" }, y: "", featured: 5,
       en: { t: "Oil & Gas Inventory Optimization", m: "4 days → min", ml: "inventory replanning",
         s: "Web optimization tool for serialized inventory that cut replanning from 4 days to minutes.",
         cx: "Oil and gas operations manage high-value, serialized inventory across locations.",

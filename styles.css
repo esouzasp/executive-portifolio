@@ -101,6 +101,9 @@ h2 { margin: 0; font-family: Manrope, Inter, sans-serif; font-weight: 800; font-
 .case .res strong { font-family: Manrope, Inter, sans-serif; font-weight: 800; font-size: 15px; color: var(--ink); margin-right: 4px; }
 .case .tags { display: flex; flex-wrap: nowrap; gap: 4px; height: 20px; overflow: hidden; }
 .tag { flex: 0 0 auto; font-size: 11px; line-height: 16px; padding: 2px 7px; border-radius: 6px; background: var(--tag-bg); color: var(--tag-fg); white-space: nowrap; }
+.subhead { margin: 10px 0 0; display: flex; align-items: center; gap: 6px; font-family: Manrope, Inter, sans-serif; font-weight: 700; font-size: 16px; }
+.subhead .star { width: 15px; height: 15px; }
+.star { color: #C98A1E; flex: 0 0 auto; vertical-align: -1px; margin-right: 5px; }
 .btn.plain { cursor: text; user-select: all; }
 
 /* case detail */

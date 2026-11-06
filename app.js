@@ -22,7 +22,7 @@
     s2: { en: ['02 — Representative Solutions', 'What I have built and led'], pt: ['02 — Soluções Representativas', 'O que construí e liderei'] },
     s3: { en: ['03 — Portfolio Projects', 'Selected cases'], pt: ['03 — Projetos do Portfólio', 'Cases selecionados'] },
     all: { en: 'All', pt: 'Todos' }, byArea: { en: 'Area', pt: 'Área' }, byCo: { en: 'Company', pt: 'Empresa' },
-    count: { en: ' cases', pt: ' cases' }, open: { en: 'View case', pt: 'Ver case' },
+    count: { en: ' cases', pt: ' cases' }, featured: { en: 'Featured Cases', pt: 'Cases em destaque' }, more: { en: 'More Cases', pt: 'Mais cases' }, open: { en: 'View case', pt: 'Ver case' },
     back: { en: 'Back to portfolio', pt: 'Voltar ao portfólio' },
     k: { en: ['Company / Client', 'Year', 'Area'], pt: ['Empresa / Cliente', 'Ano', 'Área'] },
     cxa: { en: ['Context', 'Challenge', 'Approach'], pt: ['Contexto', 'Desafio', 'Abordagem'] },
@@ -58,6 +58,23 @@
     });
   }
   function caseFromHash() { var m = /^#case-(\d+)$/.exec(location.hash); if (!m) return null; var n = +m[1]; return D.cases[n] && !D.cases[n].hidden ? n : null; }
+
+  var STAR = '<svg class="star" width="12" height="12" viewBox="0 0 24 24" role="img" aria-label="Featured"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" fill="currentColor"/></svg>';
+  function card(x) {
+    var c = x.c, t = c[state.lang];
+    return '<article class="case">' +
+      '<p class="meta">' + (c.featured ? STAR : '') + '<span class="area">' + esc(L(D.areas[c.a])) + '</span> | ' + esc(O(c)) + '</p>' +
+      '<h3>' + esc(t.t) + '</h3><p class="sum">' + esc(t.s) + '</p>' +
+      '<p class="res">' + (t.m ? '<strong>' + esc(t.m) + '</strong> ' + esc(t.ml) : esc(t.r[0])) + '</p>' +
+      '<p class="tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p></article>';
+  }
+  function casesBlock(vis) {
+    if (state.area !== 'all' || state.co !== 'all') return '<div class="cases">' + vis.map(card).join('') + '</div>';
+    var feat = vis.filter(function (x) { return x.c.featured; }).sort(function (a, b) { return a.c.featured - b.c.featured; });
+    var more = vis.filter(function (x) { return !x.c.featured; });
+    return '<h3 class="subhead">' + STAR + L(T.featured) + '</h3><div class="cases">' + feat.map(card).join('') + '</div>' +
+      '<h3 class="subhead">' + L(T.more) + '</h3><div class="cases">' + more.map(card).join('') + '</div>';
+  }
 
   function header(home) {
     var n = L(T.nav), base = home ? '' : '#';
@@ -100,14 +117,7 @@
       '<p class="count" aria-live="polite">' + vis.length + L(T.count) + '</p></div>' +
       '<div class="filters"><div class="frow" role="group" aria-label="' + L(T.byArea) + '"><span class="lbl">' + L(T.byArea) + '</span>' + areaPills + '</div>' +
       '<div class="frow" role="group" aria-label="' + L(T.byCo) + '"><span class="lbl">' + L(T.byCo) + '</span>' + coPills + '</div></div>' +
-      '<div class="cases">' + vis.map(function (x) {
-        var c = x.c, t = c[state.lang];
-        return '<article class="case">' +
-          '<p class="meta"><span class="area">' + esc(L(D.areas[c.a])) + '</span> | ' + esc(O(c)) + '</p>' +
-          '<h3>' + esc(t.t) + '</h3><p class="sum">' + esc(t.s) + '</p>' +
-          '<p class="res">' + (t.m ? '<strong>' + esc(t.m) + '</strong> ' + esc(t.ml) : esc(t.r[0])) + '</p>' +
-          '<p class="tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p></article>';
-      }).join('') + '</div></div></section>';
+      casesBlock(vis) + '</div></section>';
     h += footer();
     return h;
   }
