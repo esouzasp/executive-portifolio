@@ -50,6 +50,7 @@
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function L(o) { return o[state.lang]; }
+  function O(c) { return typeof c.org === 'string' ? c.org : c.org[state.lang]; }
   function idx() { return state.lang === 'pt' ? 1 : 0; }
   function visible() {
     return D.cases.map(function (c, i) { return { c: c, i: i }; }).filter(function (x) {
@@ -102,7 +103,7 @@
       '<div class="cases">' + vis.map(function (x) {
         var c = x.c, t = c[state.lang];
         return '<article class="case">' +
-          '<p class="meta"><span class="area">' + esc(L(D.areas[c.a])) + '</span> | ' + esc(c.org) + '</p>' +
+          '<p class="meta"><span class="area">' + esc(L(D.areas[c.a])) + '</span> | ' + esc(O(c)) + '</p>' +
           '<h3>' + esc(t.t) + '</h3><p class="sum">' + esc(t.s) + '</p>' +
           '<p class="res">' + (t.m ? '<strong>' + esc(t.m) + '</strong> ' + esc(t.ml) : esc(t.r[0])) + '</p>' +
           '<p class="tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p></article>';
@@ -129,7 +130,7 @@
       '<div class="name-row"><h1>' + esc(t.t) + '</h1>' + langToggle() + '</div>' +
       '<p class="lead">' + esc(t.s) + '</p>' +
       '<div class="dtags">' + t.tg.map(function (g) { return '<span>' + esc(g) + '</span>'; }).join('') + '</div>' +
-      '<div class="stats"><div><span class="k">' + k[0] + '</span><span class="v">' + esc(c.org) + '</span></div><div><span class="k">' + k[1] + '</span><span class="v">' + esc(c.y || '—') + '</span></div><div><span class="k">' + k[2] + '</span><span class="v">' + esc(L(D.areas[c.a])) + '</span></div></div></div></section>';
+      '<div class="stats"><div><span class="k">' + k[0] + '</span><span class="v">' + esc(O(c)) + '</span></div><div><span class="k">' + k[1] + '</span><span class="v">' + esc(c.y || '—') + '</span></div><div><span class="k">' + k[2] + '</span><span class="v">' + esc(L(D.areas[c.a])) + '</span></div></div></div></section>';
     h += '<main class="detail"><div class="narrow"><div class="cxa">' +
       [t.cx, t.ch, t.ap].map(function (p, j) { return '<div class="card"><h2>' + cx[j] + '</h2><p>' + esc(p) + '</p></div>'; }).join('') + '</div>' +
       '<section class="results"><h2 class="display" style="font-size:26px">' + L(T.results) + '</h2><div class="rgrid">' +
