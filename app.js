@@ -23,7 +23,8 @@
     s3: { en: ['03 — Portfolio Projects', 'Selected cases'], pt: ['03 — Projetos do Portfólio', 'Cases selecionados'] },
     all: { en: 'All', pt: 'Todos' }, byArea: { en: 'Area', pt: 'Área' }, byCo: { en: 'Company', pt: 'Empresa' },
     count: { en: ' cases', pt: ' cases' }, featured: { en: 'Featured Cases', pt: 'Cases em destaque' }, more: { en: 'More Cases', pt: 'Mais cases' }, view: { en: 'View', pt: 'Visualização' }, cards: { en: 'Cards', pt: 'Caixas' }, list: { en: 'List', pt: 'Lista' },
-    cols: { en: ['Case', 'Area', 'Company', 'Result', 'Tags'], pt: ['Case', 'Área', 'Empresa', 'Resultado', 'Tags'] }, open: { en: 'View case', pt: 'Ver case' },
+    cols: { en: ['Case', 'Area', 'Company', 'Result', 'Tags'], pt: ['Case', 'Área', 'Empresa', 'Resultado', 'Tags'] },
+    star: { en: ['Situation', 'Task', 'Action', 'Result'], pt: ['Situação', 'Tarefa', 'Ação', 'Resultado'] }, open: { en: 'View case', pt: 'Ver case' },
     back: { en: 'Back to portfolio', pt: 'Voltar ao portfólio' },
     k: { en: ['Company / Client', 'Year', 'Area'], pt: ['Empresa / Cliente', 'Ano', 'Área'] },
     cxa: { en: ['Context', 'Challenge', 'Approach'], pt: ['Contexto', 'Desafio', 'Abordagem'] },
@@ -46,13 +47,20 @@
   function caseFromHash() { var m = /^#case-(\d+)$/.exec(location.hash); if (!m) return null; var n = +m[1]; return D.cases[n] && !D.cases[n].hidden ? n : null; }
 
   var STAR = '<svg class="star" width="12" height="12" viewBox="0 0 24 24" role="img" aria-label="Featured"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" fill="currentColor"/></svg>';
+  function tip(c) {
+    var t = c[state.lang], k = L(T.star);
+    return '<div class="tip" role="tooltip"><p class="tip-sum">' + esc(t.s) + '</p><dl>' +
+      '<dt>' + k[0] + '</dt><dd>' + esc(t.cx) + '</dd><dt>' + k[1] + '</dt><dd>' + esc(t.ch) + '</dd>' +
+      '<dt>' + k[2] + '</dt><dd>' + esc(t.ap) + '</dd><dt>' + k[3] + '</dt><dd><ul>' +
+      t.r.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></dd></dl></div>';
+  }
   function card(x) {
     var c = x.c, t = c[state.lang];
-    return '<article class="case">' +
+    return '<article class="case hv" tabindex="0">' +
       '<p class="meta">' + (c.featured ? STAR : '') + '<span class="area">' + esc(L(D.areas[c.a])) + '</span> | ' + esc(O(c)) + '</p>' +
       '<h3>' + esc(t.t) + '</h3><p class="sum">' + esc(t.s) + '</p>' +
       '<p class="res">' + (t.m ? '<strong>' + esc(t.m) + '</strong> ' + esc(t.ml) : esc(t.r[0])) + '</p>' +
-      '<p class="tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p></article>';
+      '<p class="tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p>' + tip(c) + '</article>';
   }
   var ICON_CARDS = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>';
   var ICON_LIST = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>';
@@ -64,10 +72,10 @@
   }
   function row(x) {
     var c = x.c, t = c[state.lang];
-    return '<div class="row" role="row"><span role="cell" class="c-title">' + (c.featured ? STAR : '') + esc(t.t) + '</span>' +
+    return '<div class="row hv" role="row" tabindex="0"><span role="cell" class="c-title">' + (c.featured ? STAR : '') + esc(t.t) + '</span>' +
       '<span role="cell" class="c-area">' + esc(L(D.areas[c.a])) + '</span><span role="cell" class="c-org">' + esc(O(c)) + '</span>' +
       '<span role="cell" class="c-res">' + (t.m ? '<strong>' + esc(t.m) + '</strong>' + esc(t.ml) : esc(t.r[0])) + '</span>' +
-      '<span role="cell" class="c-tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</span></div>';
+      '<span role="cell" class="c-tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</span>' + tip(c) + '</div>';
   }
   function grid(list, mode) {
     if (mode === 'list') {

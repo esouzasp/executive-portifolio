@@ -353,7 +353,7 @@ window.PORTFOLIO = {
         r: ["Ritos de tecnologia e negócio para acompanhar o backlog", "Melhor priorização dos projetos de alto impacto"],
         tg: ["Gestão de Produto", "PMO", "Governança"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "",
+    { a: "sc", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Invoice Registration Failures", m: "12", ml: "quick wins",
         s: "Mapped the invoice process end to end and delivered quick wins and automations against a 25% error rate.",
         cx: "Invoice registration connects purchasing, receiving and tax compliance.",
@@ -417,7 +417,7 @@ window.PORTFOLIO = {
         r: ["MAPE da categoria feminina reduzido de 25% para 19%", "Modelo de forecast rodando em Databricks"],
         tg: ["Forecasting", "Databricks", "Varejo"] } },
 
-    { a: "dp", co: "rch", org: "Riachuelo", y: "",
+    { a: "dp", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Databricks Enablement Workshops", m: "", ml: "",
         s: "Drove Databricks adoption among supply chain and manufacturing users through hands-on technical workshops.",
         cx: "The lakehouse only creates value when business users actually build on it.",
@@ -465,7 +465,7 @@ window.PORTFOLIO = {
         r: ["Integrações de dados entregues para o o9 IBP", "Ferramentas de planejamento de capacidade alimentadas pela plataforma de dados"],
         tg: ["o9", "IBP", "Engenharia de Dados"] } },
 
-    { a: "go", co: "rch", org: "Riachuelo", y: "",
+    { a: "go", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Analytics & BI as-a-Service", m: "50+", ml: "strategic projects & products",
         s: "Structured analytics and BI as a service to amplify decision making across all retail areas.",
         cx: "Commercial, supply chain, manufacturing and operations all compete for analytics capacity.",
@@ -481,7 +481,7 @@ window.PORTFOLIO = {
         r: ["Analytics e BI entregues como serviço nas áreas do varejo", "Mais de 50 projetos e produtos estratégicos entregues nas operações de varejo"],
         tg: ["BI", "Modelo Operacional", "Analytics"] } },
 
-    { a: "dp", co: "rch", org: "Riachuelo", y: "",
+    { a: "dp", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Commercial Data Redesign — OTB Share", m: "", ml: "",
         s: "Led design and implementation of the commercial data redesign, including open-to-buy (OTB) share.",
         cx: "Merchandise planning uses open-to-buy (OTB) to control purchasing budgets by category.",
@@ -545,7 +545,7 @@ window.PORTFOLIO = {
         r: ["Fluxo de pedidos da logística integrado ponta a ponta", "Visibilidade dos pedidos dos CDs até as lojas"],
         tg: ["Logística", "Fluxo de Pedidos", "Integração de Dados"] } },
 
-    { a: "go", co: "rch", org: "Riachuelo", y: "",
+    { a: "go", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Partner Contracts & Performance Management", m: "15+", ml: "direct team",
         s: "Managed data and technology partner contracts and performance, while developing a direct team of 15+.",
         cx: "Delivery relies on a mix of the internal team and external partners.",
@@ -561,7 +561,7 @@ window.PORTFOLIO = {
         r: ["Contratos e performance de parceiros gerenciados", "Time direto de mais de 15 coordenadores, engenheiros e especialistas desenvolvido"],
         tg: ["Gestão de Fornecedores", "Contratos", "Liderança"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "",
+    { a: "sc", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "SAP Enhancements for Supply Chain", m: "", ml: "",
         s: "Delivered SAP enhancement initiatives across several supply chain processes and modules.",
         cx: "Supply chain and manufacturing processes run on SAP.",
