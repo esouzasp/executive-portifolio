@@ -102,10 +102,10 @@
       '<div class="cases">' + vis.map(function (x) {
         var c = x.c, t = c[state.lang];
         return '<article class="case">' +
-          '<span class="meta"><span class="area">' + esc(L(D.areas[c.a])) + '</span><span class="org">' + esc(c.org) + (c.y ? ' · ' + c.y : '') + '</span></span>' +
-          '<h3>' + esc(t.t) + '</h3><p>' + esc(t.s) + '</p><span class="foot">' +
-          (t.m ? '<span class="metric"><strong>' + esc(t.m) + '</strong><span>' + esc(t.ml) + '</span></span>' : '<span></span>') +
-          '<span class="tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</span></span></article>';
+          '<p class="meta"><span class="area">' + esc(L(D.areas[c.a])) + '</span> | ' + esc(c.org) + '</p>' +
+          '<h3>' + esc(t.t) + '</h3><p class="sum">' + esc(t.s) + '</p>' +
+          '<p class="res">' + (t.m ? '<strong>' + esc(t.m) + '</strong> ' + esc(t.ml) : esc(t.r[0])) + '</p>' +
+          '<p class="tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p></article>';
       }).join('') + '</div></div></section>';
     h += footer();
     return h;
@@ -113,8 +113,9 @@
 
   function footer() {
     return '<footer id="contact" class="contact"><div class="wrap"><div><h2>' + L(T.foot)[0] + '</h2><p>' + L(T.foot)[1] + '</p></div>' +
-      '<div class="ctas"><a class="btn ghost" href="mailto:isouzae@gmail.com">isouzae@gmail.com</a>' +
+      '<div class="ctas"><span class="btn ghost plain">isouzae@gmail.com</span>' +
       '<a class="btn primary" href="https://wa.me/5519981608088" target="_blank" rel="noopener">WhatsApp +55 19 98160-8088</a>' +
+      '<a class="btn ghost" href="https://esouzasp.github.io/executive-portifolio/">' + (state.lang === 'pt' ? 'Portfólio no GitHub' : 'GitHub portfolio') + '</a>' +
       '<a class="btn ghost" href="https://www.linkedin.com/">LinkedIn</a></div></div></footer>';
   }
 
