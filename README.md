@@ -1,13 +1,13 @@
 # Executive Portfolio — Everton Teixeira de Souza
 
-Bilingual (PT / EN) executive transformation portfolio: overview, representative solutions and 34 cases in AI, analytics, enterprise data platforms, supply chain planning, optimization and governance.
+Trilingual (EN / PT / ES) executive transformation portfolio: overview, representative solutions, tech stack and 60 cases in AI, analytics, enterprise data platforms, supply chain planning, optimization and governance.
 
 ## Structure
 
 - `index.html` — page shell
 - `styles.css` — visual style
-- `app.js` — rendering, language toggle (PT 🇧🇷 / EN 🇺🇸), filters by area and company, case detail pages (`#case-N`)
-- `data.js` — **all case content**, in English (`en`) and Portuguese (`pt`). Edit this file to add or change cases.
+- `app.js` — rendering, language toggle (PT 🇧🇷 / EN 🇺🇸 / ES 🇪🇸), filters by area and company, case detail pages (`#case-N`)
+- `data.js` — **all content**: interface strings (`ui`), overview, tech stack and cases, in English (`en`), Portuguese (`pt`) and Spanish (`es`). A case without `es` falls back to English.
 
 No build step: it is plain HTML, CSS and JavaScript.
 
