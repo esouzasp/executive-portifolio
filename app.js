@@ -52,7 +52,7 @@
       '<h2 id="modal-title">' + esc(t.t) + '</h2><p class="modal-sum">' + esc(t.s) + '</p>' +
       (t.m ? '<p class="modal-metric"><strong>' + esc(t.m) + '</strong>' + esc(t.ml) + '</p>' : '') +
       starBlock(t) + '<p class="tags modal-tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p>' +
-      '<div class="share"><p>' + L(T.shareHint) + '</p><div class="share-row"><input class="share-url" type="text" readonly value="' + esc(shareUrl(c)) + '" aria-label="' + esc(L(T.copy)) + '" onclick="this.select()">' +
+      '<div class="share"><div class="share-row"><input class="share-url" type="text" readonly value="' + esc(shareUrl(c)) + '" aria-label="' + esc(L(T.copy)) + '" onclick="this.select()">' +
       '<button type="button" class="btn-copy" data-copy="' + esc(shareUrl(c)) + '">' + LINK_ICON + '<span>' + L(T.copy) + '</span></button></div></div></div></div>';
   }
   function card(x) {
