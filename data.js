@@ -6,6 +6,7 @@
 //   hidden: true = kept here but not shown on the page (see HIDDEN_CASES.md)
 //   area (a): ai | sc | mo | ec | dp | go    company (co): rch | sam | pln | early
 //   a case without "es" falls back to English
+//   id: stable slug used in share links (cases/<id>.html and #<id>) — do not change once shared
 window.PORTFOLIO = {
   areas: {
     ai: { en: "AI & Decision Intelligence", pt: "IA e Inteligência de Decisão", es: "IA e Inteligencia de Decisión" },
@@ -39,6 +40,9 @@ window.PORTFOLIO = {
     next: {"en":"Next case →","pt":"Próximo case →","es":"Siguiente caso →"},
     github: {"en":"GitHub portfolio","pt":"Portfólio no GitHub","es":"Portafolio en GitHub"},
     repo: {"en":"GitHub Repository","pt":"Repositório no GitHub","es":"Repositorio en GitHub"},
+    copy: {"en":"Copy link","pt":"Copiar link","es":"Copiar enlace"},
+    copied: {"en":"Link copied","pt":"Link copiado","es":"Enlace copiado"},
+    shareHint: {"en":"Share this case (LinkedIn, CV, e-mail):","pt":"Compartilhe este case (LinkedIn, currículo, e-mail):","es":"Comparte este caso (LinkedIn, CV, e-mail):"},
     nav: {"en":["Overview","Solutions","Tech Stack","Portfolio","Contact"],"pt":["Visão geral","Soluções","Tecnologias","Portfólio","Contato"],"es":["Resumen","Soluciones","Tecnologías","Portafolio","Contacto"]},
     cta: {"en":["View portfolio","Get in touch"],"pt":["Ver portfólio","Fale comigo"],"es":["Ver portafolio","Contáctame"]},
     stats: {"en":["Years of experience","Industries","Enterprise clients","Programs & projects"],"pt":["Anos de experiência","Indústrias","Clientes enterprise","Programas e projetos"],"es":["Años de experiencia","Industrias","Clientes enterprise","Programas y proyectos"]},
@@ -153,7 +157,7 @@ window.PORTFOLIO = {
     ]
   },
   cases: [
-    { a: "sc", co: "rch", org: "Riachuelo", y: "", hidden: true,
+    { id: "supplier-score-matrix", a: "sc", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Supplier Score Matrix", m: "", ml: "",
         s: "Led design and implementation of a multi-criteria supplier score matrix that measures performance across supply chain dimensions for the best supplier selection.",
         cx: "Supplier decisions in supply chain involve several criteria at once — service, quality, cost and capacity.",
@@ -169,7 +173,7 @@ window.PORTFOLIO = {
         r: ["Fornecedores medidos em múltiplos critérios em uma visão única e consistente","Apoio baseado em dados para a melhor seleção de fornecedores"],
         tg: ["Gestão de Fornecedores","Scoring","Analytics"] } },
 
-    { a: "mo", co: "rch", org: "Riachuelo", y: "",
+    { id: "factory-fp-and-a-cost-and-margin-engine", a: "mo", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Factory FP&A, Cost & Margin Engine", m: "", ml: "",
         s: "Led design and implementation of an engine that consolidates factory inventory, sales and cost data to manage product cost and margin.",
         cx: "Riachuelo runs an end-to-end fashion value chain with its own manufacturing complex producing over 40M units a year. Margin decisions in manufacturing depend on combining factory inventory, sales and production cost data that lived in different sources.",
@@ -192,7 +196,7 @@ window.PORTFOLIO = {
         r: ["FP&A y gestión de costos de manufactura desarrollados","Motor único para inventario, ventas, costo y margen de la fábrica","Visión consistente del margen para decisiones de manufactura y comerciales"],
         tg: ["Motor de Margen","Costos","Manufactura"] } },
 
-    { a: "dp", co: "rch", org: "Riachuelo", y: "",
+    { id: "wms-data-ingestion-engine-with-cdc", a: "dp", co: "rch", org: "Riachuelo", y: "",
       en: { t: "WMS Data Ingestion Engine with CDC", m: "20K", ml: "WMS tables in scope",
         s: "Led design and implementation of an ingestion engine for about 20K WMS tables using change data capture (CDC).",
         cx: "Riachuelo's logistics runs through 3 distribution centers serving more than 430 stores. WMS data is essential for order flow, inventory and logistics analytics, but the WMS database has around 20K tables.",
@@ -215,7 +219,7 @@ window.PORTFOLIO = {
         r: ["Diseño de ingesta que cubre cerca de 20 mil tablas del WMS","Enfoque CDC que captura solo los cambios y mantiene los datos actualizados","Datos del WMS integrados al flujo de pedidos de logística en la plataforma de datos"],
         tg: ["WMS","CDC","Ingeniería de Datos"] } },
 
-    { a: "ai", co: "rch", org: "Riachuelo", y: "", featured: 1, hidden: true,
+    { id: "ai-data-quality-agent-for-o9", a: "ai", co: "rch", org: "Riachuelo", y: "", featured: 1, hidden: true,
       en: { t: "AI Data Quality Agent for o9", m: "", ml: "",
         s: "Led design and implementation of an AI agent that checks data quality in the integration with the o9 planning platform.",
         cx: "The o9 planning platform depends on clean, complete data from the corporate sources.",
@@ -231,7 +235,7 @@ window.PORTFOLIO = {
         r: ["Agente de IA monitorando a qualidade dos dados na integração com o o9","Problemas identificados antes de chegarem ao planejamento"],
         tg: ["Agentes de IA","Qualidade de Dados","o9"] } },
 
-    { a: "dp", co: "rch", org: "Riachuelo", y: "",
+    { id: "fileup-file-load-and-data-quality-in-databricks", a: "dp", co: "rch", org: "Riachuelo", y: "",
       en: { t: "FileUp — File Load & Data Quality in Databricks", m: "", ml: "",
         s: "Led design and implementation of FileUp: managed file uploads into Databricks with data quality checks on every load.",
         cx: "Commercial, supply chain, manufacturing and operations teams regularly need to bring file-based data — plans, parameters, supplier and manual inputs — into the lakehouse.",
@@ -254,7 +258,7 @@ window.PORTFOLIO = {
         r: ["Cargas de archivos self-service y gobernadas en Databricks","Validaciones de calidad de datos en cada carga","Parte del conjunto de gobernanza de datos, junto con el mapeo de linaje"],
         tg: ["Databricks","Calidad de Datos","Self-service"] } },
 
-    { a: "dp", co: "rch", org: "Riachuelo", y: "",
+    { id: "databricks-data-lineage-and-observability", a: "dp", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Databricks Data Lineage & Observability", m: "", ml: "",
         s: "Led design and implementation of data lineage mapping in Databricks to optimize pipelines and enable observability.",
         cx: "With more than 50 strategic projects and data products running over retail operations, the Databricks lakehouse kept growing in pipelines, tables and consumers.",
@@ -277,7 +281,7 @@ window.PORTFOLIO = {
         r: ["Linaje de datos mapeado en los pipelines de Databricks","Base para optimizar pipelines y rastrear el impacto de fallas","Observabilidad incorporada a las herramientas de gobernanza de datos"],
         tg: ["Linaje de Datos","Observabilidad","Databricks"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "",
+    { id: "demand-collaboration-tool-on-databricks", a: "sc", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Demand Collaboration Tool on Databricks", m: "", ml: "",
         s: "Led design and implementation of a demand collaboration tool where planners work in embedded Excel integrated with Databricks.",
         cx: "With more than 360K SKUs and over 3,000 new products a month, demand planning depends on collaboration between planners — and planners work in Excel.",
@@ -300,7 +304,7 @@ window.PORTFOLIO = {
         r: ["Los planificadores colaboran en una interfaz de Excel conocida","Aportes almacenados y gobernados en Databricks","Inputs de demanda conectados a los datos de planificación"],
         tg: ["Planificación de Demanda","Databricks","Excel"] } },
 
-    { a: "mo", co: "rch", org: "Riachuelo", y: "",
+    { id: "factory-capacity-and-master-planning-optimizer", a: "mo", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Factory Capacity & Master Planning Optimizer", m: "", ml: "",
         s: "Led design, implementation and evolution of a Python heuristics optimization tool for factory capacity and master planning.",
         cx: "The manufacturing complex produces over 40M units a year. Factory capacity and the master production plan must balance demand, production lines and constraints.",
@@ -323,7 +327,7 @@ window.PORTFOLIO = {
         r: ["Herramienta de optimización por heurísticas en Python en uso y en evolución","Planificación de capacidad y plan maestro apoyados por optimización","Herramientas de capacidad alimentadas por la plataforma de datos"],
         tg: ["Optimización","Heurísticas","Python"] } },
 
-    { a: "mo", co: "rch", org: "Riachuelo", y: "",
+    { id: "make-or-buy-decision-tool", a: "mo", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Make or Buy Decision Tool", m: "", ml: "",
         s: "Led design, implementation and evolution of a deterministic tool to support make-or-buy decisions.",
         cx: "Riachuelo produces part of its assortment in its own manufacturing complex and sources the rest from a base of more than 400 suppliers.",
@@ -346,7 +350,7 @@ window.PORTFOLIO = {
         r: ["Herramienta determinística de make or buy en uso y en evolución","Base común para comparar producción interna y tercerizada","Método repetible para las decisiones de sourcing"],
         tg: ["Make vs Buy","Apoyo a la Decisión","Manufactura"] } },
 
-    { a: "go", co: "rch", org: "Riachuelo", y: "",
+    { id: "briefing-checks-and-balances-panel", a: "go", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Briefing Checks & Balances Panel", m: "", ml: "",
         s: "Led design and implementation of the briefing data integration and a BI panel for checks and balances reporting.",
         cx: "Product briefings start each collection and drive commercial and supply decisions for over 3,000 new products a month. What was briefed must be checked against what is executed.",
@@ -369,7 +373,7 @@ window.PORTFOLIO = {
         r: ["Datos de briefing integrados a la plataforma de datos","Panel de BI de checks and balances entre briefing y ejecución","Parte del rediseño de los datos comerciales (briefing, margen, OTB)"],
         tg: ["Business Intelligence","Integración de Datos","Gobernanza"] } },
 
-    { a: "dp", co: "rch", org: "Riachuelo", y: "",
+    { id: "pricing-redesign-markdown-markup-and-promotions", a: "dp", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Pricing Redesign — Markdown, Markup & Promotions", m: "", ml: "",
         s: "Led design and implementation of the new SAP pricing integration into the data lake, covering markdown, markup and promotions.",
         cx: "With more than 360K SKUs across over 430 stores, pricing — including markdown, markup and promotions — has a direct impact on commercial results and margin.",
@@ -392,7 +396,7 @@ window.PORTFOLIO = {
         r: ["Datos de pricing de SAP integrados al data lake con un nuevo diseño","Datos de markdown, markup y promociones disponibles para el analytics comercial","Datos de precios que apoyan las decisiones de margen"],
         tg: ["Pricing","SAP","Data Lake"] } },
 
-    { a: "mo", co: "rch", org: "Riachuelo", y: "", hidden: true,
+    { id: "cutting-waste-optimization", a: "mo", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Cutting Waste Optimization", m: "7M/yr", ml: "waste reduction business case",
         s: "Reviewed the fabric-cutting optimization model behind commercial orders and built the business case for large-scale waste reduction.",
         cx: "Commercial orders flow into manufacturing, where cutting plans determine fabric consumption.",
@@ -408,7 +412,7 @@ window.PORTFOLIO = {
         r: ["Business case de 7M por ano em redução de desperdício","Oportunidades de pré-processamento mapeadas para o solver"],
         tg: ["Otimização","Modelos Discretos","Manufatura"] } },
 
-    { a: "ai", co: "rch", org: "Riachuelo", y: "", hidden: true,
+    { id: "launch-calendar-automation-with-ai", a: "ai", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Launch Calendar Automation with AI", m: "9,000+", ml: "follow-up tasks automated",
         s: "Designed the automation of product launch calendars, replacing manual follow-up with project management and RPA.",
         cx: "Product launches are coordinated through calendars involving many teams and deadlines.",
@@ -424,7 +428,7 @@ window.PORTFOLIO = {
         r: ["Automação de mais de 9.000 tarefas de follow-up em 50 calendários","Projeto aprovado combinando gestão de projetos e RPA"],
         tg: ["IA","RPA","Automação"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "",
+    { id: "supplier-contract-management-in-sap", a: "sc", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Supplier Contract Management in SAP", m: "", ml: "",
         s: "Moved external production supplier management from Excel to SAP standard contracts, keeping the SAP core clean.",
         cx: "Part of Riachuelo's production is outsourced to external suppliers, which requires control of terms, volumes and supplier commitments within a base of more than 400 suppliers.",
@@ -447,7 +451,7 @@ window.PORTFOLIO = {
         r: ["Solución dentro del core de SAP, usando contratos para gestionar la producción externa","Desarrollo a medida evitado con funcionalidad estándar","Gestión de proveedores fuera de las planillas"],
         tg: ["SAP","Compras","Clean Core"] } },
 
-    { a: "ai", co: "rch", org: "Riachuelo", y: "",
+    { id: "computer-vision-store-line-detection", a: "ai", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Computer Vision Store Line Detection", m: "", ml: "",
         s: "Reviewed the data pipeline for AI computer vision that detects lines in stores, and defined how to scale it.",
         cx: "Riachuelo uses AI computer vision to detect customer lines in its stores. The detection data needs to reach the analytics platform to be used by store operations.",
@@ -470,7 +474,7 @@ window.PORTFOLIO = {
         r: ["Plan para escalar la solución con ingeniería de datos","Decisión clara de trade-off sobre qué procesar y dónde","Camino de los datos de filas definido hasta la plataforma analítica"],
         tg: ["Visión Computacional","IA","Tiendas"] } },
 
-    { a: "dp", co: "rch", org: "Riachuelo", y: "", hidden: true,
+    { id: "plm-data-ingestion-architecture", a: "dp", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "PLM Data Ingestion Architecture", m: "", ml: "",
         s: "Simplified the architecture between PLM and Databricks, enabling direct integration and reducing development dependency.",
         cx: "Product lifecycle (PLM) data feeds product, sourcing and supply chain analytics.",
@@ -486,7 +490,7 @@ window.PORTFOLIO = {
         r: ["Integração direta com a origem em MongoDB","Menor dependência das equipes de desenvolvimento"],
         tg: ["PLM","Databricks","Arquitetura"] } },
 
-    { a: "go", co: "rch", org: "Riachuelo", y: "",
+    { id: "supply-chain-digital-roadmap", a: "go", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Supply Chain Digital Roadmap", m: "35", ml: "projects · 25M budget",
         s: "Built the first technology roadmap for supply chain, centralizing demands into a prioritized portfolio.",
         cx: "Reporting to the VP of Supply Chain and supporting the CDO and CTO, the role covered digital transformation across sourcing, integrated planning, foreign trade, quality, product development, manufacturing and operations.",
@@ -509,7 +513,7 @@ window.PORTFOLIO = {
         r: ["Roadmap estratégico de 3 años con más de 35 iniciativas","Presupuesto de 25M organizado por prioridad","Portafolio único para las demandas tecnológicas de supply chain"],
         tg: ["Roadmap","Portafolio","Supply Chain"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "",
+    { id: "dc-fair-share-allocation", a: "sc", co: "rch", org: "Riachuelo", y: "",
       en: { t: "DC Fair Share Allocation", m: "", ml: "",
         s: "Simplified the phasing model to accelerate fair-share allocation in the DRP and improve product availability at DCs.",
         cx: "The DRP distributes inventory from the network to Riachuelo's 3 distribution centers, which serve more than 430 stores.",
@@ -532,7 +536,7 @@ window.PORTFOLIO = {
         r: ["Implementación acelerada de la lógica de fair share en el DRP","Mayor disponibilidad de producto en los CDs","Modelo de faseo más simple para los planificadores"],
         tg: ["DRP","Asignación","Inventario"] } },
 
-    { a: "go", co: "rch", org: "Riachuelo", y: "", featured: 2,
+    { id: "it-product-management-for-supply-chain", a: "go", co: "rch", org: "Riachuelo", y: "", featured: 2,
       en: { t: "IT Product Management for Supply Chain", m: "", ml: "",
         s: "Raised product management maturity in supply chain technology with clear roles and governance rituals.",
         cx: "Supply chain and manufacturing technology demands compete for the same IT capacity, budget and partners, with many stakeholders across sourcing, planning, quality and operations.",
@@ -555,7 +559,7 @@ window.PORTFOLIO = {
         r: ["Rituales de tecnología y negocio para dar seguimiento al backlog","Mejor priorización de los proyectos de alto impacto","Rutinas de gobernanza tecnológica con el liderazgo de supply chain y TI","Más de 20 proyectos estratégicos y tácticos entregados"],
         tg: ["Gestión de Producto","PMO","Gobernanza"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "", hidden: true,
+    { id: "invoice-registration-failures", a: "sc", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Invoice Registration Failures", m: "12", ml: "quick wins",
         s: "Mapped the invoice process end to end and delivered quick wins and automations against a 25% error rate.",
         cx: "Invoice registration connects purchasing, receiving and tax compliance.",
@@ -571,7 +575,7 @@ window.PORTFOLIO = {
         r: ["12 quick wins com pequenas melhorias de tecnologia","3 automações usando XML e dados do SAP DRC"],
         tg: ["Processos","Automação","SAP DRC"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "",
+    { id: "ibp-software-selection", a: "sc", co: "rch", org: "Riachuelo", y: "",
       en: { t: "IBP Software Selection", m: "", ml: "",
         s: "Led the evaluation of IBP and supply chain planning tools with a data architecture fit analysis.",
         cx: "Riachuelo was selecting a new integrated business planning (IBP) / supply chain planning platform to connect commercial, supply and manufacturing plans.",
@@ -594,7 +598,7 @@ window.PORTFOLIO = {
         r: ["Riesgos de arquitectura no escalable anticipados antes de la contratación","Datos de entrada estáticos y dinámicos mapeados para la plataforma","Selección basada en la adherencia al negocio y a la arquitectura de datos"],
         tg: ["IBP","Selección de Software","Arquitectura"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "",
+    { id: "repeat-best-seller-tool", a: "sc", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Repeat Best Seller Tool", m: "", ml: "",
         s: "Defined requirements for best seller and FR tracking, delivered as a Databricks model and an order tracking system.",
         cx: "In fashion retail, best sellers and FR items concentrate a relevant share of sales, and repeating them at the right time drives availability and results.",
@@ -617,7 +621,7 @@ window.PORTFOLIO = {
         r: ["Modelo de identificación de best sellers en Databricks","Sistema de seguimiento de pedidos para repeat best sellers y FR","Requisitos claros compartidos entre negocio y tecnología"],
         tg: ["Retail","Databricks","Reposición"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "",
+    { id: "nos-program-forecast", a: "sc", co: "rch", org: "Riachuelo", y: "",
       en: { t: "NOS Program Forecast", m: "25→19%", ml: "MAPE, women's category",
         s: "Turned an Excel forecast into a scalable Databricks model for never-out-of-stock (NOS) programs.",
         cx: "Never-out-of-stock (NOS) programs keep core items continuously available across more than 430 stores, which depends on reliable forecasts.",
@@ -640,7 +644,7 @@ window.PORTFOLIO = {
         r: ["MAPE de la categoría femenina reducido del 25% al 19%","Modelo de forecast funcionando en Databricks","Quick win: de una herramienta en Excel a un modelo escalable"],
         tg: ["Forecasting","Databricks","Retail"] } },
 
-    { a: "dp", co: "rch", org: "Riachuelo", y: "", hidden: true,
+    { id: "databricks-enablement-workshops", a: "dp", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Databricks Enablement Workshops", m: "", ml: "",
         s: "Drove Databricks adoption among supply chain and manufacturing users through hands-on technical workshops.",
         cx: "The lakehouse only creates value when business users actually build on it.",
@@ -656,7 +660,7 @@ window.PORTFOLIO = {
         r: ["Usuários desenvolvendo em Databricks com mais governança","Caminho aberto para produtizar soluções criadas pelos usuários"],
         tg: ["Databricks","Adoção","Data Literacy"] } },
 
-    { a: "ai", co: "rch", org: "Riachuelo", y: "", featured: 8, hidden: true,
+    { id: "ai-domain-agents-for-retail-operations", a: "ai", co: "rch", org: "Riachuelo", y: "", featured: 8, hidden: true,
       en: { t: "AI Domain Agents for Retail Operations", m: "", ml: "",
         s: "Led design and implementation of AI agents with business context for the replenishment, stores and supply chain domains.",
         cx: "Replenishment, store and supply chain teams need fast answers grounded in their own data and business rules.",
@@ -672,7 +676,7 @@ window.PORTFOLIO = {
         r: ["Agentes de IA entregues para reposição, lojas e supply chain","Contexto de domínio e dados governados conectados a cada agente"],
         tg: ["Agentes de IA","GenAI","Varejo"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "", featured: 9,
+    { id: "o9-ibp-and-capacity-planning-data-engineering", a: "sc", co: "rch", org: "Riachuelo", y: "", featured: 9,
       en: { t: "o9 IBP & Capacity Planning Data Engineering", m: "", ml: "",
         s: "Led data engineering for the o9 Integrated Business Planning (IBP) platform and for the capacity planning tools.",
         cx: "Riachuelo adopted o9 for integrated business planning (IBP), connecting commercial, supply chain and manufacturing plans, alongside dedicated capacity planning tools.",
@@ -695,7 +699,7 @@ window.PORTFOLIO = {
         r: ["Integraciones de datos entregadas para o9 IBP","Herramientas de capacidad alimentadas por la plataforma de datos","Planificación sobre datos corporativos gobernados"],
         tg: ["o9","IBP","Ingeniería de Datos"] } },
 
-    { a: "go", co: "rch", org: "Riachuelo", y: "", hidden: true,
+    { id: "analytics-and-bi-as-a-service", a: "go", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Analytics & BI as-a-Service", m: "50+", ml: "strategic projects & products",
         s: "Structured analytics and BI as a service to amplify decision making across all retail areas.",
         cx: "Commercial, supply chain, manufacturing and operations all compete for analytics capacity.",
@@ -711,7 +715,7 @@ window.PORTFOLIO = {
         r: ["Analytics e BI entregues como serviço nas áreas do varejo","Mais de 50 projetos e produtos estratégicos entregues nas operações de varejo"],
         tg: ["BI","Modelo Operacional","Analytics"] } },
 
-    { a: "dp", co: "rch", org: "Riachuelo", y: "", hidden: true,
+    { id: "commercial-data-redesign-otb-share", a: "dp", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Commercial Data Redesign — OTB Share", m: "", ml: "",
         s: "Led design and implementation of the commercial data redesign, including open-to-buy (OTB) share.",
         cx: "Merchandise planning uses open-to-buy (OTB) to control purchasing budgets by category.",
@@ -727,7 +731,7 @@ window.PORTFOLIO = {
         r: ["Dados de OTB share redesenhados e integrados","Planejamento de mercadorias apoiado pela plataforma de dados"],
         tg: ["OTB","Merchandising","Integração de Dados"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "",
+    { id: "supply-chain-data-redesign-sourcing-quality-and-s-and-op", a: "sc", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Supply Chain Data Redesign — Sourcing, Quality & S&OP", m: "", ml: "",
         s: "Led design and implementation of the supply chain data redesign covering sourcing, quality and S&OP/S&OE.",
         cx: "With more than 400 suppliers and over 3,000 new products a month, sourcing, quality and S&OP/S&OE decisions depend on integrated supply chain data.",
@@ -750,7 +754,7 @@ window.PORTFOLIO = {
         r: ["Datos de sourcing, calidad y S&OP/S&OE rediseñados e integrados","Base de datos única para las decisiones de supply chain","S&OP y S&OE apoyados por los mismos datos"],
         tg: ["Sourcing","S&OP","Calidad"] } },
 
-    { a: "mo", co: "rch", org: "Riachuelo", y: "",
+    { id: "manufacturing-data-production-orders-and-raw-materials", a: "mo", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Manufacturing Data — Production Orders & Raw Materials", m: "", ml: "",
         s: "Led design and implementation of the manufacturing data integration for production orders and raw materials.",
         cx: "The manufacturing complex produces over 40M units a year, driven by production orders and raw material availability.",
@@ -773,7 +777,7 @@ window.PORTFOLIO = {
         r: ["Datos de órdenes de producción y materias primas integrados","Planificación y analytics de manufactura sobre una base común","Datos disponibles para las herramientas de capacidad y costos"],
         tg: ["Manufactura","Materias Primas","Integración de Datos"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "",
+    { id: "logistics-order-flow-integration", a: "sc", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Logistics Order Flow Integration", m: "", ml: "",
         s: "Led design and implementation of the logistics order flow data integration across the distribution network.",
         cx: "Orders flow from suppliers and the factory through 3 distribution centers to more than 430 stores.",
@@ -796,7 +800,7 @@ window.PORTFOLIO = {
         r: ["Flujo de pedidos de logística integrado de punta a punta","Visibilidad de los pedidos desde los CDs hasta las tiendas","Flujo de pedidos combinado con los datos del WMS"],
         tg: ["Logística","Flujo de Pedidos","Integración de Datos"] } },
 
-    { a: "go", co: "rch", org: "Riachuelo", y: "", hidden: true,
+    { id: "partner-contracts-and-performance-management", a: "go", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "Partner Contracts & Performance Management", m: "15+", ml: "direct team",
         s: "Managed data and technology partner contracts and performance, while developing a direct team of 15+.",
         cx: "Delivery relies on a mix of the internal team and external partners.",
@@ -812,7 +816,7 @@ window.PORTFOLIO = {
         r: ["Contratos e performance de parceiros gerenciados","Time direto de mais de 15 coordenadores, engenheiros e especialistas desenvolvido"],
         tg: ["Gestão de Fornecedores","Contratos","Liderança"] } },
 
-    { a: "sc", co: "rch", org: "Riachuelo", y: "", hidden: true,
+    { id: "sap-enhancements-for-supply-chain", a: "sc", co: "rch", org: "Riachuelo", y: "", hidden: true,
       en: { t: "SAP Enhancements for Supply Chain", m: "", ml: "",
         s: "Delivered SAP enhancement initiatives across several supply chain processes and modules.",
         cx: "Supply chain and manufacturing processes run on SAP.",
@@ -828,7 +832,7 @@ window.PORTFOLIO = {
         r: ["Melhorias SAP entregues em vários processos e módulos"],
         tg: ["SAP","Supply Chain","Requisitos"] } },
 
-    { a: "dp", co: "rch", org: "Riachuelo", y: "2025", featured: 3,
+    { id: "sap-datasphere-modernization", a: "dp", co: "rch", org: "Riachuelo", y: "2025", featured: 3,
       en: { t: "SAP Datasphere Modernization", m: "−75%", ml: "integration lead time",
         s: "Rebuilt SAP ECC/S/4 data acquisition with SAP Datasphere and Databricks, closing the supply chain and manufacturing data gap in the lake.",
         cx: "Supply chain and manufacturing decisions depended on SAP ECC and S/4 data, much of which was missing from the corporate data lake — a large data gap for supply chain and industry.",
@@ -851,7 +855,7 @@ window.PORTFOLIO = {
         r: ["Reducción del 75% en el lead time de nuevas integraciones","Menor dependencia de ABAP: 600K en el piloto, con un potencial de reducción de 2M","Datos disponibles más rápido y menor complejidad de integración","Patrón reutilizable y escalable a nuevos dominios"],
         tg: ["Data Lake","Ingeniería de Datos","Reducción de Costos"] } },
 
-    { a: "dp", co: "sam", org: "Samsung SDS", y: "2018", featured: 6,
+    { id: "large-volume-edi-platform-for-key-retail-accounts", a: "dp", co: "sam", org: "Samsung SDS", y: "2018", featured: 6,
       en: { t: "Large-Volume EDI Platform for Key Retail Accounts", m: "", ml: "",
         s: "As Product Owner, led a large-volume EDI platform connecting sell-out and inventory data from Brazil's main key accounts, built in-house on the Apache big data stack.",
         cx: "Samsung SDS, Samsung's IT arm, supported Samsung's supply chain, S&OP/IBP and CPFR processes in Brazil. Samsung needed sell-out and inventory visibility from its main Brazilian retail key accounts, exchanged electronically (EDI) in large volumes.",
@@ -874,7 +878,7 @@ window.PORTFOLIO = {
         r: ["Sell-out e inventario conectados entre los principales key accounts de Brasil","Plataforma operando en pocos meses e internalizada por Samsung","Plataforma interna que reemplaza soluciones de mercado","Requisitos de los clientes implementados con soporte técnico dedicado"],
         tg: ["EDI","Hadoop","NiFi"] } },
 
-    { a: "ec", co: "sam", org: "Samsung", y: "", featured: 10,
+    { id: "marketplace-data-hub", a: "ec", co: "sam", org: "Samsung", y: "", featured: 10,
       en: { t: "Marketplace Data Hub", m: "8", ml: "marketplaces integrated",
         s: "Built a marketplace data hub integrating Amazon, Magalu, Mercado Livre, Inter, Fast Shop, Carrefour, Leroy Merlin and KaBuM.",
         cx: "Samsung's e-commerce operation in Brazil covers B2C, D2C and O2O through its own eStore and the main marketplaces, with logistics in the middle and last mile.",
@@ -897,7 +901,7 @@ window.PORTFOLIO = {
         r: ["8 marketplaces integrados en un único hub de datos","Visión unificada de la operación de marketplaces","Insumo para la control tower de supply chain de punta a punta"],
         tg: ["Marketplaces","E-commerce","Hub de Datos"] } },
 
-    { a: "ec", co: "sam", org: "Samsung", y: "", featured: 11,
+    { id: "end-to-end-order-monitoring-with-elasticsearch", a: "ec", co: "sam", org: "Samsung", y: "", featured: 11,
       en: { t: "End-to-End Order Monitoring with ElasticSearch", m: "", ml: "",
         s: "End-to-end order management monitoring with ElasticSearch logs, metrics and tracing.",
         cx: "Orders flow across SAP, Cello TMS, the VTEX e-commerce and the marketplaces, with teams and stakeholders in Brazil and Korea.",
@@ -920,7 +924,7 @@ window.PORTFOLIO = {
         r: ["Visibilidad de punta a punta del flujo de pedidos","Fallas de integración rastreables entre sistemas","Monitoreo que apoya el rediseño de la integración de pedidos"],
         tg: ["Observabilidad","ElasticSearch","OMS"] } },
 
-    { a: "ec", co: "sam", org: "Samsung", y: "",
+    { id: "scm-portal-order-tracking", a: "ec", co: "sam", org: "Samsung", y: "",
       en: { t: "SCM Portal — Order Tracking", m: "LatAm", ml: "rollout",
         s: "SCM portal for order management tracking, rolled out to Latin America.",
         cx: "A data-driven, end-to-end supply chain control tower was one of the strategic drivers of the role, connecting e-commerce and operations.",
@@ -943,7 +947,7 @@ window.PORTFOLIO = {
         r: ["Portal de seguimiento de pedidos en uso por la operación","Extendido a América Latina","Parte de la visibilidad de la control tower de punta a punta"],
         tg: ["Seguimiento","Portal","SCM"] } },
 
-    { a: "sc", co: "sam", org: "Samsung", y: "",
+    { id: "logistics-cost-data-lakehouse", a: "sc", co: "sam", org: "Samsung", y: "",
       en: { t: "Logistics Cost Data Lakehouse", m: "", ml: "",
         s: "Logistics cost lakehouse enabling better freight analytics and simulations.",
         cx: "Freight is one of the main cost drivers of e-commerce and last-mile operations, across many carriers and hubs.",
@@ -966,7 +970,7 @@ window.PORTFOLIO = {
         r: ["Analytics de costo de flete en un único lakehouse","Simulaciones de flete para apoyar decisiones logísticas","Datos de costos que alimentan la gestión del desempeño de transportistas"],
         tg: ["Lakehouse","Flete","Logística"] } },
 
-    { a: "dp", co: "sam", org: "Samsung", y: "",
+    { id: "data-ingestion-for-100-new-sources", a: "dp", co: "sam", org: "Samsung", y: "",
       en: { t: "Data Ingestion for 100+ New Sources", m: "100+", ml: "new data sources",
         s: "Ingestion pipelines for 100+ new data sources into SAP HANA using Pentaho, Talend and T-SQL.",
         cx: "Supply chain, e-commerce and logistics analytics needed data from many new sources to build the end-to-end view.",
@@ -989,7 +993,7 @@ window.PORTFOLIO = {
         r: ["Más de 100 nuevas fuentes de datos ingeridas en SAP HANA","Numerosos data marts y reportes descriptivos y predictivos","Base de datos para la control tower y el analytics de e-commerce"],
         tg: ["Ingesta","SAP HANA","Pentaho"] } },
 
-    { a: "dp", co: "sam", org: "Samsung", y: "",
+    { id: "unified-data-warehouse-with-rpa-ftp-and-apis", a: "dp", co: "sam", org: "Samsung", y: "",
       en: { t: "Unified Data Warehouse with RPA, FTP & APIs", m: "", ml: "",
         s: "Unified data warehouse fed by RPAs, FTP and APIs.",
         cx: "Operational data came from systems and partners with very different access methods, including some with no direct integration available.",
@@ -1012,7 +1016,7 @@ window.PORTFOLIO = {
         r: ["Data warehouse único que consolida fuentes vía RPA, FTP y APIs","Fuentes sin integración nativa disponibles para analytics","Menos extracciones manuales"],
         tg: ["Data Warehouse","RPA","APIs"] } },
 
-    { a: "dp", co: "sam", org: "Samsung", y: "",
+    { id: "financial-data-lake-and-reconciliation", a: "dp", co: "sam", org: "Samsung", y: "",
       en: { t: "Financial Data Lake & Reconciliation", m: "~60M", ml: "reconciliation mitigated",
         s: "Built the data ingestion and model that took financial reconciliation out of Excel.",
         cx: "D2C operations between e-commerce and last mile generated high volumes of financial transactions across systems that had to be reconciled.",
@@ -1035,7 +1039,7 @@ window.PORTFOLIO = {
         r: ["~60M en conciliación financiera mitigada, estabilizando la operación D2C entre e-commerce y última milla","5M de registros de movimientos en la base de BI","Partidas abiertas reducidas de 20K (60M) a cerca de 5K"],
         tg: ["Data Lake","Finanzas","BI"] } },
 
-    { a: "dp", co: "sam", org: "Samsung", y: "",
+    { id: "e-commerce-data-lake-redesign", a: "dp", co: "sam", org: "Samsung", y: "",
       en: { t: "E-commerce Data Lake Redesign", m: "", ml: "",
         s: "Redesigned the e-commerce data lake with batch and streaming data, enabling a centralized control tower.",
         cx: "E-commerce operations depend on integrated commercial, supply and logistics data to build a customer journey that connects e-commerce and operations.",
@@ -1058,7 +1062,7 @@ window.PORTFOLIO = {
         r: ["Data lake entregado con datos batch y streaming","Pipeline del eStore rediseñado de ETL a ELT en SAP HANA","Base para el proyecto de control tower centralizada"],
         tg: ["Data Lake","Streaming","E-commerce"] } },
 
-    { a: "ec", co: "sam", org: "Samsung", y: "", featured: 4,
+    { id: "e-commerce-d2c-order-integration", a: "ec", co: "sam", org: "Samsung", y: "", featured: 4,
       en: { t: "E-commerce D2C Order Integration", m: "−90%", ml: "order status errors",
         s: "Led a cross-team effort that integrated D2C orders with SCM and TMS, cutting order status errors by 90%.",
         cx: "Direct-to-consumer orders must flow from the eStore and marketplaces through SAP, supply chain and transportation systems to the last mile.",
@@ -1081,7 +1085,7 @@ window.PORTFOLIO = {
         r: ["Reducción del 90% en los errores de estado de pedidos de punta a punta en los marketplaces","Integración de pedidos rediseñada entre SAP, TMS, VTEX y marketplaces","Operación D2C más estable entre e-commerce y última milla"],
         tg: ["D2C","Integración","TMS"] } },
 
-    { a: "mo", co: "sam", org: "Samsung", y: "",
+    { id: "refrigerator-returns-root-cause", a: "mo", co: "sam", org: "Samsung", y: "",
       en: { t: "Refrigerator Returns Root Cause", m: "", ml: "",
         s: "Traced a sudden spike in refrigerator returns to a procedure change at the Mexico plant using CRM data.",
         cx: "Returns hit cost, customer experience and brand. Refrigerator returns were tracked as part of last-mile carrier performance management.",
@@ -1104,7 +1108,7 @@ window.PORTFOLIO = {
         r: ["Los datos de CRM revelaron un defecto recurrente (agujero) en la parte superior de los equipos","Causa raíz vinculada a un cambio de procedimiento en la planta de México","Problema llevado de la logística a la manufactura con evidencia en datos"],
         tg: ["Causa Raíz","Calidad","CRM"] } },
 
-    { a: "ai", co: "sam", org: "Samsung", y: "",
+    { id: "last-mile-delay-prediction", a: "ai", co: "sam", org: "Samsung", y: "",
       en: { t: "Last-Mile Delay Prediction", m: "−15%", ml: "delays avoided (pilot)",
         s: "Led a data science team on a multi-hub predictive model for last-mile delays across 40K orders/day, avoiding 15% of delays in the pilot.",
         cx: "Last-mile performance drives customer satisfaction in e-commerce. The operation handled around 40K orders a day across multiple hubs.",
@@ -1127,7 +1131,7 @@ window.PORTFOLIO = {
         r: ["15% de los retrasos evitados en el piloto","Modelo multi-hub sobre 40 mil pedidos por día","Reporte creado para apoyar al equipo de atención"],
         tg: ["Data Science","Última Milla","Predicción"] } },
 
-    { a: "sc", co: "sam", org: "Samsung", y: "",
+    { id: "address-not-found-analysis", a: "sc", co: "sam", org: "Samsung", y: "",
       en: { t: "Address-Not-Found Analysis", m: "30%", ml: "carriers misreporting the reason",
         s: "Uncovered that 30% of carriers were misreporting 'address not found', giving logistics visibility to act on the real causes.",
         cx: "Failed deliveries create cost, repeated attempts and a poor customer experience. Delivery fail reasons were part of last-mile carrier performance management.",
@@ -1150,7 +1154,7 @@ window.PORTFOLIO = {
         r: ["El 30% de los transportistas informaba un motivo falso","Logística obtuvo visibilidad para actuar sobre las causas reales","Gestión del desempeño de transportistas basada en evidencia"],
         tg: ["Logística","Analytics","Transportistas"] } },
 
-    { a: "go", co: "pln", org: { en: "Planus Tech · Founder", pt: "Planus Tech · Fundador", es: "Planus Tech · Fundador" }, y: "2018", featured: 12,
+    { id: "building-planus-from-scratch", a: "go", co: "pln", org: { en: "Planus Tech · Founder", pt: "Planus Tech · Fundador", es: "Planus Tech · Fundador" }, y: "2018", featured: 12,
       en: { t: "Building Planus from Scratch", m: "20+", ml: "enterprise clients",
         s: "Founded and led Planus, a data engineering and supply chain analytics company: 10-person team, 20+ enterprise clients across five sectors.",
         cx: "Planus was a technology, data engineering and analytics company focused on supply chain solutions: SaaS platforms and on-demand tools for forecasting, optimization, resource planning and business collaboration.",
@@ -1173,7 +1177,7 @@ window.PORTFOLIO = {
         r: ["Más de 20 clientes enterprise en Alimentos y Bebidas, Química, Agronegocio, Farma e Industrial","Equipo de 10 personas entre negocios, proyectos e ingeniería","SaaS y herramientas a demanda para forecast, optimización y planificación","6 años de operación (2018–2024)"],
         tg: ["Emprendimiento","Liderazgo","SaaS"] } },
 
-    { a: "ai", co: "pln", org: { en: "Planus Tech · Multiple segments", pt: "Planus Tech · Vários segmentos", es: "Planus Tech · Varios segmentos" }, y: "",
+    { id: "statistical-forecasting-models-library", a: "ai", co: "pln", org: { en: "Planus Tech · Multiple segments", pt: "Planus Tech · Vários segmentos", es: "Planus Tech · Varios segmentos" }, y: "",
       en: { t: "Statistical Forecasting Models Library", m: "6", ml: "segments served",
         s: "Predictive models in Python (Darts, Orbit, sktime, statsmodels, Prophet, GLM) to improve forecast accuracy across segments.",
         cx: "Clients in agribusiness, animal pharma, food & beverage, food grains, garden products and ice cream needed better demand forecasts for their S&OP.",
@@ -1196,7 +1200,7 @@ window.PORTFOLIO = {
         r: ["Modelos de forecast aplicados en seis segmentos","Enfoque reutilizable integrado a los ciclos de S&OP","Elección del método adaptada a cada patrón de demanda"],
         tg: ["Forecasting","Python","CRISP-DM"] } },
 
-    { a: "dp", co: "pln", org: { en: "Planus Tech · Global beverage & confectionery · Large enterprise", pt: "Planus Tech · Bebidas e confeitaria globais · Grande porte", es: "Planus Tech · Bebidas y confitería globales · Gran empresa" }, y: "",
+    { id: "bi-and-data-lake-for-beverage-and-confectionery", a: "dp", co: "pln", org: { en: "Planus Tech · Global beverage & confectionery · Large enterprise", pt: "Planus Tech · Bebidas e confeitaria globais · Grande porte", es: "Planus Tech · Bebidas y confitería globales · Gran empresa" }, y: "",
       en: { t: "BI & Data Lake for Beverage and Confectionery", m: "", ml: "",
         s: "Descriptive, predictive and prescriptive analytics with data lake and data warehouse implementations.",
         cx: "Large global beverage and confectionery companies needed business intelligence built on a solid data foundation.",
@@ -1219,7 +1223,7 @@ window.PORTFOLIO = {
         r: ["Data lake y data warehouse implementados","BI descriptivo, predictivo y prescriptivo entregado","Capa semántica lista para los usuarios de negocio"],
         tg: ["BI","Data Lake","Data Warehouse"] } },
 
-    { a: "go", co: "pln", org: { en: "Planus Tech · Advisory", pt: "Planus Tech · Consultoria", es: "Planus Tech · Consultoría" }, y: "",
+    { id: "mrp-n-training-and-consulting", a: "go", co: "pln", org: { en: "Planus Tech · Advisory", pt: "Planus Tech · Consultoria", es: "Planus Tech · Consultoría" }, y: "",
       en: { t: "MRP-N Training & Consulting", m: "", ml: "",
         s: "Implementation, training and consulting engagements as subcontracted advisor in analytics engineering and supply planning.",
         cx: "Besides its own products, Planus took part in implementation and consulting engagements for enterprise clients as a subcontracted advisor.",
@@ -1242,7 +1246,7 @@ window.PORTFOLIO = {
         r: ["Capacitación y consultoría MRP-N entregadas","Soluciones de analytics engineering y planificación de abastecimiento para clientes enterprise","Equipos de los clientes capacitados en nuevos métodos de planificación"],
         tg: ["Consultoría","Capacitación","MRP"] } },
 
-    { a: "ai", co: "pln", org: { en: "Planus Tech · Own SaaS product", pt: "Planus Tech · Produto SaaS próprio", es: "Planus Tech · Producto SaaS propio" }, y: "",
+    { id: "demand-planning-saas-from-scratch", a: "ai", co: "pln", org: { en: "Planus Tech · Own SaaS product", pt: "Planus Tech · Produto SaaS próprio", es: "Planus Tech · Producto SaaS propio" }, y: "",
       en: { t: "Demand Planning SaaS from Scratch", m: "300", ml: "models in best-fit forecasting",
         s: "Led the technical team that built a demand planning SaaS on Azure, with best-fit selection across about 300 models.",
         cx: "Companies needed modern, accessible demand planning tools, and Planus saw the opportunity to offer demand planning as a SaaS product.",
@@ -1265,7 +1269,7 @@ window.PORTFOLIO = {
         r: ["Herramienta visual y estadística para llevar la planificación a otro nivel","Forecast best-fit con cerca de 300 modelos","Producto SaaS ofrecido a los clientes de Planus"],
         tg: ["SaaS","Azure","Forecasting"] } },
 
-    { a: "sc", co: "pln", org: { en: "Planus Tech · Home décor retail · Mid-size", pt: "Planus Tech · Varejo de decoração · Médio porte", es: "Planus Tech · Retail de decoración · Mediana empresa" }, y: "",
+    { id: "container-formation-optimization", a: "sc", co: "pln", org: { en: "Planus Tech · Home décor retail · Mid-size", pt: "Planus Tech · Varejo de decoração · Médio porte", es: "Planus Tech · Retail de decoración · Mediana empresa" }, y: "",
       en: { t: "Container Formation Optimization", m: "4 days → 30 min", ml: "container planning",
         s: "Optimization tool that cut container formation for order taking from 4 days to 30 minutes.",
         cx: "A mid-size home décor retailer buys imported products, and order taking requires grouping items into containers.",
@@ -1288,7 +1292,7 @@ window.PORTFOLIO = {
         r: ["Herramienta entregada para planificar contenedores","Proceso reducido de 4 días a 30 minutos","Planificadores liberados para el análisis en lugar de la agrupación manual"],
         tg: ["Optimización","Solver","Logística"] } },
 
-    { a: "ai", co: "pln", org: { en: "Planus Tech · Animal health · Large enterprise", pt: "Planus Tech · Saúde animal · Grande porte", es: "Planus Tech · Salud animal · Gran empresa" }, y: "",
+    { id: "demand-correlation-with-exogenous-data", a: "ai", co: "pln", org: { en: "Planus Tech · Animal health · Large enterprise", pt: "Planus Tech · Saúde animal · Grande porte", es: "Planus Tech · Salud animal · Gran empresa" }, y: "",
       en: { t: "Demand Correlation with Exogenous Data", m: "Lag 6", ml: "correlation, Asian suppliers",
         s: "Explained demand peaks with exogenous factors, finding strong lagged correlation with Asian supplier market data.",
         cx: "A large animal health company faced demand peaks that affected inventory and service levels.",
@@ -1311,7 +1315,7 @@ window.PORTFOLIO = {
         r: ["Alta correlación con un desfase de 6 periodos para proveedores asiáticos","Señales exógenas anticipadas disponibles para mejorar el forecast","Explicación para picos antes vistos como impredecibles"],
         tg: ["Forecasting","Datos Exógenos","Analytics"] } },
 
-    { a: "mo", co: "pln", org: { en: "Planus Tech · Chemicals · Large enterprise", pt: "Planus Tech · Química · Grande porte", es: "Planus Tech · Química · Gran empresa" }, y: "",
+    { id: "mps-optimization-solver", a: "mo", co: "pln", org: { en: "Planus Tech · Chemicals · Large enterprise", pt: "Planus Tech · Química · Grande porte", es: "Planus Tech · Química · Gran empresa" }, y: "",
       en: { t: "MPS Optimization Solver", m: "", ml: "",
         s: "Replaced manual master production scheduling with a linear optimization model feeding S&OP.",
         cx: "A large chemical company runs a master production schedule (MPS) that balances demand, capacity and inventory and feeds the S&OP.",
@@ -1334,7 +1338,7 @@ window.PORTFOLIO = {
         r: ["Proceso de MPS optimizado con un solver lineal","Plan de producción entregado para el S&OP","Replanificación más rápida en una herramienta conocida"],
         tg: ["MPS","Optimización","S&OP"] } },
 
-    { a: "ai", co: "pln", org: { en: "Planus Tech · Ice cream manufacturer · Mid-size", pt: "Planus Tech · Fabricante de sorvetes · Médio porte", es: "Planus Tech · Fabricante de helados · Mediana empresa" }, y: "", featured: 7,
+    { id: "weather-driven-forecast", a: "ai", co: "pln", org: { en: "Planus Tech · Ice cream manufacturer · Mid-size", pt: "Planus Tech · Fabricante de sorvetes · Médio porte", es: "Planus Tech · Fabricante de helados · Mediana empresa" }, y: "", featured: 7,
       en: { t: "Weather-Driven Forecast", m: "+30 pp", ml: "accuracy, 7-day daily forecast",
         s: "Weather-driven daily forecasting for an ice cream company, improving accuracy by up to 30 percentage points.",
         cx: "A mid-size ice cream manufacturer plans production and distribution on a daily basis, and ice cream demand is highly sensitive to weather.",
@@ -1357,7 +1361,7 @@ window.PORTFOLIO = {
         r: ["+30 pp de precisión en el forecast diario a 7 días","+20 pp de precisión en el forecast diario a 15 días","Datos climáticos incorporados a la planificación diaria"],
         tg: ["Forecasting","Python","Clima"] } },
 
-    { a: "go", co: "pln", org: { en: "Planus Tech · Own go-to-market", pt: "Planus Tech · Go-to-market próprio", es: "Planus Tech · Go-to-market propio" }, y: "",
+    { id: "saas-go-to-market-on-a-lean-budget", a: "go", co: "pln", org: { en: "Planus Tech · Own go-to-market", pt: "Planus Tech · Go-to-market próprio", es: "Planus Tech · Go-to-market propio" }, y: "",
       en: { t: "SaaS Go-to-Market on a Lean Budget", m: "5", ml: "clients in 6 months",
         s: "Designed a lean sales model with a fixed-plus-success SDR contract, closing 5 clients in 6 months.",
         cx: "As a startup, Planus needed to grow revenue for its demand planning SaaS without a large sales team.",
@@ -1380,7 +1384,7 @@ window.PORTFOLIO = {
         r: ["5 clientes cerrados en 6 meses","Costos operativos sostenidos","Costo de ventas ligado a los negocios cerrados"],
         tg: ["Go-to-Market","Ventas","SaaS"] } },
 
-    { a: "dp", co: "pln", org: { en: "Planus Tech · Beverage bottler · Large enterprise", pt: "Planus Tech · Engarrafador de bebidas · Grande porte", es: "Planus Tech · Embotellador de bebidas · Gran empresa" }, y: "",
+    { id: "long-range-planning-productization", a: "dp", co: "pln", org: { en: "Planus Tech · Beverage bottler · Large enterprise", pt: "Planus Tech · Engarrafador de bebidas · Grande porte", es: "Planus Tech · Embotellador de bebidas · Gran empresa" }, y: "",
       en: { t: "Long-Range Planning Productization", m: "", ml: "",
         s: "Turned a long-range planning tool built in Excel and Power BI into a PySpark data product on Azure Synapse.",
         cx: "A large Latin American beverage bottler used a long-range planning (LRP) tool, built in Excel and Power BI, to support capacity and investment decisions.",
@@ -1403,7 +1407,7 @@ window.PORTFOLIO = {
         r: ["Herramienta funcionando en el entorno Azure Synapse del cliente","Embotellador de América Latina listo para escalar globalmente","Lógica de LRP llevada de las planillas a un producto de datos"],
         tg: ["PySpark","Synapse","LRP"] } },
 
-    { a: "sc", co: "pln", org: { en: "Planus Tech · Oil & gas", pt: "Planus Tech · Óleo e gás", es: "Planus Tech · Petróleo y gas" }, y: "", featured: 5,
+    { id: "oil-and-gas-inventory-optimization", a: "sc", co: "pln", org: { en: "Planus Tech · Oil & gas", pt: "Planus Tech · Óleo e gás", es: "Planus Tech · Petróleo y gas" }, y: "", featured: 5,
       en: { t: "Oil & Gas Inventory Optimization", m: "4 days → min", ml: "inventory replanning",
         s: "Web optimization tool for serialized inventory that cut replanning from 4 days to minutes.",
         cx: "An oil and gas operation manages high-value, serialized inventory across many locations, where each item must be tracked and allocated individually.",
@@ -1426,7 +1430,7 @@ window.PORTFOLIO = {
         r: ["Gestión de inventario serializado, ítem por ítem","Replanificación reducida de 4 días a pocos minutos","Herramienta web usada por la operación, sin planillas"],
         tg: ["Optimización","Aplicación Web","Inventario"] } },
 
-    { a: "go", co: "early", org: { en: "Axsis · Industrial conglomerate · Large enterprise", pt: "Axsis · Conglomerado industrial · Grande porte", es: "Axsis · Conglomerado industrial · Gran empresa" }, y: "2016",
+    { id: "global-transfer-allocation-rfp", a: "go", co: "early", org: { en: "Axsis · Industrial conglomerate · Large enterprise", pt: "Axsis · Conglomerado industrial · Grande porte", es: "Axsis · Conglomerado industrial · Gran empresa" }, y: "2016",
       en: { t: "Global Transfer Allocation RFP", m: "R$3M", ml: "project closed",
         s: "Built the winning proposal for transfer allocation in global operations, closing an R$3M project.",
         cx: "Axsis delivered demand and supply planning solutions for industrial and FMCG companies. A large industrial group issued an RFP for transfer allocation in its global operations.",
@@ -1449,7 +1453,7 @@ window.PORTFOLIO = {
         r: ["Negocio cerrado: proyecto de R$ 3M","Propuesta que combina experiencia en planificación y tecnología de socios"],
         tg: ["Preventa","MPS","Consultoría"] } },
 
-    { a: "mo", co: "early", org: { en: "Axsis · Beverage bottler · Large enterprise", pt: "Axsis · Engarrafador de bebidas · Grande porte", es: "Axsis · Embotellador de bebidas · Gran empresa" }, y: "2016",
+    { id: "beverage-bottler-mps-implementation", a: "mo", co: "early", org: { en: "Axsis · Beverage bottler · Large enterprise", pt: "Axsis · Engarrafador de bebidas · Grande porte", es: "Axsis · Embotellador de bebidas · Gran empresa" }, y: "2016",
       en: { t: "Beverage Bottler MPS Implementation", m: "3 months", ml: "to production plan",
         s: "Master production schedule (MPS) implementation for a large beverage bottling plant, delivered in a 3-month project.",
         cx: "A large beverage bottling plant needed a structured master production schedule (MPS) to plan production and stock.",
@@ -1472,7 +1476,7 @@ window.PORTFOLIO = {
         r: ["Proyecto de 3 meses que entregó el plan de producción","Políticas de inventario modeladas","Proceso de planificación mapeado y estructurado"],
         tg: ["MPS","APS","Consultoría"] } },
 
-    { a: "sc", co: "early", org: { en: "Axsis · FMCG · Large enterprises", pt: "Axsis · FMCG · Grande porte", es: "Axsis · FMCG · Grandes empresas" }, y: "2015",
+    { id: "planning-software-implementations-in-fmcg", a: "sc", co: "early", org: { en: "Axsis · FMCG · Large enterprises", pt: "Axsis · FMCG · Grande porte", es: "Axsis · FMCG · Grandes empresas" }, y: "2015",
       en: { t: "Planning Software Implementations in FMCG", m: "", ml: "",
         s: "Led the PMO of demand and supply planning software implementations in FMCG, from concept to go-live.",
         cx: "Axsis implemented demand and supply planning software, mostly for FMCG companies: demand planning and forecast, MPS/APS/PPCM/MRP/DRP/TMS and inventory, and S&OP/IBP processes.",
@@ -1495,7 +1499,7 @@ window.PORTFOLIO = {
         r: ["Soluciones de planificación llevadas al go-live en FMCG","PMO de punta a punta, del concepto al go-live","Cobertura desde materias primas hasta transporte"],
         tg: ["PMO","Implementación","FMCG"] } },
 
-    { a: "go", co: "early", org: { en: "Axsis · Consulting practice", pt: "Axsis · Consultoria", es: "Axsis · Consultoría" }, y: "2015",
+    { id: "consulting-practice-growth-sales-and-marketing", a: "go", co: "early", org: { en: "Axsis · Consulting practice", pt: "Axsis · Consultoria", es: "Axsis · Consultoría" }, y: "2015",
       en: { t: "Consulting Practice Growth — Sales & Marketing", m: "", ml: "",
         s: "Led sales, pre-sales and the commercial and marketing strategy (field and digital) of the consulting practice.",
         cx: "As a partner at Axsis, growing the consulting practice was part of the role, alongside project delivery.",
@@ -1518,7 +1522,7 @@ window.PORTFOLIO = {
         r: ["Proceso de ventas y preventa conducido","Estrategia de marketing de campo y digital","Relación con proveedores de servicios gestionada"],
         tg: ["Preventa","Marketing","Consultoría"] } },
 
-    { a: "sc", co: "early", org: "Ypê", y: "2014",
+    { id: "drp-with-cargo-formation", a: "sc", co: "early", org: "Ypê", y: "2014",
       en: { t: "DRP with Cargo Formation", m: "3 → 1", ml: "planners, in less time",
         s: "Multimodal DRP model (road, rail, cabotage) that let one planner do the work of three in less time.",
         cx: "At Ypê, transfers between plants and distribution centers could use road, rail or cabotage, each with different cost, lead time and load rules.",
@@ -1541,7 +1545,7 @@ window.PORTFOLIO = {
         r: ["De 3 planificadores a 1, en menos tiempo","Plan de transferencias que cubre carretera, ferrocarril y cabotaje","Formación de carga incorporada al DRP"],
         tg: ["DRP","Multimodal","Logística"] } },
 
-    { a: "sc", co: "early", org: "Ypê", y: "2013",
+    { id: "drp-tool-for-5-dcs-and-plants", a: "sc", co: "early", org: "Ypê", y: "2013",
       en: { t: "DRP Tool for 5 DCs and Plants", m: "1M/yr", ml: "savings with cabotage",
         s: "Excel + VBA planning tool for 5 DCs and plants that captured cabotage savings and cut rail by 30%.",
         cx: "Ypê distributes from its plants through 5 distribution centers in Brazil; distribution planning drove transport mode decisions.",
@@ -1564,7 +1568,7 @@ window.PORTFOLIO = {
         r: ["Ahorro de 1M por año con cabotaje","Transporte ferroviario −30%","Planificación y control de transferencias automatizados"],
         tg: ["DRP","VBA","Transporte"] } },
 
-    { a: "mo", co: "early", org: "Ypê", y: "2013",
+    { id: "aps-mps-for-100-production-lines", a: "mo", co: "early", org: "Ypê", y: "2013",
       en: { t: "APS / MPS for 100+ Production Lines", m: "100+", ml: "production lines",
         s: "Solver-based supply planning integrated with SQL for more than 100 production lines, stabilized in 6 months.",
         cx: "Ypê's supply review covered production planning, inventory, transfers and materials for 5 business units, more than 100 production lines and 5 DCs.",
@@ -1587,7 +1591,7 @@ window.PORTFOLIO = {
         r: ["Proceso estabilizado y en operación en 6 meses","Supply review apoyado por optimización en más de 100 líneas","Solver integrado con los datos de la empresa"],
         tg: ["APS","MPS","Solver"] } },
 
-    { a: "sc", co: "early", org: "Ypê", y: "2014",
+    { id: "s-and-op-supply-review-leadership", a: "sc", co: "early", org: "Ypê", y: "2014",
       en: { t: "S&OP Supply Review Leadership", m: "5", ml: "business units",
         s: "Led steps 2 and 3 of the S&OP process (supply review) with mid and senior managers from 5 business units.",
         cx: "Ypê's S&OP aligned 5 business units with production, distribution centers and logistics, transportation, procurement and materials.",
@@ -1610,7 +1614,7 @@ window.PORTFOLIO = {
         r: ["Supply review conducido con BUs, producción, CDs, transporte, compras y materiales","Plan de abastecimiento acordado entre las áreas en cada ciclo de S&OP"],
         tg: ["S&OP","Supply Review","Liderazgo"] } },
 
-    { a: "sc", co: "early", org: "Ypê", y: "2011",
+    { id: "transportation-budget-and-cost-reduction", a: "sc", co: "early", org: "Ypê", y: "2011",
       en: { t: "Transportation Budget & Cost Reduction", m: "~$100M", ml: "transportation budget",
         s: "Built the company-wide transportation budget and the cost reduction breakdown.",
         cx: "Transportation was one of Ypê's largest logistics costs, with a company-wide budget of about $100M.",
@@ -1633,7 +1637,7 @@ window.PORTFOLIO = {
         r: ["Presupuesto construido para cerca de $100M en transporte","Análisis de ocupación, drop size y reducción de costos","Presupuesto basado en los datos del sistema de flete"],
         tg: ["Transporte","Presupuesto","Costos"] } },
 
-    { a: "go", co: "early", org: "Ypê", y: "2011",
+    { id: "industrial-process-management", a: "go", co: "early", org: "Ypê", y: "2011",
       en: { t: "Industrial Process Management", m: "", ml: "",
         s: "Applied quality management tools across industrial business units: BPM, PDCA/SDCA, Six Sigma, Kaizen and process mapping.",
         cx: "Ypê's industrial business units needed standardized, continuously improving processes and stronger leadership routines.",
@@ -1656,7 +1660,7 @@ window.PORTFOLIO = {
         r: ["Herramientas de gestión de la calidad aplicadas en las BUs industriales","Gerentes, supervisores y líderes capacitados","Mapeo de procesos como base para rutinas estándar"],
         tg: ["Lean Six Sigma","BPM","Kaizen"] } },
 
-    { a: "sc", co: "early", org: "Rede", y: "2014",
+    { id: "serialized-asset-drp-and-reverse-logistics", a: "sc", co: "early", org: "Rede", y: "2014",
       en: { t: "Serialized Asset DRP & Reverse Logistics", m: "", ml: "",
         s: "Planned supply and purchasing of payment terminals (serialized assets) for advanced inventory points, plus reverse logistics with 3PLs.",
         cx: "Rede, a payments company, distributes payment terminals — serialized assets — across Brazil through advanced inventory points.",
@@ -1679,7 +1683,7 @@ window.PORTFOLIO = {
         r: ["DRP nacional de terminales de pago serializadas","Logística inversa de mantenimiento con almacenes y transportistas 3PL"],
         tg: ["DRP","Activos Serializados","Logística Inversa"] } },
 
-    { a: "sc", co: "early", org: "Solistica", y: "2010",
+    { id: "warehouse-sizing-and-performance", a: "sc", co: "early", org: "Solistica", y: "2010",
       en: { t: "Warehouse Sizing & Performance", m: "", ml: "",
         s: "DC sizing, inventory layout and policies, inbound and outbound processes, KPIs and WMS parameters for 3PL operations.",
         cx: "Solistica, a 3PL operator, runs warehouses for clients in healthcare, food, industrial and telecom.",
@@ -1702,7 +1706,7 @@ window.PORTFOLIO = {
         r: ["Proyectos de implementación y desempeño de almacenes en cuatro segmentos","KPIs y parámetros de WMS definidos para las operaciones"],
         tg: ["Almacenaje","WMS","KPIs"] } },
 
-    { a: "mo", co: "early", org: "AmBev", y: "2009",
+    { id: "bottle-breakage-reduction", a: "mo", co: "early", org: "AmBev", y: "2009",
       en: { t: "Bottle Breakage Reduction", m: "~500K/yr", ml: "bottle breakage reduced",
         s: "Improvement group that helped reduce bottle breakage in beer production by about 500K per year.",
         cx: "The career started at AmBev at age 16 through an apprenticeship, moving on to production operator and logistics operations. Returnable assets — bottles, crates, pallets — are critical in beverage operations.",

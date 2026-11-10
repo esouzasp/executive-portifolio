@@ -16,6 +16,17 @@ No build step: it is plain HTML, CSS and JavaScript.
 Settings → Pages → Source: *Deploy from a branch* → Branch: `main` / `(root)` → Save.
 The site will be available at `https://esouzasp.github.io/executive-portifolio/`.
 
+## Share links (LinkedIn, CV, e-mail)
+
+Each visible case has its own page with a preview image, in three languages:
+
+- `https://esouzasp.github.io/executive-portifolio/cases/<id>.html` (English)
+- `…/cases/pt/<id>.html` (Portuguese) · `…/cases/es/<id>.html` (Spanish)
+
+The page shows a proper preview when pasted on LinkedIn or WhatsApp and opens the portfolio with the case modal open. The "Copy link" button inside each case modal copies this link in the current language. `<id>` is the stable `id` of the case in `data.js`.
+
+After changing `data.js`, regenerate pages and images: `python3 tools/build_share.py` (needs node and Pillow).
+
 ## Hidden cases
 
 Cases marked `hidden: true` stay in `data.js` but are not shown on the site. See the list in [HIDDEN_CASES.md](HIDDEN_CASES.md) — regenerate it with `node tools/build-hidden-list.js`.

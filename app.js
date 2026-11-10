@@ -2,9 +2,11 @@
   var D = window.PORTFOLIO;
   var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
                 set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
-  var state = { modal: null, lang: store.get('lang') || 'en', area: 'all', co: 'all', vf: 'cards', vm: 'list' };
+  var qLang = (/[?&]lang=(en|pt|es)\b/.exec(location.search) || [])[1];
+  var state = { modal: null, lang: qLang || store.get('lang') || 'en', area: 'all', co: 'all', vf: 'cards', vm: 'list' };
 
   var FLAG_BR = '<svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" fill="#009C3B"/><path d="M10 1.6 18.2 7 10 12.4 1.8 7Z" fill="#FFDF00"/><circle cx="10" cy="7" r="3.2" fill="#002776"/><path d="M6.9 6.4c2-.5 4.4-.2 6.1.9" stroke="#fff" stroke-width=".6" fill="none"/></svg>';
+  var LINK_ICON = '<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>';
   var GH_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" style="margin-right:8px"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg>';
   var FLAG_ES = '<svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" fill="#AA151B"/><rect y="3.5" width="20" height="7" fill="#F1BF00"/><rect x="4.4" y="5.4" width="2.6" height="3.2" rx=".4" fill="#AA151B" opacity=".85"/></svg>';
   var FLAG_US = '<svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" fill="#fff"/><g fill="#B22234"><rect y="0" width="20" height="1.08"/><rect y="2.15" width="20" height="1.08"/><rect y="4.3" width="20" height="1.08"/><rect y="6.46" width="20" height="1.08"/><rect y="8.62" width="20" height="1.08"/><rect y="10.77" width="20" height="1.08"/><rect y="12.92" width="20" height="1.08"/></g><rect width="8.6" height="7.54" fill="#3C3B6E"/><g fill="#fff"><circle cx="1.6" cy="1.4" r=".45"/><circle cx="4.3" cy="1.4" r=".45"/><circle cx="7" cy="1.4" r=".45"/><circle cx="2.95" cy="2.9" r=".45"/><circle cx="5.65" cy="2.9" r=".45"/><circle cx="1.6" cy="4.4" r=".45"/><circle cx="4.3" cy="4.4" r=".45"/><circle cx="7" cy="4.4" r=".45"/><circle cx="2.95" cy="5.9" r=".45"/><circle cx="5.65" cy="5.9" r=".45"/></g></svg>';
@@ -21,7 +23,14 @@
       return !x.c.hidden && (state.area === 'all' || x.c.a === state.area) && (state.co === 'all' || x.c.co === state.co);
     });
   }
-  function caseFromHash() { var m = /^#case-(\d+)$/.exec(location.hash); if (!m) return null; var n = +m[1]; return D.cases[n] && !D.cases[n].hidden ? n : null; }
+  var BASE = 'https://esouzasp.github.io/executive-portifolio/';
+  function caseFromHash() {
+    var h = decodeURIComponent(location.hash.slice(1)), n = null;
+    var m = /^case-(\d+)$/.exec(h);
+    if (m) n = +m[1]; else if (h) D.cases.forEach(function (c, i) { if (c.id === h) n = i; });
+    return n != null && D.cases[n] && !D.cases[n].hidden ? n : null;
+  }
+  function shareUrl(c) { return BASE + 'cases/' + (state.lang === 'en' ? '' : state.lang + '/') + c.id + '.html'; }
 
   var STAR = '<svg class="star" width="12" height="12" viewBox="0 0 24 24" role="img" aria-label="Featured"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" fill="currentColor"/></svg>';
   function tip(c) {
@@ -42,7 +51,9 @@
       '<p class="modal-meta">' + (c.featured ? STAR : '') + '<span class="area">' + esc(L(D.areas[c.a])) + '</span> | ' + esc(O(c)) + (c.y ? ' · ' + esc(c.y) : '') + '</p>' +
       '<h2 id="modal-title">' + esc(t.t) + '</h2><p class="modal-sum">' + esc(t.s) + '</p>' +
       (t.m ? '<p class="modal-metric"><strong>' + esc(t.m) + '</strong>' + esc(t.ml) + '</p>' : '') +
-      starBlock(t) + '<p class="tags modal-tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p></div></div>';
+      starBlock(t) + '<p class="tags modal-tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p>' +
+      '<div class="share"><p>' + L(T.shareHint) + '</p><div class="share-row"><input class="share-url" type="text" readonly value="' + esc(shareUrl(c)) + '" aria-label="' + esc(L(T.copy)) + '" onclick="this.select()">' +
+      '<button type="button" class="btn-copy" data-copy="' + esc(shareUrl(c)) + '">' + LINK_ICON + '<span>' + L(T.copy) + '</span></button></div></div></div></div>';
   }
   function card(x) {
     var c = x.c, t = CT(c);
@@ -106,7 +117,7 @@
     h += '<section id="top" class="hero"><div class="wrap">' +
       '<p class="lead">' + L(T.summary) + '</p>' +
       '<div class="ctas"><a class="btn primary" href="#portfolio">' + L(T.cta)[0] + '</a>' +
-      '<a class="btn ghost" href="https://github.com/esouzasp/executive-portifolio" target="_blank" rel="noopener">' + GH_ICON + L(T.repo) + '</a>' +
+      '<a class="btn ghost" href="https://github.com/esouzasp" target="_blank" rel="noopener">' + GH_ICON + L(T.repo) + '</a>' +
       '<a class="btn ghost" href="#contact">' + L(T.cta)[1] + '</a></div>' +
       '<div class="stats">' + ['20+', '10+', '20+', '100+'].map(function (v, k) { return '<div><strong>' + v + '</strong><span>' + L(T.stats)[k] + '</span></div>'; }).join('') + '</div></div></section>';
 
@@ -170,9 +181,8 @@
   var app = document.getElementById('app');
   function render(scrollTop) {
     document.documentElement.lang = { pt: 'pt-BR', es: 'es', en: 'en' }[state.lang] || 'en';
-    var n = caseFromHash();
-    app.innerHTML = n === null ? home() : detail(n);
-    document.title = (n === null ? 'Everton Teixeira de Souza — ' + L(T.eyebrow) : CT(D.cases[n]).t + ' — Everton Teixeira de Souza');
+    app.innerHTML = home();
+    document.title = (state.modal == null ? 'Everton Teixeira de Souza — ' + L(T.eyebrow) : CT(D.cases[state.modal]).t + ' — Everton Teixeira de Souza');
     if (scrollTop) window.scrollTo(0, 0);
     onScroll();
   }
@@ -182,15 +192,34 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  function openModal(n) { state.modal = n; render(false); document.body.style.overflow = 'hidden'; var x = app.querySelector('.modal-close'); if (x) x.focus(); }
-  function closeModal() { var n = state.modal; state.modal = null; document.body.style.overflow = ''; render(false); var el = app.querySelector('[data-modal="' + n + '"]'); if (el) el.focus(); }
+  function openModal(n, fromUrl) {
+    state.modal = n; render(false); document.body.style.overflow = 'hidden';
+    if (!fromUrl && location.hash !== '#' + D.cases[n].id) history.pushState(null, '', '#' + D.cases[n].id);
+    var x = app.querySelector('.modal-close'); if (x) x.focus();
+  }
+  function closeModal(fromUrl) {
+    var n = state.modal; state.modal = null; document.body.style.overflow = ''; render(false);
+    if (!fromUrl && caseFromHash() != null) history.pushState(null, '', location.pathname + location.search);
+    var el = app.querySelector('[data-modal="' + n + '"]'); if (el) el.focus();
+  }
+  function syncFromUrl() {
+    var n = caseFromHash();
+    if (n != null && state.modal !== n) openModal(n, true);
+    else if (n == null && state.modal != null) closeModal(true);
+  }
+  function copyLink(btn) {
+    var url = btn.getAttribute('data-copy'), done = function () { btn.classList.add('ok'); btn.querySelector('span').textContent = L(T.copied); setTimeout(function () { btn.classList.remove('ok'); btn.querySelector('span').textContent = L(T.copy); }, 2200); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { fallback(); });
+    else fallback();
+    function fallback() { var ta = document.createElement('textarea'); ta.value = url; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) {} document.body.removeChild(ta); }
+  }
   document.addEventListener('keydown', function (e) {
     if (state.modal != null && e.key === 'Escape') { closeModal(); return; }
     var c = e.target.closest && e.target.closest('[data-modal]');
     if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openModal(+c.getAttribute('data-modal')); }
   });
   app.addEventListener('click', function (e) {
-    if (state.modal != null) { if (e.target.closest('[data-close]') || e.target.hasAttribute('data-overlay')) closeModal(); return; }
+    if (state.modal != null) { var cp = e.target.closest('[data-copy]'); if (cp) { copyLink(cp); return; } if (e.target.closest('[data-close]') || e.target.hasAttribute('data-overlay')) closeModal(); return; }
     var m = e.target.closest('[data-modal]'); if (m) { openModal(+m.getAttribute('data-modal')); return; }
     var b = e.target.closest('[data-lang],[data-all],[data-area],[data-co],[data-view],[data-open],[data-back]');
     if (!b) return;
@@ -202,10 +231,10 @@
     else if (b.hasAttribute('data-open')) { location.hash = 'case-' + b.getAttribute('data-open'); }
     else if (b.hasAttribute('data-back')) { e.preventDefault(); history.pushState(null, '', location.pathname); render(false); var p = document.getElementById('portfolio'); if (p) p.scrollIntoView(); }
   });
-  window.addEventListener('hashchange', function () {
-    var n = caseFromHash();
-    if (n !== null) { render(true); return; }
-    if (!document.getElementById('overview')) { render(false); var id = location.hash.slice(1); var el = id && document.getElementById(id); if (el) el.scrollIntoView(); }
-  });
+  window.addEventListener('hashchange', syncFromUrl);
+  window.addEventListener('popstate', syncFromUrl);
   render(false);
+  if (qLang) store.set('lang', qLang);
+  var start = caseFromHash();
+  if (start != null) { var pf = document.getElementById('portfolio'); if (pf) pf.scrollIntoView(); openModal(start, true); }
 })();
