@@ -127,7 +127,7 @@ window.PORTFOLIO = {
       { t: {"en":"Data Platforms & Engineering","pt":"Plataformas e Engenharia de Dados","es":"Plataformas e Ingeniería de Datos"},
         i: ["Databricks","SAP Datasphere","Azure Synapse","Snowflake","SAP HANA","PySpark","SparkSQL","SQL","T-SQL","Pentaho","Talend","Apache NiFi","Hadoop / Hive","CDC","Oracle","PostgreSQL","MySQL","SQL Server","MongoDB / NoSQL"] },
       { t: {"en":"Planning, Optimization & Enterprise Systems","pt":"Planejamento, Otimização e Sistemas","es":"Planificación, Optimización y Sistemas"},
-        i: ["SAP ECC / S/4","o9 (IBP)","Infor APS","VTEX","Cello TMS","GKO","TMS / WMS","Pyomo","OR-Tools","Gurobi","CPLEX","HiGHS","CBC","SCIP","AIMMS"] },
+        i: ["SAP ECC / S/4","o9 (IBP)","Infor APS","VTEX","Pyomo","OR-Tools","Gurobi","CPLEX","HiGHS","CBC","SCIP","AIMMS"] },
       { t: {"en":"AI, ML & Forecasting","pt":"IA, ML e Forecasting","es":"IA, ML y Forecasting"},
         i: ["Python","LLM Agents","Databricks Genie","Computer Vision","Prophet","Darts","sktime","statsmodels","Orbit","scikit-learn (GLM)"] },
       { t: {"en":"Analytics, Ops & Architecture","pt":"Analytics, Operação e Arquitetura","es":"Analytics, Operación y Arquitectura"},
