@@ -219,3 +219,13 @@ footer.contact p { margin: 4px 0 0; font-size: 16px; line-height: 1.6; color: va
   .nav { gap: 16px; }
   .big { flex-basis: 100%; }
 }
+
+/* mobile: every grid becomes one stacked card per row */
+@media (max-width: 760px) {
+  .grid5, .cases, .pillars, .stats, .cxa { grid-template-columns: minmax(0, 1fr) !important; }
+  .stats > div { padding: 10px 16px; }
+  .case { min-width: 0; }
+  .ctas .btn { flex: 1 1 100%; justify-content: center; }
+  .filters .frow { gap: 6px; }
+}
+
