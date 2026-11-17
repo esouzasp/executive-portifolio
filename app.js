@@ -3,7 +3,7 @@
   var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
                 set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
   var qLang = (/[?&]lang=(en|pt|es)\b/.exec(location.search) || [])[1];
-  var state = { modal: null, lang: qLang || store.get('lang') || 'en', area: 'all', co: 'all', vf: 'cards', vm: 'list' };
+  var state = { modal: null, rowOpen: null, lang: qLang || store.get('lang') || 'en', area: 'all', co: 'all', vf: 'cards', vm: 'list' };
 
   var FLAG_BR = '<svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" fill="#009C3B"/><path d="M10 1.6 18.2 7 10 12.4 1.8 7Z" fill="#FFDF00"/><circle cx="10" cy="7" r="3.2" fill="#002776"/><path d="M6.9 6.4c2-.5 4.4-.2 6.1.9" stroke="#fff" stroke-width=".6" fill="none"/></svg>';
   var LINK_ICON = '<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>';
@@ -73,10 +73,19 @@
   }
   function row(x) {
     var c = x.c, t = CT(c);
-    return '<div class="row hv" role="row" tabindex="0"><span role="cell" class="c-title">' + (c.featured ? STAR : '') + esc(t.t) + '</span>' +
+    var open = state.rowOpen === x.i;
+    return '<div class="row hv' + (open ? ' open' : '') + '" role="row" tabindex="0" aria-expanded="' + open + '" data-row="' + x.i + '"><span role="cell" class="c-title">' + (c.featured ? STAR : '') + esc(t.t) + '</span>' +
       '<span role="cell" class="c-area">' + esc(L(D.areas[c.a])) + '</span><span role="cell" class="c-org">' + esc(O(c)) + '</span>' +
       '<span role="cell" class="c-res">' + (t.m ? '<strong>' + esc(t.m) + '</strong>' + esc(t.ml) : esc(t.r[0])) + '</span>' +
-      '<span role="cell" class="c-tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</span>' + tip(c) + '</div>';
+      '<span role="cell" class="c-tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</span></div>' + (open ? rowDetail(c) : '');
+  }
+  function rowDetail(c) {
+    var t = CT(c);
+    return '<div class="row-detail" role="region" aria-label="' + esc(t.t) + '">' +
+      '<button type="button" class="modal-close row-close" data-rowclose aria-label="' + L(T.close) + '"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+      '<p class="tip-sum">' + esc(t.s) + '</p>' + starBlock(t) +
+      '<div class="share"><div class="share-row"><input class="share-url" type="text" readonly value="' + esc(shareUrl(c)) + '" aria-label="' + esc(L(T.copy)) + '" onclick="this.select()">' +
+      '<button type="button" class="btn-copy" data-copy="' + esc(shareUrl(c)) + '">' + LINK_ICON + '<span>' + L(T.copy) + '</span></button></div></div></div>';
   }
   function grid(list, mode) {
     if (mode === 'list') {
@@ -202,6 +211,10 @@
     if (!fromUrl && caseFromHash() != null) history.pushState(null, '', location.pathname + location.search);
     var el = app.querySelector('[data-modal="' + n + '"]'); if (el) el.focus();
   }
+  function toggleRow(n) {
+    state.rowOpen = state.rowOpen === n ? null : n; render(false);
+    var el = app.querySelector('[data-row="' + n + '"]'); if (el) el.focus({ preventScroll: true });
+  }
   function syncFromUrl() {
     var n = caseFromHash();
     if (n != null && state.modal !== n) openModal(n, true);
@@ -216,15 +229,21 @@
   document.addEventListener('keydown', function (e) {
     if (state.modal != null && e.key === 'Escape') { closeModal(); return; }
     var c = e.target.closest && e.target.closest('[data-modal]');
-    if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openModal(+c.getAttribute('data-modal')); }
+    if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openModal(+c.getAttribute('data-modal')); return; }
+    var r = e.target.closest && e.target.closest('[data-row]');
+    if (r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggleRow(+r.getAttribute('data-row')); }
+    else if (state.rowOpen != null && e.key === 'Escape') toggleRow(state.rowOpen);
   });
   app.addEventListener('click', function (e) {
     if (state.modal != null) { var cp = e.target.closest('[data-copy]'); if (cp) { copyLink(cp); return; } if (e.target.closest('[data-close]') || e.target.hasAttribute('data-overlay')) closeModal(); return; }
     var m = e.target.closest('[data-modal]'); if (m) { openModal(+m.getAttribute('data-modal')); return; }
+    var cp2 = e.target.closest('[data-copy]'); if (cp2) { copyLink(cp2); return; }
+    if (e.target.closest('[data-rowclose]')) { toggleRow(state.rowOpen); return; }
+    var rw = e.target.closest('[data-row]'); if (rw) { toggleRow(+rw.getAttribute('data-row')); return; }
     var b = e.target.closest('[data-lang],[data-all],[data-area],[data-co],[data-view],[data-open],[data-back]');
     if (!b) return;
     if (b.hasAttribute('data-lang')) { state.lang = b.getAttribute('data-lang'); store.set('lang', state.lang); render(false); }
-    else if (b.hasAttribute('data-all')) { state.area = 'all'; state.co = 'all'; render(false); }
+    else if (b.hasAttribute('data-all')) { state.area = 'all'; state.co = 'all'; state.rowOpen = null; render(false); }
     else if (b.hasAttribute('data-area')) { state.area = b.getAttribute('data-area'); state.co = 'all'; render(false); }
     else if (b.hasAttribute('data-co')) { state.co = b.getAttribute('data-co'); state.area = 'all'; render(false); }
     else if (b.hasAttribute('data-view')) { var v = b.getAttribute('data-view').split('|'); state[v[0]] = v[1]; render(false); }

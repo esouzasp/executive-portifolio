@@ -151,9 +151,17 @@ h2 { margin: 0; font-family: Manrope, Inter, sans-serif; font-weight: 800; font-
 .case { position: relative; }
 .hv { outline: none; }
 .hv:hover, .hv:focus-visible { border-color: var(--ink); }
-.row.hv:hover, .row.hv:focus-visible { background: #FAF9F6; }
 .tip { display: none; position: absolute; z-index: 30; top: calc(100% - 4px); left: 10px; width: min(520px, 92vw); background: #fff; color: var(--ink); border: 1px solid var(--ink); border-radius: 10px; box-shadow: 0 10px 30px rgba(15, 27, 45, .18); padding: 14px 16px; font-size: 13px; line-height: 1.5; white-space: normal; text-align: left; cursor: default; }
-.hv:hover > .tip, .hv:focus-within > .tip { display: block; }
+.row[data-row] { cursor: pointer; }
+.row[data-row]:hover, .row[data-row]:focus-visible { background: #FAF9F6; }
+.row.open, .row.open:hover, .row.open:focus-visible { background: var(--ink); color: #fff; }
+.row.open .c-area, .row.open .c-org, .row.open .c-res { color: #C9D1DC; }
+.row.open .c-res strong { color: #fff; }
+.row.open .star { color: var(--accent); }
+.row-detail { position: relative; padding: 16px 56px 18px 18px; background: #FAF9F6; border-top: 1px solid var(--line); border-left: 3px solid var(--ink); font-size: 14px; }
+.row-detail .tip-sum { padding-right: 8px; }
+.row-close { top: 8px; right: 8px; }
+@media (max-width: 760px) { .row-detail { padding: 14px 14px 16px; } .row-detail .tip-sum { padding-right: 40px; } }
 .tip-sum { margin: 0 0 10px; font-weight: 600; }
 /* tech stack — plain lists in 4 pillars */
 .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px 24px; }
