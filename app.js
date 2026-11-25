@@ -224,7 +224,7 @@
   window.addEventListener('scroll', onScroll, { passive: true });
 
 
-  // ---- visit counter (Supabase RPC). Owner's browser is excluded via localStorage 'pf_owner'.
+  // ---- visit counter (Supabase RPC). Browsers on the exclusion list (managed at /counter) are not counted.
   var PF = { url: 'https://vicetirlflvnbsgsqqbr.supabase.co/rest/v1/rpc/pf_track', key: 'sb_publishable_V4v_TQIhUacnJfrDsIWN9g_Clka-KWs' };
   function pfVid() { try { var v = localStorage.getItem('pf_vid'); if (!v) { v = Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('pf_vid', v); } return v; } catch (e) { return 'nostore'; } }
   function pfRef() {
@@ -233,7 +233,6 @@
   }
   var pfRefOnce = pfRef();
   function track(caseId) {
-    try { if (localStorage.getItem('pf_owner') === '1') return; } catch (e) {}
     if (/^(localhost|127\.)/.test(location.hostname)) return;
     var body = JSON.stringify({ p_path: '/' + (caseId ? 'case' : ''), p_case: caseId || null, p_lang: state.lang, p_ref: pfRefOnce, p_vid: pfVid(), p_mobile: window.matchMedia('(max-width: 760px)').matches });
     pfRefOnce = null;

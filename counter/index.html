@@ -61,21 +61,22 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function rpc(fn, body) {
     return fetch(API + fn, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: KEY, Authorization: 'Bearer ' + KEY }, body: JSON.stringify(body) })
-      .then(function (r) { if (!r.ok) throw new Error(r.status === 403 || r.status === 401 ? 'forbidden' : 'HTTP ' + r.status); return r.json(); });
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.status === 204 ? null : r.json(); });
   }
-  function myVid() { return ls.get('pf_vid'); }
+  function myVid() { var v = ls.get('pf_vid'); if (!v) { v = Math.random().toString(36).slice(2) + Date.now().toString(36); ls.set('pf_vid', v); } return v; }
+  ls.set('pf_owner', null); ls.set('pf_key', null);
 
-  function gate(msg) {
-    root.innerHTML = '<div class="card gate"><h1>Counter</h1><p class="sub">Página privada. Digite sua chave de acesso.</p>' +
-      '<form id="f"><input id="k" type="password" autocomplete="current-password" placeholder="Chave de acesso" autofocus><button>Entrar</button></form><p class="err">' + esc(msg || '') + '</p></div>';
-    document.getElementById('f').onsubmit = function (e) { e.preventDefault(); var k = document.getElementById('k').value.trim(); if (k) load(k); };
+  function load() {
+    rpc('pf_stats', { p_days: days }).then(view).catch(function (e) { root.innerHTML = '<p class="err">Erro ao carregar: ' + esc(e.message) + '</p>'; });
   }
-
-  function load(k) {
-    root.innerHTML = '<p class="sub">Carregando…</p>';
-    Promise.all([rpc('pf_stats', { p_key: k, p_days: days }), rpc('pf_recent', { p_key: k })]).then(function (r) {
-      ls.set('pf_key', k); ls.set('pf_owner', '1'); view(k, r[0], r[1]);
-    }).catch(function (e) { ls.set('pf_key', null); gate(e.message === 'forbidden' ? 'Chave inválida.' : 'Erro ao carregar: ' + e.message); });
+  function exclude(vid, suggested) {
+    var label = prompt('Nome para este navegador na lista de exceção (ex.: Laptop, iPhone Safari):', suggested || '');
+    if (label === null) return;
+    rpc('pf_exclude', { p_vid: vid, p_label: label }).then(load).catch(function (e) { alert(e.message); });
+  }
+  function include(vid) {
+    if (!confirm('Tirar este navegador da lista de exceção? Ele volta a ser contado.')) return;
+    rpc('pf_include', { p_vid: vid }).then(load).catch(function (e) { alert(e.message); });
   }
 
   function list(title, rows, label, extra) {
@@ -87,13 +88,12 @@
 
   function chart(rows) {
     var W = 1000, H = 200, P = 24, n = rows.length || 1, max = Math.max.apply(null, rows.map(function (r) { return r.views; }).concat([1]));
-    var bw = (W - P) / n, out = '';
+    var bw = (W - P) / n, out = '', step = Math.ceil(n / 10);
     rows.forEach(function (r, i) {
       var x = P + i * bw, h1 = (H - 30) * r.views / max, h2 = (H - 30) * r.visitors / max;
       out += '<g><title>' + r.day + ': ' + r.views + ' views, ' + r.visitors + ' visitantes</title>' +
         '<rect x="' + (x + bw * 0.12) + '" y="' + (H - 20 - h1) + '" width="' + (bw * 0.76) + '" height="' + h1 + '" fill="#E9D4B0" rx="2"/>' +
         '<rect x="' + (x + bw * 0.12) + '" y="' + (H - 20 - h2) + '" width="' + (bw * 0.76) + '" height="' + h2 + '" fill="#C98A2B" rx="2"/></g>';
-      var step = Math.ceil(n / 10);
       if (i % step === 0 || i === n - 1) out += '<text x="' + (x + bw / 2) + '" y="' + (H - 4) + '" font-size="11" fill="#5A6472" text-anchor="middle">' + r.day.slice(8, 10) + '/' + r.day.slice(5, 7) + '</text>';
     });
     out += '<text x="0" y="12" font-size="11" fill="#5A6472">' + max + '</text><line x1="' + P + '" x2="' + W + '" y1="' + (H - 20) + '" y2="' + (H - 20) + '" stroke="#E3E1DA"/>';
@@ -102,12 +102,17 @@
 
   function fmt(ts) { var d = new Date(ts); return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); }
 
-  function view(k, s, vis) {
-    var me = myVid();
+  function view(s) {
+    var me = myVid(), vis = s.visitors, exc = s.excluded;
+    var meExcluded = exc.some(function (e) { return e.vid === me; });
     var refLabel = function (r) { return esc(r.ref.replace(/^share:/, '🔗 link compartilhado · ')); };
     root.innerHTML =
-      '<div class="top"><div><h1>Counter</h1><div class="sub">Executive Portfolio · visitas desde a ativação (horário de Brasília)</div></div>' +
+      '<div class="top"><div><h1>Counter</h1><div class="sub">Executive Portfolio · visitas desde a ativação (horário de Brasília) · sem navegadores da lista de exceção</div></div>' +
       '<div class="seg" id="seg">' + [7, 30, 90, 365].map(function (d) { return '<button data-d="' + d + '" class="' + (d === days ? 'on' : '') + '">' + (d === 365 ? '1 ano' : d + ' dias') + '</button>'; }).join('') + '</div></div>' +
+      '<div class="card owner" style="margin-bottom:12px">' + (meExcluded
+          ? '<span class="pill">✓ Este navegador (' + esc(me.slice(0, 8)) + ') está na lista de exceção</span>'
+          : '<span class="sub">Este navegador: <b>' + esc(me.slice(0, 8)) + '</b> — ainda é contado.</span><button data-ex="' + esc(me) + '">Adicionar à exceção</button>') +
+        '<span class="sub">Abra esta página em cada aparelho seu para incluí-lo.</span></div>' +
       '<div class="tiles">' +
         '<div class="card tile"><div class="k">Hoje</div><div class="v">' + s.today.views + '</div><div class="s">' + s.today.visitors + ' visitantes</div></div>' +
         '<div class="card tile"><div class="k">Últimos ' + days + ' dias</div><div class="v">' + s.period.views + '</div><div class="s">' + s.period.visitors + ' visitantes</div></div>' +
@@ -121,25 +126,23 @@
         list('Idioma', s.by_lang, function (r) { return esc({ en: 'English', pt: 'Português', es: 'Español' }[r.lang] || r.lang); }, 'Idioma') +
         list('Dispositivo', s.by_device, function (r) { return r.device === 'mobile' ? 'Celular' : 'Desktop'; }, 'Tipo') +
       '</div>' +
-      '<div class="card" style="margin-top:12px"><h2>Visitantes</h2><p class="sub" style="margin:0 0 8px">Cada linha é um navegador. A linha destacada é este navegador. Use “Remover” para apagar as visitas de um navegador seu.</p>' +
+      '<div class="card" style="margin-top:12px"><h2>Visitantes</h2><p class="sub" style="margin:0 0 8px">Cada linha é um navegador. “Exceção” tira o navegador da contagem sem apagar o histórico.</p>' +
         (vis.length ? '<table><tr><th>Visitante</th><th>Primeira visita</th><th>Última visita</th><th class="n">Views</th><th></th></tr>' + vis.map(function (v) {
           var mine = v.vid === me;
-          return '<tr class="' + (mine ? 'me' : '') + '"><td>' + (v.mobile ? '📱 ' : '💻 ') + esc(v.vid.slice(0, 8)) + (mine ? ' <span class="pill">este navegador</span>' : '') + '</td><td>' + fmt(v.first_seen) + '</td><td>' + fmt(v.last_seen) + '</td><td class="n">' + v.views + '</td><td class="n"><button class="danger" data-purge="' + esc(v.vid) + '">Remover</button></td></tr>';
-        }).join('') + '</table>' : '<p class="sub">Nenhuma visita ainda.</p>') + '</div>' +
-      '<div class="card owner" style="margin-top:12px"><span class="pill">✓ Este navegador não é contado</span><span class="sub">Abra esta página uma vez em cada aparelho seu (celular, notebook do trabalho) para que ele também deixe de ser contado.</span>' +
-        '<span style="flex:1"></span><button class="ghost" id="out">Sair</button></div>';
-    document.getElementById('seg').onclick = function (e) { var d = e.target.getAttribute('data-d'); if (d) { days = +d; ls.set('pf_days', d); load(k); } };
-    document.getElementById('out').onclick = function () { ls.set('pf_key', null); gate(); };
-    Array.prototype.forEach.call(root.querySelectorAll('[data-purge]'), function (b) {
-      b.onclick = function () {
-        if (!confirm('Apagar todas as visitas deste navegador?')) return;
-        rpc('pf_purge', { p_key: k, p_vid: b.getAttribute('data-purge') }).then(function () { load(k); }).catch(function (e) { alert(e.message); });
-      };
-    });
+          return '<tr class="' + (mine ? 'me' : '') + '"><td>' + (v.mobile ? '📱 ' : '💻 ') + esc(v.vid.slice(0, 8)) + (mine ? ' <span class="pill">este navegador</span>' : '') + '</td><td>' + fmt(v.first_seen) + '</td><td>' + fmt(v.last_seen) + '</td><td class="n">' + v.views + '</td><td class="n"><button class="danger" data-ex="' + esc(v.vid) + '">Exceção</button></td></tr>';
+        }).join('') + '</table>' : '<p class="sub">Nenhuma visita contada ainda.</p>') + '</div>' +
+      '<div class="card" style="margin-top:12px"><h2>Lista de exceção</h2><p class="sub" style="margin:0 0 8px">Navegadores que não são contados. As visitas antigas ficam guardadas e voltam aos números se você restaurar.</p>' +
+        (exc.length ? '<table><tr><th>Navegador</th><th>Nome</th><th>Na lista desde</th><th class="n">Views guardadas</th><th></th></tr>' + exc.map(function (e) {
+          var mine = e.vid === me;
+          return '<tr class="' + (mine ? 'me' : '') + '"><td>' + esc(e.vid.slice(0, 8)) + (mine ? ' <span class="pill">este navegador</span>' : '') + '</td><td>' + esc(e.label || '—') + '</td><td>' + fmt(e.created_at) + '</td><td class="n">' + e.views + '</td><td class="n"><button class="ghost" style="height:30px" data-ren="' + esc(e.vid) + '" data-label="' + esc(e.label || '') + '">Renomear</button> <button class="danger" data-in="' + esc(e.vid) + '">Restaurar</button></td></tr>';
+        }).join('') + '</table>' : '<p class="sub">Lista vazia.</p>') + '</div>';
+    document.getElementById('seg').onclick = function (e) { var d = e.target.getAttribute('data-d'); if (d) { days = +d; ls.set('pf_days', d); load(); } };
+    Array.prototype.forEach.call(root.querySelectorAll('[data-ex]'), function (b) { b.onclick = function () { exclude(b.getAttribute('data-ex')); }; });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-ren]'), function (b) { b.onclick = function () { exclude(b.getAttribute('data-ren'), b.getAttribute('data-label')); }; });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-in]'), function (b) { b.onclick = function () { include(b.getAttribute('data-in')); }; });
   }
 
-  var saved = ls.get('pf_key');
-  if (saved) load(saved); else gate();
+  myVid(); load();
 })();
 </script>
 </body>
