@@ -105,9 +105,7 @@ window.PORTFOLIO = {
       { en: "Warehousing", pt: "Armazenagem", es: "Almacenaje", l: 2 },
       { en: "Commercial", pt: "Comercial", es: "Comercial", l: 1 },
       { en: "Procurement", pt: "Compras", es: "Compras", l: 1 },
-      { en: "Pricing", pt: "Pricing", es: "Pricing", l: 1 },
-      { en: "Finance & FP&A", pt: "Finanças e FP&A", es: "Finanzas y FP&A", l: 1 },
-      { en: "Quality", pt: "Qualidade", es: "Calidad", l: 1 }
+      { en: "Pricing", pt: "Pricing", es: "Pricing", l: 1 }
     ],
     groups: [
       { t: {"en":"Industries","pt":"Indústrias","es":"Industrias"},
