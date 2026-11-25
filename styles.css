@@ -239,17 +239,18 @@ footer.contact p { margin: 4px 0 0; font-size: 16px; line-height: 1.6; color: va
 
 /* career journey — minimal vertical timeline */
 .journey { list-style: none; margin: 0; padding: 0; position: relative; }
-.journey::before { content: ""; position: absolute; left: 118px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
-.jitem { position: relative; display: grid; grid-template-columns: 104px 28px minmax(0, 1fr); align-items: start; padding: 4px 0; }
-.jyear { font-size: 12px; font-weight: 600; color: var(--muted); padding-top: 2px; text-align: right; padding-right: 4px; font-variant-numeric: tabular-nums; }
-.jdot { width: 10px; height: 10px; margin: 4px 0 0 9px; border-radius: 50%; background: #fff; border: 2px solid var(--ink); position: relative; z-index: 1; }
+.journey::before { content: ""; position: absolute; left: 96px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+.jitem { position: relative; display: grid; grid-template-columns: 86px 20px minmax(0, 1fr); align-items: start; padding: 4px 0; }
+.jyear { font-size: 12px; font-weight: 600; color: var(--muted); padding-top: 2px; text-align: right; padding-right: 2px; font-variant-numeric: tabular-nums; white-space: nowrap; letter-spacing: -0.01em; }
+.jdot { width: 10px; height: 10px; margin: 4px 0 0 5px; border-radius: 50%; background: #fff; border: 2px solid var(--ink); position: relative; z-index: 1; }
 .jitem.now .jdot { background: var(--accent); border-color: var(--accent); }
 .jbody { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
 .jco { margin: 0; font-size: 14px; white-space: nowrap; }
 .jco strong { font-family: Manrope, Inter, sans-serif; font-weight: 700; }
 .jco span { color: var(--muted); font-size: 13px; }
 .jtags { margin: 0; display: flex; flex-wrap: wrap; gap: 4px; }
-.jt { font-size: 11px; line-height: 16px; padding: 2px 8px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+.jt { font-size: 11px; line-height: 16px; padding: 2px 6px; border-radius: 4px; border: 1px solid; white-space: nowrap; }
+@media (min-width:761px){ .jbody { flex-wrap: nowrap; gap: 4px 8px; } .jtags { flex-wrap: nowrap; min-width: 0; gap: 5px; font-size: 10.5px; } .jtags .jt { font-size: inherit; padding: 1px var(--jpad, 5px); } .jbody.jstack { flex-wrap: wrap; } .jbody.jstack .jtags { flex: 1 0 100%; } }
 .jt-p { border-color: #D9D6CC; background: #fff; color: var(--body); }
 .jt-l { border-color: #D9A441; background: #FBF3E4; color: #6B4510; }
 .jt-t { border-color: var(--ink); background: var(--ink); color: #fff; }

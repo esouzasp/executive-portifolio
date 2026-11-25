@@ -134,7 +134,7 @@
     var JT = L(T.jTypes), JK = { p: 0, l: 1, t: 2 };
     h += '<section id="journey" class="block first"><div class="wrap"><div class="head"><p class="eyebrow">' + L(T.sJ)[0] + '</p><h2>' + L(T.sJ)[1] + '</h2></div>' +
       '<ol class="journey">' + D.journey.map(function (j) {
-        return '<li class="jitem' + (j.current ? ' now' : '') + '"><span class="jyear">' + esc(j.y) + (j.current ? ' – ' + L(T.present) : '') + '</span>' +
+        return '<li class="jitem' + (j.current ? ' now' : '') + '"><span class="jyear">' + esc(j.y) + (j.current ? '–' + L(T.present) : '') + '</span>' +
           '<span class="jdot" aria-hidden="true"></span><div class="jbody"><p class="jco"><strong>' + esc(j.co) + '</strong> <span>| ' + esc(L(j.seg)) + '</span></p>' +
           '<p class="jtags">' + j.tags.map(function (t) { return '<span class="jt jt-' + t[0] + '" title="' + JT[JK[t[0]]] + '">' + esc(L(t[1])) + '</span>'; }).join('') + '</p></div></li>';
       }).join('') + '</ol><p class="jkey">' + ['p', 'l', 't'].map(function (k) { return '<span class="jt jt-' + k + '">' + JT[JK[k]] + '</span>'; }).join('') + '</p></div></section>';
@@ -201,16 +201,47 @@
     app.innerHTML = home();
     document.title = (state.modal == null ? 'Everton Teixeira de Souza — ' + L(T.eyebrow) : CT(D.cases[state.modal]).t + ' — Everton Teixeira de Souza');
     if (scrollTop) window.scrollTo(0, 0);
-    onScroll();
+    onScroll(); fitJourney();
   }
+  // keep each journey row's tags on one line (desktop): shrink that row's tags until they fit
+  function fitJourney() {
+    var desk = window.matchMedia('(min-width: 761px)').matches;
+    Array.prototype.forEach.call(app.querySelectorAll('.jtags'), function (t) {
+      t.style.fontSize = ''; t.style.removeProperty('--jpad'); t.style.flexWrap = ''; t.parentNode.classList.remove('jstack');
+      if (!desk) return;
+      var fit = function (min) { var f = 10.5; t.style.fontSize = ''; t.style.removeProperty('--jpad');
+        while (t.scrollWidth > t.clientWidth + 1 && f > min) { f -= 0.25; t.style.fontSize = f + 'px'; t.style.setProperty('--jpad', Math.max(4, Math.round(f * 0.55)) + 'px'); } };
+      fit(9.5);
+      if (t.scrollWidth > t.clientWidth + 1) { t.parentNode.classList.add('jstack'); fit(8.5); }
+      if (t.scrollWidth > t.clientWidth + 1) { t.style.fontSize = ''; t.style.removeProperty('--jpad'); t.style.flexWrap = 'wrap'; }
+    });
+  }
+  var fitT; window.addEventListener('resize', function () { clearTimeout(fitT); fitT = setTimeout(fitJourney, 120); });
   function onScroll() {
     var m = document.getElementById('masthead');
     if (m) m.classList.toggle('shrink', window.scrollY > 40);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
 
+
+  // ---- visit counter (Supabase RPC). Owner's browser is excluded via localStorage 'pf_owner'.
+  var PF = { url: 'https://vicetirlflvnbsgsqqbr.supabase.co/rest/v1/rpc/pf_track', key: 'sb_publishable_V4v_TQIhUacnJfrDsIWN9g_Clka-KWs' };
+  function pfVid() { try { var v = localStorage.getItem('pf_vid'); if (!v) { v = Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('pf_vid', v); } return v; } catch (e) { return 'nostore'; } }
+  function pfRef() {
+    try { var s = sessionStorage.getItem('pf_src'); if (s) { sessionStorage.removeItem('pf_src'); return s; } } catch (e) {}
+    try { if (!document.referrer) return null; var h = new URL(document.referrer).hostname; return h === location.hostname ? null : h; } catch (e) { return null; }
+  }
+  var pfRefOnce = pfRef();
+  function track(caseId) {
+    try { if (localStorage.getItem('pf_owner') === '1') return; } catch (e) {}
+    if (/^(localhost|127\.)/.test(location.hostname)) return;
+    var body = JSON.stringify({ p_path: '/' + (caseId ? 'case' : ''), p_case: caseId || null, p_lang: state.lang, p_ref: pfRefOnce, p_vid: pfVid(), p_mobile: window.matchMedia('(max-width: 760px)').matches });
+    pfRefOnce = null;
+    try { fetch(PF.url, { method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json', apikey: PF.key, Authorization: 'Bearer ' + PF.key }, body: body }).catch(function () {}); } catch (e) {}
+  }
   function openModal(n, fromUrl) {
     state.modal = n; render(false); document.body.style.overflow = 'hidden';
+    track(D.cases[n].id);
     if (!fromUrl && location.hash !== '#' + D.cases[n].id) history.pushState(null, '', '#' + D.cases[n].id);
     var x = app.querySelector('.modal-close'); if (x) x.focus();
   }
@@ -221,6 +252,7 @@
   }
   function toggleRow(n) {
     state.rowOpen = state.rowOpen === n ? null : n; render(false);
+    if (state.rowOpen === n) track(D.cases[n].id);
     var el = app.querySelector('[data-row="' + n + '"]'); if (el) el.focus({ preventScroll: true });
   }
   function syncFromUrl() {
@@ -263,5 +295,6 @@
   render(false);
   if (qLang) store.set('lang', qLang);
   var start = caseFromHash();
+  if (start == null) track(null);
   if (start != null) { var pf = document.getElementById('portfolio'); if (pf) pf.scrollIntoView(); openModal(start, true); }
 })();

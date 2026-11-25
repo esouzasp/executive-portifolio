@@ -110,7 +110,7 @@ PAGE = """<!doctype html>
 <meta name="twitter:description" content="{desc}">
 <meta name="twitter:image" content="{image}">
 <meta name="author" content="{name}">
-<script>location.replace({target});</script>
+<script>try{{sessionStorage.setItem("pf_src","share:"+(document.referrer?new URL(document.referrer).hostname:"direct"))}}catch(e){{}}location.replace({target});</script>
 <style>
 body{{margin:0;font-family:Inter,system-ui,sans-serif;background:#F7F6F2;color:#0F1B2D}}
 main{{max-width:720px;margin:0 auto;padding:40px 24px}}
