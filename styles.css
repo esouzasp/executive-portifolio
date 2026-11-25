@@ -132,6 +132,9 @@ h2 { margin: 0; font-family: Manrope, Inter, sans-serif; font-weight: 800; font-
 .view button + button { border-left: 1px solid #D9D6CC; }
 .view button[aria-pressed="true"] { background: var(--ink); color: #fff; }
 .view button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.cogroup { margin-top: 14px; }
+.cohead { display: flex; align-items: baseline; gap: 8px; margin: 0 0 6px; font: 700 14px Manrope, Inter, sans-serif; color: var(--ink); }
+.cohead span { font: 500 12px Inter, sans-serif; color: var(--muted); }
 .rows { background: #fff; border: 1px solid var(--line); border-radius: 8px; }
 .rows > .row:first-child { border-radius: 8px 8px 0 0; }
 .row { position: relative; display: grid; grid-template-columns: minmax(0, 3.4fr) minmax(0, 1.4fr) minmax(0, 1.2fr) minmax(0, 1.7fr) minmax(0, 1.2fr); gap: 14px; align-items: center; padding: 8px 14px; border-top: 1px solid var(--line-soft); font-size: 12.5px; }

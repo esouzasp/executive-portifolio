@@ -3,7 +3,7 @@
   var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
                 set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
   var qLang = (/[?&]lang=(en|pt|es)\b/.exec(location.search) || [])[1];
-  var state = { modal: null, rowOpen: null, lang: qLang || store.get('lang') || 'en', area: 'all', co: 'all', vf: 'cards', vm: 'list' };
+  var state = { modal: null, rowOpen: null, lang: qLang || store.get('lang') || 'en', area: 'all', co: 'all', vf: 'cards', vm: 'list', group: false };
 
   var FLAG_BR = '<svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" fill="#009C3B"/><path d="M10 1.6 18.2 7 10 12.4 1.8 7Z" fill="#FFDF00"/><circle cx="10" cy="7" r="3.2" fill="#002776"/><path d="M6.9 6.4c2-.5 4.4-.2 6.1.9" stroke="#fff" stroke-width=".6" fill="none"/></svg>';
   var LINK_ICON = '<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>';
@@ -65,11 +65,24 @@
   }
   var ICON_CARDS = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>';
   var ICON_LIST = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>';
+  var ICON_CO = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 10h.01M15 10h.01"/></svg>';
+  var BY_CO = { en: 'By Company', pt: 'Por empresa', es: 'Por empresa' };
   function viewToggle(key) {
-    var cur = state[key];
+    var cur = state.group ? 'company' : state[key];
     return '<div class="view" role="group" aria-label="' + L(T.view) + '">' +
       '<button type="button" data-view="' + key + '|cards" aria-pressed="' + (cur === 'cards') + '">' + ICON_CARDS + L(T.cards) + '</button>' +
-      '<button type="button" data-view="' + key + '|list" aria-pressed="' + (cur === 'list') + '">' + ICON_LIST + L(T.list) + '</button></div>';
+      '<button type="button" data-view="' + key + '|list" aria-pressed="' + (cur === 'list') + '">' + ICON_LIST + L(T.list) + '</button>' +
+      '<button type="button" data-view="group|company" aria-pressed="' + (cur === 'company') + '">' + ICON_CO + L(BY_CO) + '</button></div>';
+  }
+  // all visible cases grouped by company; featured cases first inside each company (by featured rank), then the rest in data order
+  function byCompany(vis) {
+    return Object.keys(D.companies).map(function (k) {
+      var g = vis.filter(function (x) { return x.c.co === k; });
+      if (!g.length) return '';
+      var f = g.filter(function (x) { return x.c.featured; }).sort(function (a, b) { return a.c.featured - b.c.featured; });
+      var rest = g.filter(function (x) { return !x.c.featured; });
+      return '<div class="cogroup"><h4 class="cohead">' + esc(L(D.companies[k])) + '<span>' + g.length + L(T.count) + '</span></h4>' + grid(f.concat(rest), 'list') + '</div>';
+    }).join('');
   }
   function row(x) {
     var c = x.c, t = CT(c);
@@ -97,6 +110,7 @@
     return '<div class="cases">' + list.map(card).join('') + '</div>';
   }
   function casesBlock(vis) {
+    if (state.group) return '<div class="subrow"><h3 class="subhead">' + L(BY_CO) + '</h3>' + viewToggle('vm') + '</div>' + byCompany(vis);
     if (state.area !== 'all' || state.co !== 'all') return '<div class="subrow"><span></span>' + viewToggle('vm') + '</div>' + grid(vis, state.vm);
     var feat = vis.filter(function (x) { return x.c.featured; }).sort(function (a, b) { return a.c.featured - b.c.featured; });
     var more = vis.filter(function (x) { return !x.c.featured; });
@@ -285,7 +299,7 @@
     else if (b.hasAttribute('data-all')) { state.area = 'all'; state.co = 'all'; state.rowOpen = null; render(false); }
     else if (b.hasAttribute('data-area')) { state.area = b.getAttribute('data-area'); state.co = 'all'; render(false); }
     else if (b.hasAttribute('data-co')) { state.co = b.getAttribute('data-co'); state.area = 'all'; render(false); }
-    else if (b.hasAttribute('data-view')) { var v = b.getAttribute('data-view').split('|'); state[v[0]] = v[1]; render(false); }
+    else if (b.hasAttribute('data-view')) { var v = b.getAttribute('data-view').split('|'); if (v[0] === 'group') state.group = true; else { state.group = false; state[v[0]] = v[1]; } state.rowOpen = null; render(false); }
     else if (b.hasAttribute('data-open')) { location.hash = 'case-' + b.getAttribute('data-open'); }
     else if (b.hasAttribute('data-back')) { e.preventDefault(); history.pushState(null, '', location.pathname); render(false); var p = document.getElementById('portfolio'); if (p) p.scrollIntoView(); }
   });

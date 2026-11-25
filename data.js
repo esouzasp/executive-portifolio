@@ -287,7 +287,7 @@ window.PORTFOLIO = {
         r: ["Diseño de ingesta que cubre cerca de 20 mil tablas del WMS","Enfoque CDC que captura solo los cambios y mantiene los datos actualizados","Datos del WMS integrados al flujo de pedidos de logística en la plataforma de datos"],
         tg: ["WMS","CDC","Ingeniería de Datos"] } },
 
-    { id: "ai-data-quality-agent-for-o9", a: "ai", co: "rch", org: "Riachuelo", y: "", featured: 1,
+    { id: "ai-data-quality-agent-for-o9", a: "ai", co: "rch", org: "Riachuelo", y: "",
       en: { t: "Agentic Data Quality for o9 Pipelines", m: "", ml: "",
         s: "Led a data quality tool that combines a deterministic model and an agentic model to assess data quality in the pipelines that feed the o9 planning solution.",
         cx: "The o9 planning solution depends on complete, consistent data arriving through the corporate data pipelines.",
