@@ -147,6 +147,8 @@ def main():
     for sub in ["cases", os.path.join("images", "cases")]:
         p = os.path.join(ROOT, sub)
         if os.path.isdir(p): shutil.rmtree(p)
+    os.makedirs(os.path.join(ROOT, "cases"), exist_ok=True)
+    shutil.copyfile(os.path.join(ROOT, "tools", "cases_index.html"), os.path.join(ROOT, "cases", "index.html"))  # /cases listing page
     ui = D["ui"]
     for L in LANGS:
         site = tr(ui["eyebrow"], L)

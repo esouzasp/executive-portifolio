@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cases — Everton Teixeira de Souza</title>
+<meta name="description" content="All portfolio cases in a structured format, ready to copy into prompts.">
+<!-- Source: tools/cases_index.html — copied to cases/index.html by tools/build_share.py -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0F1B2D; --muted: #5A6472; --line: #E3E1DA; --bg: #F7F6F2; --accent: #C98A2B; --ok: #2E7D4F; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.55 Inter, system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 60px; }
+  header { position: sticky; top: 0; z-index: 5; background: rgba(247,246,242,.96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+  header .wrap { padding-top: 14px; padding-bottom: 14px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  h1 { font: 800 22px Manrope, Inter, sans-serif; margin: 0; flex: 1 1 auto; }
+  h1 a { color: inherit; text-decoration: none; }
+  h1 small { display: block; font: 500 12px Inter, sans-serif; color: var(--muted); }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
+  .seg button { border: 0; background: transparent; color: var(--muted); font: 600 12px Inter, sans-serif; height: 32px; padding: 0 12px; cursor: pointer; }
+  .seg button.on { background: var(--ink); color: #fff; }
+  input[type=search] { height: 34px; border: 1px solid var(--line); border-radius: 8px; padding: 0 10px; font: inherit; min-width: 200px; background: #fff; }
+  button.btn { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: var(--ink); color: #fff; font: 600 12.5px Inter, sans-serif; cursor: pointer; white-space: nowrap; }
+  button.btn.ghost { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+  button.btn.done { background: var(--ok); color: #fff; border-color: var(--ok); }
+  .count { color: var(--muted); font-size: 12.5px; margin: 0 0 12px; }
+  article { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 0 0 12px; scroll-margin-top: 90px; }
+  article h2 { font: 700 17px Manrope, Inter, sans-serif; margin: 0 0 2px; }
+  .meta { color: var(--muted); font-size: 12.5px; margin: 0 0 10px; }
+  .metric { display: inline-block; margin: 0 0 10px; font-size: 13px; }
+  .metric b { font: 800 16px Manrope, Inter, sans-serif; margin-right: 4px; }
+  .sum { font-weight: 600; margin: 0 0 10px; }
+  dl { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 6px 12px; margin: 0; }
+  dt { font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8A5A12; padding-top: 3px; }
+  dd { margin: 0; color: #3E4856; }
+  dd ul { margin: 0; padding-left: 16px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 12px 0 0; }
+  .tags span { font-size: 11px; line-height: 16px; padding: 2px 7px; border-radius: 4px; background: #F3EBDD; color: #6B4510; }
+  .url { display: flex; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #EEECE6; }
+  .url input { flex: 1 1 auto; min-width: 0; height: 34px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: #3E4856; font: 12px Inter, sans-serif; }
+  @media (max-width: 640px) { dl { grid-template-columns: 1fr; } dt { padding-top: 6px; } .url { flex-wrap: wrap; } input[type=search] { flex: 1 1 100%; } }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1><a href="../">Everton Teixeira de Souza</a><small id="sub"></small></h1>
+  <input type="search" id="q" aria-label="Search">
+  <div class="seg" id="lang"><button data-l="en">EN</button><button data-l="pt">PT</button><button data-l="es">ES</button></div>
+  <button class="btn" id="all"></button>
+</div></header>
+<main class="wrap"><p class="count" id="count"></p><div id="list"></div></main>
+<script src="../data.js"></script>
+<script>
+(function () {
+  var D = window.PORTFOLIO, BASE = 'https://esouzasp.github.io/executive-portifolio/';
+  var qs = new URLSearchParams(location.search);
+  var lang = ['en', 'pt', 'es'].indexOf(qs.get('lang')) >= 0 ? qs.get('lang') : 'en';
+  var TX = {
+    sub: { en: 'Portfolio cases — structured for prompts', pt: 'Cases do portfólio — estruturados para prompts', es: 'Casos del portafolio — estructurados para prompts' },
+    search: { en: 'Search cases…', pt: 'Buscar cases…', es: 'Buscar casos…' },
+    all: { en: 'Copy all', pt: 'Copiar todos', es: 'Copiar todos' },
+    copyCase: { en: 'Copy case', pt: 'Copiar case', es: 'Copiar caso' },
+    copied: { en: 'Copied', pt: 'Copiado', es: 'Copiado' },
+    count: { en: ' cases', pt: ' cases', es: ' casos' },
+    company: { en: 'Company', pt: 'Empresa', es: 'Empresa' }, year: { en: 'Year', pt: 'Ano', es: 'Año' }, area: { en: 'Area', pt: 'Área', es: 'Área' },
+    key: { en: 'Key result', pt: 'Resultado-chave', es: 'Resultado clave' }, summary: { en: 'Summary', pt: 'Resumo', es: 'Resumen' },
+    tags: { en: 'Tags', pt: 'Tags', es: 'Etiquetas' }, url: { en: 'URL', pt: 'URL', es: 'URL' }
+  };
+  function L(o) { return o[lang] || o.en; }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function org(c) { return typeof c.org === 'string' ? c.org : L(c.org); }
+  function url(c) { return BASE + 'cases/' + (lang === 'en' ? '' : lang + '/') + c.id + '.html'; }
+  var cases = D.cases.filter(function (c) { return !c.hidden; });
+
+  function md(c) {
+    var t = c[lang], u = D.ui, lines = ['## ' + t.t,
+      '- ' + L(TX.company) + ': ' + org(c) + (c.y ? ' | ' + L(TX.year) + ': ' + c.y : '') + ' | ' + L(TX.area) + ': ' + L(D.areas[c.a])];
+    if (t.m) lines.push('- ' + L(TX.key) + ': ' + t.m + (t.ml ? ' ' + t.ml : ''));
+    lines.push('- ' + L(TX.summary) + ': ' + t.s, '- ' + L(u.sSit) + ': ' + t.cx, '- ' + L(u.sTask) + ': ' + t.ch, '- ' + L(u.sAct) + ': ' + t.ap, '- ' + L(u.sRes) + ':');
+    t.r.forEach(function (r) { lines.push('  - ' + r); });
+    lines.push('- ' + L(TX.tags) + ': ' + t.tg.join(', '), '- ' + L(TX.url) + ': ' + url(c));
+    return lines.join('\n');
+  }
+  function fallback(text) { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove(); }
+  function copy(text, btn, label) {
+    var done = function () { btn.classList.add('done'); btn.lastChild.textContent = L(TX.copied); setTimeout(function () { btn.classList.remove('done'); btn.lastChild.textContent = label; }, 1800); };
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () { fallback(text); done(); }); else { fallback(text); done(); }
+  }
+  var ICON = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  var LINK = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>';
+
+  function visible() {
+    var q = document.getElementById('q').value.trim().toLowerCase();
+    return cases.filter(function (c) { return !q || md(c).toLowerCase().indexOf(q) >= 0; });
+  }
+  function render() {
+    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+    document.getElementById('sub').textContent = L(TX.sub);
+    document.getElementById('q').placeholder = L(TX.search);
+    Array.prototype.forEach.call(document.querySelectorAll('#lang button'), function (b) { b.classList.toggle('on', b.getAttribute('data-l') === lang); });
+    document.getElementById('all').innerHTML = ICON + '<span>' + L(TX.all) + '</span>';
+    var list = visible(), u = D.ui;
+    document.getElementById('count').textContent = list.length + L(TX.count);
+    document.getElementById('list').innerHTML = list.map(function (c) {
+      var t = c[lang];
+      return '<article id="' + c.id + '"><h2>' + esc(t.t) + '</h2>' +
+        '<p class="meta">' + esc(org(c)) + (c.y ? ' · ' + esc(c.y) : '') + ' · ' + esc(L(D.areas[c.a])) + '</p>' +
+        (t.m ? '<p class="metric"><b>' + esc(t.m) + '</b>' + esc(t.ml) + '</p>' : '') +
+        '<p class="sum">' + esc(t.s) + '</p>' +
+        '<dl><dt>' + L(u.sSit) + '</dt><dd>' + esc(t.cx) + '</dd><dt>' + L(u.sTask) + '</dt><dd>' + esc(t.ch) + '</dd><dt>' + L(u.sAct) + '</dt><dd>' + esc(t.ap) + '</dd>' +
+        '<dt>' + L(u.sRes) + '</dt><dd><ul>' + t.r.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></dd></dl>' +
+        '<p class="tags">' + t.tg.map(function (g) { return '<span>' + esc(g) + '</span>'; }).join('') + '</p>' +
+        '<div class="url"><input type="text" readonly value="' + esc(url(c)) + '" aria-label="URL" onclick="this.select()">' +
+        '<button class="btn ghost" data-link="' + c.id + '">' + LINK + '<span>' + L(u.copy) + '</span></button>' +
+        '<button class="btn" data-case="' + c.id + '">' + ICON + '<span>' + L(TX.copyCase) + '</span></button></div></article>';
+    }).join('');
+  }
+  var byId = {}; cases.forEach(function (c) { byId[c.id] = c; });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.id === 'all') copy(visible().map(md).join('\n\n'), b, L(TX.all));
+    else if (b.getAttribute('data-case')) copy(md(byId[b.getAttribute('data-case')]), b, L(TX.copyCase));
+    else if (b.getAttribute('data-link')) copy(url(byId[b.getAttribute('data-link')]), b, L(D.ui.copy));
+    else if (b.getAttribute('data-l')) { lang = b.getAttribute('data-l'); var p = new URLSearchParams(location.search); p.set('lang', lang); history.replaceState(null, '', '?' + p.toString() + location.hash); render(); }
+  });
+  document.getElementById('q').addEventListener('input', render);
+  render();
+  if (location.hash) { var el = document.getElementById(location.hash.slice(1)); if (el) el.scrollIntoView(); }
+})();
+</script>
+</body>
+</html>

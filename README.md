@@ -27,6 +27,14 @@ The page shows a proper preview when pasted on LinkedIn or WhatsApp and opens th
 
 After changing `data.js`, regenerate pages and images: `python3 tools/build_share.py` (needs node and Pillow).
 
+## Cases list for prompts
+
+`https://esouzasp.github.io/executive-portifolio/cases/` lists every visible case (title, company, area, key result, STAR, tags, URL) with copy buttons per case and "Copy all" in Markdown. Source: `tools/cases_index.html` (copied by `tools/build_share.py`); content comes from `data.js`.
+
+## Visit counter
+
+`/counter/` shows visits (Supabase project `planus`, schema `portfolio`). Browsers on the exclusion list are not counted.
+
 ## Hidden cases
 
 Cases marked `hidden: true` stay in `data.js` but are not shown on the site. See the list in [HIDDEN_CASES.md](HIDDEN_CASES.md) — regenerate it with `node tools/build-hidden-list.js`.

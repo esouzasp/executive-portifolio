@@ -6,16 +6,15 @@ To publish one again, remove `hidden: true` from its entry in `data.js`.
 | # | Case | Area | Company | Featured |
 |---|---|---|---|---|
 | 0 | Supplier Score Matrix | Supply Chain & Planning | Riachuelo |  |
-| 3 | AI Data Quality Agent for o9 | AI & Decision Intelligence | Riachuelo | ★ 1 |
-| 12 | Cutting Waste Optimization | Manufacturing & Operations | Riachuelo |  |
-| 13 | Launch Calendar Automation with AI | AI & Decision Intelligence | Riachuelo |  |
-| 16 | PLM Data Ingestion Architecture | Enterprise Data Platforms | Riachuelo |  |
-| 21 | Invoice Registration Failures | Supply Chain & Planning | Riachuelo |  |
-| 25 | Databricks Enablement Workshops | Enterprise Data Platforms | Riachuelo |  |
-| 26 | AI Domain Agents for Retail Operations | AI & Decision Intelligence | Riachuelo | ★ 8 |
-| 28 | Analytics & BI as-a-Service | Governance & Operating Model | Riachuelo |  |
-| 29 | Commercial Data Redesign — OTB Share | Enterprise Data Platforms | Riachuelo |  |
-| 34 | Partner Contracts & Performance Management | Governance & Operating Model | Riachuelo |  |
-| 35 | SAP Enhancements for Supply Chain | Supply Chain & Planning | Riachuelo |  |
+| 13 | Cutting Waste Optimization | Manufacturing & Operations | Riachuelo |  |
+| 14 | Launch Calendar Automation with AI | AI & Decision Intelligence | Riachuelo |  |
+| 17 | PLM Data Ingestion Architecture | Enterprise Data Platforms | Riachuelo |  |
+| 22 | Invoice Registration Failures | Supply Chain & Planning | Riachuelo |  |
+| 26 | Databricks Enablement Workshops | Enterprise Data Platforms | Riachuelo |  |
+| 27 | AI Domain Agents for Retail Operations | AI & Decision Intelligence | Riachuelo | ★ 8 |
+| 29 | Analytics & BI as-a-Service | Governance & Operating Model | Riachuelo |  |
+| 30 | Commercial Data Redesign — OTB Share | Enterprise Data Platforms | Riachuelo |  |
+| 35 | Partner Contracts & Performance Management | Governance & Operating Model | Riachuelo |  |
+| 36 | SAP Enhancements for Supply Chain | Supply Chain & Planning | Riachuelo |  |
 
-_12 hidden of 75 cases._
+_11 hidden of 76 cases._
