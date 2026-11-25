@@ -84,6 +84,7 @@
     return '<div class="row-detail" role="region" aria-label="' + esc(t.t) + '">' +
       '<button type="button" class="modal-close row-close" data-rowclose aria-label="' + L(T.close) + '"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
       '<p class="tip-sum">' + esc(t.s) + '</p>' + starBlock(t) +
+      '<p class="tags modal-tags">' + t.tg.map(function (g) { return '<span class="tag">' + esc(g) + '</span>'; }).join('') + '</p>' +
       '<div class="share"><div class="share-row"><input class="share-url" type="text" readonly value="' + esc(shareUrl(c)) + '" aria-label="' + esc(L(T.copy)) + '" onclick="this.select()">' +
       '<button type="button" class="btn-copy" data-copy="' + esc(shareUrl(c)) + '">' + LINK_ICON + '<span>' + L(T.copy) + '</span></button></div></div></div>';
   }
@@ -105,7 +106,7 @@
   function header(home) {
     var n = L(T.nav), base = home ? '' : '#';
     return '<header class="top"><div class="wrap bar">' +
-      (home ? '<nav class="nav" aria-label="Main"><a href="#overview">' + n[0] + '</a><a href="#solutions">' + n[1] + '</a><a href="#stack">' + n[2] + '</a><a href="#portfolio">' + n[3] + '</a><a href="#contact">' + n[4] + '</a></nav>'
+      (home ? '<nav class="nav" aria-label="Main"><a href="#journey">' + L(T.navJ) + '</a><a href="#overview">' + n[0] + '</a><a href="#solutions">' + n[1] + '</a><a href="#stack">' + n[2] + '</a><a href="#portfolio">' + n[3] + '</a><a href="#contact">' + n[4] + '</a></nav>'
             : '<a class="backlink" href="#portfolio" data-back>← ' + L(T.back) + '</a>') + '</div></header>';
   }
   function masthead(home, eyebrow, title, width) {
@@ -130,7 +131,14 @@
       '<a class="btn ghost" href="#contact">' + L(T.cta)[1] + '</a></div>' +
       '<div class="stats">' + ['20+', '10+', '20+', '100+'].map(function (v, k) { return '<div><strong>' + v + '</strong><span>' + L(T.stats)[k] + '</span></div>'; }).join('') + '</div></div></section>';
 
-    h += '<section id="overview" class="block first"><div class="wrap"><div class="head"><p class="eyebrow">' + L(T.s1)[0] + '</p><h2>' + L(T.s1)[1] + '</h2></div><div class="grid5">';
+    var JT = L(T.jTypes), JK = { p: 0, l: 1, t: 2 };
+    h += '<section id="journey" class="block first"><div class="wrap"><div class="head"><p class="eyebrow">' + L(T.sJ)[0] + '</p><h2>' + L(T.sJ)[1] + '</h2></div>' +
+      '<ol class="journey">' + D.journey.map(function (j) {
+        return '<li class="jitem' + (j.current ? ' now' : '') + '"><span class="jyear">' + esc(j.y) + (j.current ? ' – ' + L(T.present) : '') + '</span>' +
+          '<span class="jdot" aria-hidden="true"></span><div class="jbody"><p class="jco"><strong>' + esc(j.co) + '</strong> <span>| ' + esc(L(j.seg)) + '</span></p>' +
+          '<p class="jtags">' + j.tags.map(function (t) { return '<span class="jt jt-' + t[0] + '" title="' + JT[JK[t[0]]] + '">' + esc(L(t[1])) + '</span>'; }).join('') + '</p></div></li>';
+      }).join('') + '</ol><p class="jkey">' + ['p', 'l', 't'].map(function (k) { return '<span class="jt jt-' + k + '">' + JT[JK[k]] + '</span>'; }).join('') + '</p></div></section>';
+    h += '<section id="overview" class="block"><div class="wrap"><div class="head"><p class="eyebrow">' + L(T.s1)[0] + '</p><h2>' + L(T.s1)[1] + '</h2></div><div class="grid5">';
     h += '<div class="card"><h3>' + L(T.domains) + '</h3>' + DOMAINS.map(function (d) {
       return '<div class="dom"><span>' + esc(L(d)) + '</span><span class="bars" role="img" aria-label="' + d.l + (state.lang === 'en' ? ' of 3' : ' de 3') + '"><i class="on"></i><i class="' + (d.l >= 2 ? 'on' : '') + '"></i><i class="' + (d.l >= 3 ? 'on' : '') + '"></i></span></div>';
     }).join('') + '</div>';

@@ -237,3 +237,39 @@ footer.contact p { margin: 4px 0 0; font-size: 16px; line-height: 1.6; color: va
   .filters .frow { gap: 6px; }
 }
 
+/* career journey — minimal vertical timeline */
+.journey { list-style: none; margin: 0; padding: 0; position: relative; }
+.journey::before { content: ""; position: absolute; left: 118px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+.jitem { position: relative; display: grid; grid-template-columns: 104px 28px minmax(0, 1fr); align-items: start; padding: 4px 0; }
+.jyear { font-size: 12px; font-weight: 600; color: var(--muted); padding-top: 2px; text-align: right; padding-right: 4px; font-variant-numeric: tabular-nums; }
+.jdot { width: 10px; height: 10px; margin: 4px 0 0 9px; border-radius: 50%; background: #fff; border: 2px solid var(--ink); position: relative; z-index: 1; }
+.jitem.now .jdot { background: var(--accent); border-color: var(--accent); }
+.jbody { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.jco { margin: 0; font-size: 14px; white-space: nowrap; }
+.jco strong { font-family: Manrope, Inter, sans-serif; font-weight: 700; }
+.jco span { color: var(--muted); font-size: 13px; }
+.jtags { margin: 0; display: flex; flex-wrap: wrap; gap: 4px; }
+.jt { font-size: 11px; line-height: 16px; padding: 2px 8px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+.jt-p { border-color: #D9D6CC; background: #fff; color: var(--body); }
+.jt-l { border-color: #D9A441; background: #FBF3E4; color: #6B4510; }
+.jt-t { border-color: var(--ink); background: var(--ink); color: #fff; }
+.jkey { margin: 12px 0 0; display: flex; gap: 8px; align-items: center; }
+#journey { scroll-margin-top: 110px; }
+@media (max-width: 640px) {
+  .journey::before { left: 6px; }
+  .jitem { grid-template-columns: 22px minmax(0, 1fr); }
+  .jdot { grid-column: 1; grid-row: 1 / span 2; margin: 5px 0 0 1px; }
+  .jyear { grid-column: 2; text-align: left; padding: 0 0 2px; }
+  .jbody { grid-column: 2; gap: 4px 8px; }
+  .jco { white-space: normal; }
+}
+
+/* collapsed header on desktop: name and menu on one line */
+@media (min-width: 761px) {
+  .masthead.shrink { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-inline: max(32px, calc((100% - 1136px) / 2)); }
+  .masthead.shrink .top { order: 2; background: transparent; flex: 0 1 auto; }
+  .masthead.shrink .top .bar { padding: 0; max-width: none; margin: 0; }
+  .masthead.shrink .mast { order: 1; flex: 1 1 auto; padding: 8px 0; }
+  .masthead.shrink .mast .wrap, .masthead.shrink .mast .narrow { max-width: none; margin: 0; }
+}
+
