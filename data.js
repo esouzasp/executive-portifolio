@@ -201,7 +201,6 @@ window.PORTFOLIO = {
         ["l",{"en":"20+ Customers","pt":"20+ Clientes","es":"20+ Clientes"}],
         ["l",{"en":"Go-to-Market","pt":"Go-to-Market","es":"Go-to-Market"}],
         ["p",{"en":"Technical Consulting","pt":"Consultoria Técnica","es":"Consultoría Técnica"}],
-        ["t",{"en":"Solutions Architecture","pt":"Arquitetura de Soluções","es":"Arquitectura de Soluciones"}],
         ["t",{"en":"Data Science","pt":"Ciência de Dados","es":"Ciencia de Datos"}],
         ["t",{"en":"MILP Optimization","pt":"Otimização MILP","es":"Optimización MILP"}],
         ["t",{"en":"Demand Planning SaaS","pt":"SaaS de Planejamento de Demanda","es":"SaaS de Planificación de Demanda"}]] },
